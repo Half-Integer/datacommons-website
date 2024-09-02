@@ -29,6 +29,16 @@ export const resolveHref = (href: string, routes: Routes): string => {
   }
 };
 
+export const slugify = (text: string): string => {
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/[^\w-]+/g, "")
+    .replace(/--+/g, "-");
+};
+
 export const getRoutes = (elementId = "metadata-routes"): Routes => {
   const routeElements = document.getElementById(elementId)?.children;
   const routes: Routes = new Proxy(

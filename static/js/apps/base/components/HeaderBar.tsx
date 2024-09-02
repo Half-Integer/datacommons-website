@@ -18,7 +18,7 @@ import React, { ReactElement, useMemo } from "react";
 
 import { HeaderMenu } from "../../../shared/types/base";
 import { Labels, Routes } from "../../../shared/types/general";
-import { resolveHref } from "../utilities/utilities";
+import { resolveHref, slugify } from "../utilities/utilities";
 
 interface HeaderBarProps {
   name: string;
@@ -78,7 +78,7 @@ const HeaderBar = ({
                   <a
                     className="nav-link dropdown-toggle"
                     href="#"
-                    id="nav-explore-dropdown"
+                    id={slugify(`nav-${menuItem.label}-dropdown`)}
                     role="button"
                     data-toggle="dropdown"
                     aria-haspopup="true"
@@ -94,7 +94,9 @@ const HeaderBar = ({
                           ? "dropdown-menu-right"
                           : ""
                       }`}
-                      aria-labelledby="nav-explore-dropdown"
+                      aria-labelledby={slugify(
+                        `nav-${menuItem.label}-dropdown`
+                      )}
                     >
                       {menuItem.subMenu.map((subMenuItem) => (
                         <a
