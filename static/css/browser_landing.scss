@@ -14,19 +14,12 @@
  * limitations under the License.
  */
 
-/* Styles for the build page */
+/* Styles for the browser landing (knowledge graph) page */
 
 @use "./new_variables" as var;
 @import "base";
-@import "./components/partners";
-@import "./components/hero_columns";
-@import "./components/media_text";
-@import "./components/quote";
-@import "./components/simple_text";
-@import "./components/slide_carousel";
-@import "./components/one_data_commons";
 
-#build {
+#browser-landing {
   // General Styles
   &.main-content {
     margin: 0;
