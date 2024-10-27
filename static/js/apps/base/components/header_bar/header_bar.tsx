@@ -35,8 +35,8 @@ interface HeaderBarProps {
   logoWidth: string;
   //the data that will populate the header menu.
   menu: HeaderMenu[];
-  //if set true, the header menu will show - this value is pulled in from the page template and will default to false.
-  showHeaderSearchBar: boolean;
+  //if set true, the header menu will be hidden - this value is pulled in from the page template and will default to false.
+  hideHeaderSearchBar: boolean;
   //the labels dictionary - all labels will be passed through this before being rendered. If no value exists, the dictionary will return the key that was sent.
   labels: Labels;
   //the routes dictionary - this is used to convert routes to resolved urls
@@ -48,7 +48,7 @@ const HeaderBar = ({
   logoPath,
   logoWidth,
   menu,
-  showHeaderSearchBar,
+  hideHeaderSearchBar,
   labels,
   routes,
 }: HeaderBarProps): ReactElement => {
@@ -63,7 +63,7 @@ const HeaderBar = ({
             labels={labels}
             routes={routes}
           />
-          {showHeaderSearchBar && <HeaderBarSearch />}
+          {!hideHeaderSearchBar && <HeaderBarSearch />}
           <MenuDesktop menu={menu} labels={labels} routes={routes} />
         </div>
         <div className="navbar-menu-mobile">
@@ -74,7 +74,7 @@ const HeaderBar = ({
             labels={labels}
             routes={routes}
           />
-          {showHeaderSearchBar && <HeaderBarSearch />}
+          {!hideHeaderSearchBar && <HeaderBarSearch />}
           <MenuMobile menu={menu} labels={labels} routes={routes} />
         </div>
       </nav>

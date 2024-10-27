@@ -47,8 +47,8 @@ function renderPage(): void {
   const name = metadataContainer.dataset.name;
   const logoPath = metadataContainer.dataset.logoPath;
   const logoWidth = metadataContainer.dataset.logoWidth;
-  const showHeaderSearchBar =
-    metadataContainer.dataset.showHeaderSearchBar.toLowerCase() === "true";
+  const hideHeaderSearchBar =
+    metadataContainer.dataset.hideHeaderSearchBar.toLowerCase() === "true";
   const brandLogoLight =
     metadataContainer.dataset.brandLogoLight.toLowerCase() === "true";
 
@@ -62,7 +62,7 @@ function renderPage(): void {
       logoPath,
       logoWidth,
       headerMenu,
-      showHeaderSearchBar,
+      hideHeaderSearchBar,
       labels,
       routes,
     }),
