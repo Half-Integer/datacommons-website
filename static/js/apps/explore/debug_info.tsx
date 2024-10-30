@@ -20,11 +20,10 @@
 
 import _ from "lodash";
 import queryString from "query-string";
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { Col, Row } from "reactstrap";
 
 import {
-  DebugInfo,
   MultiSVCandidate,
   QueryResult,
   SentenceScore,
@@ -36,7 +35,7 @@ const DEBUG_PARAM = "dbg";
 const svToSentences = (
   variables: string[],
   varSentences: Map<string, Array<SentenceScore>>
-): JSX.Element => {
+): ReactElement => {
   return (
     <div id="sv-sentences-list">
       <table>
@@ -54,7 +53,7 @@ const svToSentences = (
                   <td>{variable}</td>
                   <td>
                     <ul>
-                      {varSentences[variable].map((sentence) => {
+                      {varSentences[variable].map((sentence: SentenceScore) => {
                         return (
                           <li key={sentence.score + sentence.sentence}>
                             {sentence.sentence} (cosine:
@@ -80,7 +79,7 @@ const svToSentences = (
 const monoVarScoresElement = (
   variables: string[],
   scores: string[]
-): JSX.Element => {
+): ReactElement => {
   return (
     <div id="sv-scores-list">
       <table>
@@ -106,7 +105,7 @@ const monoVarScoresElement = (
   );
 };
 
-const multiVarPartsElement = (c: MultiSVCandidate): JSX.Element => {
+const multiVarPartsElement = (c: MultiSVCandidate): ReactElement => {
   return (
     <ul>
       {c.Parts.map((p) => {
@@ -130,7 +129,7 @@ const multiVarPartsElement = (c: MultiSVCandidate): JSX.Element => {
   );
 };
 
-const multiVarScoresElement = (svScores: SVScores): JSX.Element => {
+const multiVarScoresElement = (svScores: SVScores): ReactElement => {
   const monovarScores = Object.values(svScores.CosineScore);
   const maxMonovarScore = monovarScores.length > 0 ? monovarScores[0] : 0;
   const candidates = svScores.MultiSV.Candidates;
@@ -174,11 +173,14 @@ export interface DebugInfoProps {
   queryResult: QueryResult;
 }
 
-export function DebugInfo(props: DebugInfoProps): JSX.Element {
+export function DebugInfo(props: DebugInfoProps): ReactElement {
   const debugParam = queryString.parse(window.location.hash)[DEBUG_PARAM];
   const hideDebug =
-    document.getElementById("metadata").dataset.hideDebug === "True" &&
-    !debugParam;
+    !document.getElementById("metadata") ||
+    !document.getElementById("metadata").dataset ||
+    (document.getElementById("metadata").dataset.hideDebug !== "False" &&
+      !debugParam);
+
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [showDebug, setShowDebug] = useState(false);
 
@@ -219,7 +221,7 @@ export function DebugInfo(props: DebugInfoProps): JSX.Element {
     counters: props.debugData["counters"],
   };
 
-  const toggleShowDebug = () => {
+  const toggleShowDebug = (): void => {
     setShowDebug(!showDebug);
   };
 
@@ -431,7 +433,7 @@ export function DebugInfo(props: DebugInfoProps): JSX.Element {
           </Row>
           <Row>
             <b
-              onClick={() => setIsCollapsed(!isCollapsed)}
+              onClick={(): void => setIsCollapsed(!isCollapsed)}
               style={{ cursor: "pointer" }}
             >
               <h3>SHOW MORE: {isCollapsed ? "[+]" : "[-]"}</h3>

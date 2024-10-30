@@ -37,6 +37,10 @@ interface HeaderBarProps {
   menu: HeaderMenu[];
   //if set true, the header menu will be hidden - this value is pulled in from the page template and will default to false.
   hideHeaderSearchBar: boolean;
+  //if set true, the search bar will operate in "hash mode", changing the hash rather than redirecting/refreshing the full page.
+  searchBarHashMode: boolean;
+  //the Google Analytics tag associated with a search action
+  gaValueSearchSource: string | null;
   //the labels dictionary - all labels will be passed through this before being rendered. If no value exists, the dictionary will return the key that was sent.
   labels: Labels;
   //the routes dictionary - this is used to convert routes to resolved urls
@@ -49,6 +53,8 @@ const HeaderBar = ({
   logoWidth,
   menu,
   hideHeaderSearchBar,
+  searchBarHashMode,
+  gaValueSearchSource,
   labels,
   routes,
 }: HeaderBarProps): ReactElement => {
@@ -63,7 +69,12 @@ const HeaderBar = ({
             labels={labels}
             routes={routes}
           />
-          {!hideHeaderSearchBar && <HeaderBarSearch />}
+          {!hideHeaderSearchBar && (
+            <HeaderBarSearch
+              searchBarHashMode={searchBarHashMode}
+              gaValueSearchSource={gaValueSearchSource}
+            />
+          )}
           <MenuDesktop menu={menu} labels={labels} routes={routes} />
         </div>
         <div className="navbar-menu-mobile">
@@ -74,7 +85,12 @@ const HeaderBar = ({
             labels={labels}
             routes={routes}
           />
-          {!hideHeaderSearchBar && <HeaderBarSearch />}
+          {!hideHeaderSearchBar && (
+            <HeaderBarSearch
+              searchBarHashMode={searchBarHashMode}
+              gaValueSearchSource={gaValueSearchSource}
+            />
+          )}
           <MenuMobile menu={menu} labels={labels} routes={routes} />
         </div>
       </nav>

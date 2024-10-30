@@ -34,6 +34,10 @@ interface HeaderAppProps {
   headerMenu: HeaderMenu[];
   //if set true, the header menu will be hidden - this value is pulled in from the page template and will default to false.
   hideHeaderSearchBar: boolean;
+  //if set true, the search bar will operate in "hash mode", changing the hash rather than redirecting/refreshing the full page.
+  searchBarHashMode: boolean;
+  //the Google Analytics tag associated with a search action
+  gaValueSearchSource: string | null;
   //the labels dictionary - all labels will be passed through this before being rendered. If no value exists, the dictionary will return the key that was sent.
   labels: Labels;
   //the routes dictionary - this is used to convert routes to resolved urls
@@ -49,6 +53,8 @@ export function HeaderApp({
   logoWidth,
   headerMenu,
   hideHeaderSearchBar,
+  searchBarHashMode,
+  gaValueSearchSource,
   labels,
   routes,
 }: HeaderAppProps): ReactElement {
@@ -60,6 +66,8 @@ export function HeaderApp({
         logoWidth={logoWidth}
         menu={headerMenu}
         hideHeaderSearchBar={hideHeaderSearchBar}
+        searchBarHashMode={searchBarHashMode}
+        gaValueSearchSource={gaValueSearchSource}
         labels={labels}
         routes={routes}
       />
