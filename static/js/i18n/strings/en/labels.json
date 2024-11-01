@@ -1,0 +1,110 @@
+{
+  "data-commons": {
+    "defaultMessage": "Data Commons",
+    "description": "The label for a link to informational pages about the Data Commons project."
+  },
+  "back-to-homepage": {
+    "defaultMessage": "Back to {name} homepage",
+    "description": "The label for a link back to the homepage with a project-specific name."
+  },
+  "place-explorer": {
+    "defaultMessage": "Place Explorer",
+    "description": "The name of a tool to browse statistics about a place."
+  },
+  "knowledge-graph": {
+    "defaultMessage": "Knowledge Graph",
+    "description": "The name of a tool to browse the Data Commons knowledge graph."
+  },
+  "timelines-explorer": {
+    "defaultMessage": "Timelines Explorer",
+    "description": "The name of a tool to explore timeline charts of statistical variables for places."
+  },
+  "scatter-plot-explorer": {
+    "defaultMessage": "Scatter Plot Explorer",
+    "description": "The name of a tool to explore scatter plots of statistical variables for places."
+  },
+  "map-explorer": {
+    "defaultMessage": "Map Explorer",
+    "description": "The name of a tool to explore maps of statistical variables for places."
+  },
+  "statistical-variable-explorer": {
+    "defaultMessage": "Statistical Variable Explorer",
+    "description": "The name of a tool that provides observation and import information about statistical variables."
+  },
+  "data-download-tool": {
+    "defaultMessage": "Data Download Tool",
+    "description": "The name of a tool that allows users to download data."
+  },
+  "natural-disaster-dashboard": {
+    "defaultMessage": "Natural Disaster Dashboard",
+    "description": "The name of a dashboard that shows information about natural disasters."
+  },
+  "documentation": {
+    "defaultMessage": "Documentation",
+    "description": "The label for a list of documentation links."
+  },
+  "apis": {
+    "defaultMessage": "APIs",
+    "description": "The label for a link to our API documentation."
+  },
+  "bigquery": {
+    "defaultMessage": "BigQuery",
+    "description": "The label for a link to BigQuery integration starter docs."
+  },
+  "tutorials": {
+    "defaultMessage": "Tutorials",
+    "description": "The label for a link to our API tutorials."
+  },
+  "contribute": {
+    "defaultMessage": "Contribute",
+    "description": "The label for a link to instructions about contributing to the project."
+  },
+  "github-repository": {
+    "defaultMessage": "Github Repository",
+    "description": "The label for a link to the project's GitHub repository (for open sourced code)."
+  },
+  "about-data-commons": {
+    "defaultMessage": "About Data Commons",
+    "description": "The label for a link to the project's about page."
+  },
+  "blog": {
+    "defaultMessage": "Blog",
+    "description": "The label for a link to the project's blog."
+  },
+  "data-sources": {
+    "defaultMessage": "Data Sources",
+    "description": "The label for a link to data sources included in the Data Commons knowledge graph."
+  },
+  "faq": {
+    "defaultMessage": "FAQ",
+    "description": "The label for a link to project FAQ page (abbreviated version)."
+  },
+  "frequently-asked-questions": {
+    "defaultMessage": "Frequently Asked Questions",
+    "description": "The label for a link to project FAQ page."
+  },
+  "feedback": {
+    "defaultMessage": "Feedback",
+    "description": "The label for a link to instructions about sending feedback."
+  },
+  "tools": {
+    "defaultMessage": "Tools",
+    "description": "The label for a collection of exploration tools."
+  },
+  "an-initiative-from": {
+    "defaultMessage": "An initiative from",
+    "description": "The label for the Google branding byline."
+  },
+  "terms-and-conditions": {
+    "defaultMessage": "Terms and Conditions",
+    "description": "The label for a link to site terms and conditions."
+  },
+  "privacy-policy": {
+    "defaultMessage": "Privacy Policy",
+    "description": "The label for a link to site privacy policy."
+  },
+  "disclaimers": {
+    "defaultMessage": "Disclaimers",
+    "description": "The label for a link to site disclaimers."
+  }
+}
