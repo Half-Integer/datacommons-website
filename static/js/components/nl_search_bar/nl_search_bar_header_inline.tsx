@@ -38,7 +38,7 @@ const NlSearchBarHeaderInline = ({
     : false;
 
   return (
-    <div className="header-search-section">
+    <>
       <AutoCompleteInput
         enableAutoComplete={enableAutoComplete}
         value={value}
@@ -51,7 +51,7 @@ const NlSearchBarHeaderInline = ({
         shouldAutoFocus={shouldAutoFocus}
         barType="header"
       />
-    </div>
+    </>
   );
 };
 

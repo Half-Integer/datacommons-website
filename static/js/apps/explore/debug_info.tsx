@@ -21,7 +21,6 @@
 import _ from "lodash";
 import queryString from "query-string";
 import React, { ReactElement, useState } from "react";
-import { Col, Row } from "reactstrap";
 
 import {
   MultiSVCandidate,
@@ -153,7 +152,7 @@ const multiVarScoresElement = (svScores: SVScores): ReactElement => {
                     {c.Parts.length} {c.DelimBased ? " (delim)" : ""}
                   </td>
                   <td>
-                    {c.AggCosineScore}{" "}
+                    {c.AggCosineScore}
                     {c.AggCosineScore > maxMonovarScore
                       ? " (> best single var)"
                       : ""}
@@ -225,273 +224,272 @@ export function DebugInfo(props: DebugInfoProps): ReactElement {
     setShowDebug(!showDebug);
   };
 
+  console.log(debugInfo)
+
   return (
     <>
-      {!showDebug && (
-        <a className="debug-info-toggle show" onClick={toggleShowDebug}>
-          <span className="material-icons">bug_report</span>
-        </a>
-      )}
+      <a className={`debug-info-open ${showDebug && "active"}`} onClick={toggleShowDebug}>
+        <span className="material-icons">bug_report</span>
+      </a>
       {showDebug && (
-        <div className="nl-query-result-debug-info">
-          <a className="debug-info-toggle hide" onClick={toggleShowDebug}>
-            X
-          </a>
-          <Row>
-            <b>DEBUGGING OPTIONS/INFO: </b>
-            <br></br>
-          </Row>
-          <Row>
-            <b>Execution Status: </b>{" "}
-            <span className="highlight">{debugInfo.status}</span>
-          </Row>
-          <Row>
-            <b>Detection Type: </b>
-            <span className="highlight">{debugInfo.detectionType}</span>
-          </Row>
-          <Row>
-            <b>Place Detection Type: </b>{" "}
-            <span className="highlight">
-              {debugInfo.placeDetectionType.toUpperCase()}
-            </span>
-          </Row>
-          <Row>
-            <b>Original Query: </b>
-            <span className="highlight">{debugInfo.originalQuery}</span>
-          </Row>
-          <Row>
-            <b>Blocked:</b>{" "}
-            <span className="highlight">{debugInfo.blocked.toString()}</span>
-          </Row>
-          <Row>
-            <b>Query index types: </b>
-            <span className="highlight">
-              {debugInfo.queryIndexTypes.join(", ")}
-            </span>
-          </Row>
-          <Row>
-            <b>Query without places: </b>
-            <span className="highlight">{debugInfo.queryWithoutPlaces}</span>
-          </Row>
-          <Row>
-            <b>Query without stop words: </b>
-            <span className="highlight">
-              {debugInfo.queryWithoutStopWords || ""}
-            </span>
-          </Row>
-          <Row>
-            <b>Place Detection:</b>
-          </Row>
-          <Row>
-            <Col>
-              Places Detected:{" "}
-              <span className="highlight">
-                {" "}
-                {debugInfo.placesDetected
-                  ? debugInfo.placesDetected.join(", ")
-                  : ""}
-              </span>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              Places Resolved:
-              <span className="highlight">{debugInfo.placesResolved}</span>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              Main Place:
-              <span className="highlight">
-                {debugInfo.mainPlaceName} (dcid: {debugInfo.mainPlaceDCID})
-              </span>
-            </Col>
-          </Row>
-          <Row>
-            <b>Entity Detection:</b>
-          </Row>
-          <Row>
-            <Col>
-              Entities Detected: {debugInfo.entitiesDetected.join(", ")}
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              Entities Resolved:{" "}
-              <span className="highlight">{debugInfo.entitiesResolved}</span>
-            </Col>
-          </Row>
-          <Row>
-            <b>Query Type Detection:</b>
-          </Row>
-          <Row>
-            <Col>Ranking classification: </Col>
-          </Row>
-          <Row>
-            <Col>
-              Superlative type classification:{" "}
-              {debugInfo.superlativeClassification}
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              TimeDelta classification: {debugInfo.timeDeltaClassification}
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              Comparison classification: {debugInfo.comparisonClassification}
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              ContainedIn classification: {debugInfo.containedInClassification}
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              Correlation classification: {debugInfo.correlationClassification}
-            </Col>
-          </Row>
-          <Row>
-            <Col>Event classification: {debugInfo.eventClassification}</Col>
-          </Row>
-          <Row>
-            <Col>General classification: {debugInfo.generalClassification}</Col>
-          </Row>
-          <Row>
-            <Col>
-              Quantity classification: {debugInfo.quantityClassification}
-            </Col>
-          </Row>
-          <Row>
-            <Col>Date classification: {debugInfo.dateClassification}</Col>
-          </Row>
-          <Row>
-            <b>Single Variables Matches:</b>
-          </Row>
-          <Row>
-            Note: Variables with scores less than model threshold are not used.
-          </Row>
-          <Row>
-            <Col>
-              {monoVarScoresElement(
-                Object.values(debugInfo.svScores.SV || {}),
-                Object.values(debugInfo.svScores.CosineScore || {})
+        <>
+          <div className="debug-overlay"></div>
+          <div className="nl-query-result-debug-info">
+
+            <header>
+              <h3><span className="material-icons">bug_report</span> Debugging: options & information</h3>
+              <a className="debug-info-close" onClick={toggleShowDebug}>
+                <span className="material-icons">close</span>
+              </a>
+            </header>
+            
+            <section>
+
+              <div className="block">
+                <strong>Execution Status: </strong>
+                <span className="highlight">{debugInfo.status || '--' || '--'}</span>
+              </div>
+
+              <div className="block">
+                <strong>Detection Type: </strong>
+                <span className="highlight">{debugInfo.detectionType || '--'}</span>
+              </div>
+
+              <div className="block">
+                <strong>Place Detection Type: </strong>
+                <span className="highlight">
+                  {debugInfo.placeDetectionType.toUpperCase()}
+                </span>
+              </div>
+
+              <div className="block">
+                <strong>Original Query: </strong>
+                <span className="highlight">{debugInfo.originalQuery || '--'}</span>
+              </div>
+
+              <div className="block">
+                <strong>Blocked:</strong>
+                <span className="highlight">{debugInfo.blocked.toString() || '--'}</span>
+              </div>
+
+              <div className="block">
+                <strong>Query index types: </strong>
+                <span className="highlight">
+                  {debugInfo.queryIndexTypes.join(", ")}
+                </span>
+              </div>
+
+              <div className="block">
+                <strong>Query without places: </strong>
+                <span className="highlight">{debugInfo.queryWithoutPlaces || '--'}</span>
+              </div>
+
+              <div className="block">
+                <strong>Query without stop words: </strong>
+                <span className="highlight">
+                  {debugInfo.queryWithoutStopWords || "--"}
+                </span>
+              </div>
+
+              <div className="block">
+                <p><strong>Place Detection:</strong></p>
+                <ul>
+                  <li>
+                    <strong>Places Detected:</strong> 
+                    <span className="highlight">
+                      {debugInfo?.placesDetected.length
+                        ? debugInfo.placesDetected.join(", ")
+                        : "--"}
+                    </span>
+                  </li>
+                  <li>
+                    <strong>Places Resolved:</strong>
+                    <span className="highlight">
+                      {debugInfo.placesResolved || '--'}</span>
+                  </li>
+                  <li>
+                    <strong>Main Place:</strong>
+                    <span className="highlight">
+                      {debugInfo.mainPlaceName || '--'} (dcid: {debugInfo.mainPlaceDCID})
+                    </span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="block">
+                <p><strong>Entity Detection:</strong></p>
+                <ul>
+                  <li>
+                    <strong>Entities Detected: </strong>
+                    <span className="highlight">
+                      {debugInfo?.entitiesDetected.length
+                        ? debugInfo.entitiesDetected.join(", ")
+                        : "--"}
+                    </span>
+                  </li>
+                  <li>
+                    <strong>Entities Resolved:</strong> 
+                    <span className="highlight">
+                      {debugInfo?.entitiesResolved.length
+                        ? debugInfo.entitiesResolved.join(", ")
+                        : "--"}
+                    </span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="block">
+                <p><strong>Query Type Detection:</strong></p>
+                <ul>
+                  <li>
+                    <strong>Ranking classification:</strong>
+                    {debugInfo.rankingClassification || '--'}
+                  </li>
+                  <li>
+                    <strong>Superlative type classification:</strong>
+                    {debugInfo.superlativeClassification || '--'}
+                  </li>
+                  <li>
+                    <strong>TimeDelta classification:</strong>
+                    {debugInfo.timeDeltaClassification || '--'}
+                  </li>
+                  <li>
+                    <strong>Comparison classification: </strong>
+                    {debugInfo.comparisonClassification || '--'}
+                  </li>
+                  <li>
+                    <strong>ContainedIn classification: </strong>
+                    {debugInfo.containedInClassification || '--'}
+                  </li>
+                  <li>
+                    <strong>Correlation classification: </strong>
+                    {debugInfo.correlationClassification || '--'}
+                  </li>
+                  <li>
+                    <strong>Event classification: </strong>
+                    {debugInfo.eventClassification || '--'}</li>
+                  <li>
+                    <strong>General classification: </strong>
+                    {debugInfo.generalClassification || '--'}</li>
+                  <li>
+                    <strong>Quantity classification: </strong>
+                    {debugInfo.quantityClassification || '--'}
+                  </li>
+                  <li>
+                    <strong>Date classification: </strong>
+                    {debugInfo.dateClassification || '--'}
+                  </li>
+                </ul>
+              </div>
+
+              <div className="block">
+                <p><strong>Single Variables Matches:</strong></p>
+                <small>Note: Variables with scores less than model threshold are not used.</small>
+
+                {monoVarScoresElement(
+                  Object.values(debugInfo.svScores.SV || {}),
+                  Object.values(debugInfo.svScores.CosineScore || {})
+                )}
+              </div>
+
+              <div className="block">
+                <strong>Multi-Variable Matches:</strong>
+                {multiVarScoresElement(debugInfo.svScores)}
+              </div>
+
+              <div className="block">
+                <strong>Variable Sentences Matched:</strong>
+                {svToSentences(
+                  Object.values(debugInfo.svScores.SV || {}),
+                  debugInfo.svSentences
+                )}
+              </div>
+
+              <div className="block">
+                <p><strong>Property Matches:</strong></p>
+                <small className="note">Note: Properties with scores less than 0.5 are not used.</small>
+                {monoVarScoresElement(
+                  Object.values(debugInfo.propScores.PROP || {}),
+                  Object.values(debugInfo.propScores.CosineScore || {})
+                )}
+              </div>
+
+              <div className="block">
+                <strong>Property Sentences Matched:</strong>
+                {svToSentences(
+                  Object.values(debugInfo.propScores.PROP || {}),
+                  debugInfo.propSentences
+                )}
+              </div>
+
+              <div className="block">
+                <strong>Query Detection:</strong>
+                <pre>
+                  {JSON.stringify(debugInfo.queryDetectionDebugLogs, null, 2)}
+                </pre>
+              </div>
+
+              <div className="show-more">
+                <a
+                  onClick={(): void => setIsCollapsed(!isCollapsed)}
+                >
+                  {isCollapsed ? "Show More" : "Show Less"}
+                </a>
+              </div>
+
+              {!isCollapsed && (
+                <>
+                  <div className="block">
+                    <p><strong>Query Fulfillment:</strong></p>
+                    <ul>
+                      {props.queryResult && (
+                        <li>
+                          <strong>Place Query Source:</strong>
+                          {props.queryResult.placeSource}
+                          {props.queryResult.pastSourceContext
+                            ? "(" + props.queryResult.pastSourceContext + ")"
+                            : ""}
+                        </li>
+                      )}
+                      {props.queryResult && (
+                        <li>
+                          <strong>Variable Query Source:</strong>
+                          {props.queryResult.svSource}
+                        </li>
+                      )}
+                      {props.queryResult && props.queryResult.placeFallback && (
+                        <li>
+                          <strong>Place Fallback:</strong>
+                          &quot;
+                          {props.queryResult.placeFallback.origStr}
+                          &quot; to &quot;{props.queryResult.placeFallback.newStr}
+                          &quot;
+                        </li>
+                      )}
+                    </ul>
+                  </div>
+
+                  <div className="block">
+                    <p><strong>Counters:</strong></p>
+                    <pre>{JSON.stringify(debugInfo.counters, null, 2)}</pre>
+                  </div>
+                      
+                  <div className="block">
+                    <p><strong>Page Config:</strong></p>
+                    <pre>
+                      {JSON.stringify(
+                        props.queryResult ? props.queryResult.config : null,
+                        null,
+                        2
+                      )}
+                    </pre>
+                  </div>
+                </>
               )}
-            </Col>
-          </Row>
-          <Row>
-            <b>Multi-Variable Matches:</b>
-          </Row>
-          <Row>
-            <Col>{multiVarScoresElement(debugInfo.svScores)}</Col>
-          </Row>
-          <Row>
-            <b>Variable Sentences Matched:</b>
-          </Row>
-          <Row>
-            <Col>
-              {svToSentences(
-                Object.values(debugInfo.svScores.SV || {}),
-                debugInfo.svSentences
-              )}
-            </Col>
-          </Row>
-          <Row>
-            <b>Property Matches:</b>
-          </Row>
-          <Row>Note: Properties with scores less than 0.5 are not used.</Row>
-          <Row>
-            <Col>
-              {monoVarScoresElement(
-                Object.values(debugInfo.propScores.PROP || {}),
-                Object.values(debugInfo.propScores.CosineScore || {})
-              )}
-            </Col>
-          </Row>
-          <Row>
-            <b>Property Sentences Matched:</b>
-          </Row>
-          <Row>
-            <Col>
-              {svToSentences(
-                Object.values(debugInfo.propScores.PROP || {}),
-                debugInfo.propSentences
-              )}
-            </Col>
-          </Row>
-          <Row>
-            <b>Query Detection:</b>
-          </Row>
-          <Row>
-            <Col>
-              <pre>
-                {JSON.stringify(debugInfo.queryDetectionDebugLogs, null, 2)}
-              </pre>
-            </Col>
-          </Row>
-          <Row>
-            <b
-              onClick={(): void => setIsCollapsed(!isCollapsed)}
-              style={{ cursor: "pointer" }}
-            >
-              <h3>SHOW MORE: {isCollapsed ? "[+]" : "[-]"}</h3>
-            </b>
-          </Row>
-          {!isCollapsed && (
-            <>
-              <Row>
-                <b>Query Fulfillment:</b>
-              </Row>
-              {props.queryResult && (
-                <Row>
-                  <Col>
-                    Place Query Source: {props.queryResult.placeSource}
-                    {props.queryResult.pastSourceContext
-                      ? "(" + props.queryResult.pastSourceContext + ")"
-                      : ""}
-                  </Col>
-                </Row>
-              )}
-              {props.queryResult && (
-                <Row>
-                  <Col>Variable Query Source: {props.queryResult.svSource}</Col>
-                </Row>
-              )}
-              {props.queryResult && props.queryResult.placeFallback && (
-                <Row>
-                  <Col>
-                    Place Fallback: &quot;
-                    {props.queryResult.placeFallback.origStr}
-                    &quot; to &quot;{props.queryResult.placeFallback.newStr}
-                    &quot;
-                  </Col>
-                </Row>
-              )}
-              <Row>
-                <Col>
-                  <b>Counters:</b>
-                  <pre>{JSON.stringify(debugInfo.counters, null, 2)}</pre>
-                </Col>
-              </Row>
-              <Row>
-                <b>Page Config:</b>
-              </Row>
-              <Row>
-                <Col>
-                  <pre>
-                    {JSON.stringify(
-                      props.queryResult ? props.queryResult.config : null,
-                      null,
-                      2
-                    )}
-                  </pre>
-                </Col>
-              </Row>
-            </>
-          )}
-        </div>
+
+            </section>
+          </div>
+        </>
       )}
     </>
   );

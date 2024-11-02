@@ -95,8 +95,7 @@ const HeaderBarSearch = ({
   }, []);
 
   return (
-    <div>
-      <DebugInfo debugData={debugData} queryResult={queryResult}></DebugInfo>
+    <div className="header-search">
       <NlSearchBar
         variant="header-inline"
         inputId="query-search-input"
@@ -126,6 +125,7 @@ const HeaderBarSearch = ({
         initialValue={queryString}
         shouldAutoFocus={false}
       />
+      <DebugInfo debugData={debugData} queryResult={queryResult}></DebugInfo>
     </div>
   );
 };
