@@ -76,6 +76,8 @@
     "react-markdown": "^8.0.7",
     "react-table": "^7.8.0",
     "reactstrap": "^8.7.1",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "rehype-raw": "^7.0.0",
     "remark-gfm": "^3.0.1",
     "resize-observer-polyfill": "^1.5.1",
