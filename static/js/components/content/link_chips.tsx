@@ -18,7 +18,10 @@
  * A component that renders a series of chips that function as links with titles
  */
 
-import React, { ReactElement } from "react";
+/** @jsxImportSource @emotion/react */
+
+import { css, useTheme } from "@emotion/react";
+import { ReactElement } from "react";
 
 import {
   GA_EVENT_HOMEPAGE_CLICK,
@@ -48,10 +51,21 @@ export const LinkChips = ({
   title,
   linkChips,
 }: LinkChipsProps): ReactElement => {
+  const theme = useTheme();
   return (
     <section id="chip-section" className="chip-section">
       <div className="container">
-        {title && <h3>{title}</h3>}
+        {
+          title && 
+          <h3 
+            css={css`
+              ${theme.typography.title_xs}
+              margin-bottom: ${theme.spacing.lg}
+            `}
+          >
+            {title}
+          </h3>
+        }
         <ul className="chip-container">
           {linkChips.map((linkChip) => (
             <li key={linkChip.id} className="chip-item">

@@ -19,10 +19,10 @@
  */
 
 .chip-section {
-  h3 {
-    @include var.title_xs;
-    margin-bottom: calc(#{var.$spacing} * 3);
-  }
+  // h3 {
+  //   @include var.title_xs;
+  //   margin-bottom: calc(#{var.$spacing} * 3);
+  // }
 
   .chip-container {
     margin: 0;
