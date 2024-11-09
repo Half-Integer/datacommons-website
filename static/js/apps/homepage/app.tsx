@@ -22,6 +22,7 @@
 
 import { ThemeProvider } from "@emotion/react";
 import React, { ReactElement } from "react";
+import theme from "theme";
 
 import Build from "../../components/content/build_your_own";
 import HeroVideo from "../../components/content/hero_video";
@@ -36,7 +37,6 @@ import {
   SampleQuestionCategory,
   Topic,
 } from "../../shared/types/homepage";
-import theme from "../../theme/theme";
 import Test from "./Test";
 
 interface AppProps {

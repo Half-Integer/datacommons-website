@@ -21,6 +21,7 @@
 /** @jsxImportSource @emotion/react */
 
 import { css, useTheme } from "@emotion/react";
+import React from "react";
 import { ReactElement } from "react";
 
 import {
@@ -55,17 +56,16 @@ export const LinkChips = ({
   return (
     <section id="chip-section" className="chip-section">
       <div className="container">
-        {
-          title && 
-          <h3 
+        {title && (
+          <h3
             css={css`
-              ${theme.typography.title_xs}
+              ${theme.typography.titleXs}
               margin-bottom: ${theme.spacing.lg}
             `}
           >
             {title}
           </h3>
-        }
+        )}
         <ul className="chip-container">
           {linkChips.map((linkChip) => (
             <li key={linkChip.id} className="chip-item">

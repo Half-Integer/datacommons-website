@@ -18,8 +18,8 @@ export function Test(): ReactElement {
     <button
       css={css`
         background-color: ${theme.colors.primary};
-        color: ${theme.colors.secondary};
-        padding: ${theme.spacing.large};
+        color: ${theme.colors.tertiary};
+        padding: ${theme.spacing.lg};
         font-family: ${theme.typography.fontFamily};
         position: relative;
         transition: transform 0.1s ease;

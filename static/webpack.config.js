@@ -15,10 +15,19 @@
  */
 
 const path = require("path");
+const fs = require('fs');
 const CopyPlugin = require("copy-webpack-plugin");
 const FixStyleOnlyEntriesPlugin = require("webpack-remove-empty-scripts");
 const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
 const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
+
+const customThemeDir = path.resolve(__dirname, 'js/theme/dc_custom_theme');
+const defaultThemeDir = path.resolve(__dirname, 'js/theme/base_theme');
+const customThemeFile = path.join(customThemeDir, 'theme.ts');
+
+const themeDir = fs.existsSync(customThemeFile)
+  ? customThemeDir
+  : defaultThemeDir;
 
 const smp = new SpeedMeasurePlugin();
 
@@ -170,6 +179,9 @@ const config = {
   },
   resolve: {
     extensions: [".js", ".ts", ".tsx"],
+    alias: {
+      'theme': themeDir,
+    },
   },
   module: {
     rules: [
