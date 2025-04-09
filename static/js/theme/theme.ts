@@ -35,7 +35,7 @@ const SPACING = {
   lg: 24,
   xl: 32,
   xxl: 48,
-  huge: 64,
+  xxxl: 64,
 };
 
 const SECTIONS = {
@@ -51,6 +51,13 @@ const WIDTH = {
   md: 750,
   lg: 1040,
   xl: 1310,
+};
+
+const HEADER = {
+  sm: 142,
+  md: 128,
+  lg: 96,
+  width: 1728,
 };
 
 const DC_BLACK = "hsl(0, 0%, 18.82%)";
@@ -92,6 +99,7 @@ const theme: Theme = {
   spacing: SPACING,
   sections: SECTIONS,
   width: WIDTH,
+  header: HEADER,
   colors: {
     text: {
       primary: {

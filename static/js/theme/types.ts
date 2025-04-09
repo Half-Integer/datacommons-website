@@ -33,7 +33,7 @@ export interface Theme {
     lg: number;
     xl: number;
     xxl: number;
-    huge: number;
+    xxxl: number;
   };
   sections: {
     compact: number;
@@ -46,6 +46,12 @@ export interface Theme {
     md: number;
     lg: number;
     xl: number;
+  };
+  header: {
+    sm: number;
+    md: number;
+    lg: number;
+    width: number;
   };
   colors: {
     text?: {
