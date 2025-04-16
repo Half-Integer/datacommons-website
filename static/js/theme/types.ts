@@ -354,6 +354,14 @@ export interface Theme {
     secondary: {
       boxShadow: string;
     };
+    header: {
+      primary: {
+        boxShadow: string;
+      };
+      secondary: {
+        boxShadow: string;
+      };
+    };
   };
   radius: {
     none: {

@@ -93,6 +93,7 @@ const DC_GRAY_PILL_TEXT = DC_YELLOW;
 const DC_GRAY_PILL_BCKG = "hsl(240, 20.8%, 90.6%)";
 const DC_GRAY_LIGHT = "hsl(0, 0%, 78%)";
 const DC_GRAY_LINING = "hsl(140, 3%, 77%)";
+const DC_GRAY_LIGHTER = "hsl(0, 0%, 94.9%)";
 
 const theme: Theme = {
   breakpoints: BREAKPOINTS,
@@ -303,6 +304,14 @@ const theme: Theme = {
     secondary: {
       boxShadow: "0 2px 5px hsla(0,0%,0%,0.1)",
     },
+    header: {
+      primary: {
+        boxShadow: "0 1px 2px rgb(94, 94, 94, 0.1)",
+      },
+      secondary: {
+        boxShadow: "0 1px 2px rgb(94, 94, 94, 0.5)",
+      },
+    }
   },
   radius: {
     none: {

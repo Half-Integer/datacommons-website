@@ -71,21 +71,12 @@ const HeaderLogo = ({
               [GA_PARAM_URL]: "{static.homepage}",
             });
           }}
-          css={css`
-            display: block;
-            margin: 0;
-            padding: 0;
-          `}
         >
           <img
             src={logoPath}
             alt={`${name} logo`}
             css={css`
-              display: block;
-              margin: 0;
-              padding: 0;
               width: ${logoWidth};
-              max-width: 35px;
             `}
           />
         </a>
@@ -101,10 +92,7 @@ const HeaderLogo = ({
         css={css`
           ${theme.typography.family.heading};
           ${theme.typography.text.md};
-          display: block;
-          margin: 0;
-          padding: 0;
-          color: #000;
+          color: ${theme.colors.text.primary.dark};
           &:hover {
             text-decoration: none;
           }

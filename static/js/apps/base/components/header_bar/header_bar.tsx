@@ -70,13 +70,13 @@ const HeaderBar = ({
     <div
       id="main-header-container"
       css={css`
+        ${theme.elevation.header.primary};
         position: fixed;
         left: 0;
         right: 0;
         top: 0;
         z-index: 100;
-        background-color: white;
-        box-shadow: 0 1px 2px rgb(94, 94, 94, 0.1);
+        background-color: ${theme.colors.background.primary.base};
       `}
     >
       <nav
@@ -96,7 +96,7 @@ const HeaderBar = ({
             height: ${theme.header.lg}px;
             padding: 0 ${theme.spacing.lg}px;
             margin: auto;
-            background: white;
+            background: ${theme.colors.background.primary.base};
             @media (max-width: ${theme.breakpoints.xl}px) {
               gap: ${theme.spacing.md}px;
             }

@@ -98,7 +98,7 @@ const MenuDesktop = ({
     <div
       css={css`
         display: flex;
-        max-width: 450px;
+        align-items: center;
       `}
       ref={menuContainerRef}
     >
@@ -106,8 +106,8 @@ const MenuDesktop = ({
         css={css`
           display: flex;
           align-items: stretch;
-          list-style: none;
           margin: 0;
+          padding: 0;
           @media (min-width: ${theme.breakpoints.xl}px) {
             gap: ${theme.spacing.xl}px;
           }
@@ -138,10 +138,10 @@ const MenuDesktop = ({
                     display: flex;
                     align-items: center;
                     padding: 8px 0;
-                    color: #474747;
+                    color: ${theme.colors.text.primary.base};
                     transition: color 0.3s ease-in-out;
                     &:hover {
-                      color: #0b57d0;
+                      color: ${theme.colors.link.primary.base};
                       text-decoration: none;
                     }
                   `}
@@ -161,17 +161,17 @@ const MenuDesktop = ({
                   <button
                     id={buttonId}
                     css={css`
+                      display: flex;
+                      align-items: center;
                       ${theme.typography.family.text};
                       ${theme.typography.text.sm};
                       border: 0;
                       padding: ${theme.spacing.sm}px 0;
                       margin: 0;
-                      display: flex;
-                      align-items: center;
                       background-color: transparent;
                       transition: color 0.3s ease-in-out;
                       &:hover span {
-                        color: #0b57d0;
+                        color: ${theme.colors.link.primary.base};
                         text-decoration: none;
                       }
                     `}
@@ -189,10 +189,8 @@ const MenuDesktop = ({
                   >
                     <span
                       css={css`
-                        margin: 0;
-                        padding: 0;
                         display: inline-block;
-                        color: #474747;
+                        color: ${theme.colors.text.primary.base};
                         transition: color 0.3s ease-in-out;
                         transform: translateY(-1px);
                       `}
@@ -201,8 +199,6 @@ const MenuDesktop = ({
                     </span>
                     <span
                       css={css`
-                        margin: 0;
-                        padding: 0;
                         display: inline-block;
                         transition: transform 0.3s ease;
                         transform: ${openMenu === index
@@ -210,7 +206,10 @@ const MenuDesktop = ({
                           : "rotate(0deg)"};
                       `}
                     >
-                      <KeyboardArrowDown height={"24px"} color={"#5f6368"} />
+                      <KeyboardArrowDown
+                        height={"24px"}
+                        color={theme.colors.text.secondary.base}
+                      />
                     </span>
                   </button>
                   <div
@@ -221,13 +220,13 @@ const MenuDesktop = ({
                     aria-labelledby={buttonId}
                     css={css`
                       position: fixed;
+                      z-index: 1000;
                       top: ${theme.header.lg}px;
                       left: 0;
                       right: 0;
                       width: 100vw;
                       overflow: hidden;
-                      background: white;
-                      z-index: 1000;
+                      background: ${theme.colors.background.primary.base};
                       transition: max-height 0.4s ease-in-out;
                       max-height: ${openMenu === index
                         ? `${panelHeight}px`
@@ -249,15 +248,15 @@ const MenuDesktop = ({
       </ul>
       <div
         css={css`
+          ${theme.elevation.header.secondary};
           width: 100vw;
           left: 0;
           right: 0;
           position: absolute;
           z-index: 950;
           top: ${theme.header.lg}px;
-          background: white;
+          background: ${theme.colors.background.primary.base};
           overflow: hidden;
-          box-shadow: 0 1px 2px rgb(94, 94, 94, 0.5);
           transition: height 0.4s ease-in-out;
           height: ${panelHeight}px;
         `}
