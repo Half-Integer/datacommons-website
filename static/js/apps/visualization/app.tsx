@@ -20,11 +20,11 @@
 
 import { ThemeProvider } from "@emotion/react";
 import _ from "lodash";
-import React, { useContext, useEffect, useState } from "react";
+import React, { ReactElement, useContext, useEffect, useState } from "react";
+import theme from "theme";
 
 import { Spinner } from "../../components/spinner";
 import { RankingUnitUrlFuncContext } from "../../shared/context";
-import theme from "../../theme/theme";
 import { isSelectionComplete } from "../../utils/app/visualization_utils";
 import { AppContext, AppContextProvider } from "./app_context";
 import { Chart } from "./chart";
@@ -33,7 +33,7 @@ import { SelectedOptions } from "./selected_options";
 import { SelectorPane } from "./selector_pane";
 import { VisTypeSelector } from "./vis_type_selector";
 
-export function App(): JSX.Element {
+export function App(): ReactElement {
   return (
     <ThemeProvider theme={theme}>
       <AppContextProvider>
@@ -46,7 +46,7 @@ export function App(): JSX.Element {
   );
 }
 
-function MainPane(): JSX.Element {
+function MainPane(): ReactElement {
   const { visType, places, statVars, enclosedPlaceType, isContextLoading } =
     useContext(AppContext);
   const [showInfo, setShowInfo] = useState(

@@ -20,6 +20,7 @@ import {
   PlaceChartsApiResponse,
 } from "@datacommonsorg/client/dist/data_commons_web_client_types";
 import _ from "lodash";
+import { Theme } from "theme/types";
 
 import { intl, localizeLink } from "../i18n/i18n";
 import {
@@ -30,7 +31,6 @@ import {
 import { USA_PLACE_DCID } from "../shared/constants";
 import { NamedTypedPlace, StatVarSpec } from "../shared/types";
 import { isMobileByWidth } from "../shared/util";
-import { Theme } from "../theme/types";
 import {
   BlockConfig as SubjectPageBlockConfig,
   CategoryConfig,

@@ -20,9 +20,10 @@
 
 import { ThemeProvider } from "@emotion/react";
 import _ from "lodash";
-import React from "react";
+import React, { ReactElement } from "react";
 import { RawIntlProvider } from "react-intl";
 import { Container } from "reactstrap";
+import theme from "theme";
 
 import { ArcTableRow } from "../../browser/arc_table_row";
 import { GoogleMap } from "../../components/google_map";
@@ -30,7 +31,6 @@ import { SubjectPageMainPane } from "../../components/subject_page/main_pane";
 import { intl } from "../../i18n/i18n";
 import { PropertyValues } from "../../shared/api_response_types";
 import { NamedTypedPlace } from "../../shared/types";
-import theme from "../../theme/theme";
 import { SubjectPageConfig } from "../../types/subject_page_proto_types";
 import {
   findProperty,
@@ -88,7 +88,7 @@ interface AppPropsType {
  * Main component for rendering an event page.
  * Displays the properties and property values of the event described.
  */
-export function App(props: AppPropsType): JSX.Element {
+export function App(props: AppPropsType): ReactElement {
   const typeOf = findProperty(["typeOf"], props.properties);
   const geoJson = getValue(findProperty(_GEOJSON_PROPERTIES, props.properties));
   const latLong = parseLatLong(
@@ -102,7 +102,7 @@ export function App(props: AppPropsType): JSX.Element {
   tableProperties.sort();
 
   const dateDisplay = getDateDisplay(props.properties);
-  let placeBreadcrumbsJsx: JSX.Element[];
+  let placeBreadcrumbsJsx: ReactElement[];
   if (props.place.dcid) {
     const allPlaces = [props.place, ...props.parentPlaces];
     placeBreadcrumbsJsx = allPlaces.map((place, i) => (

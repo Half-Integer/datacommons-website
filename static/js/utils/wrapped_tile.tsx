@@ -28,8 +28,7 @@ import createCache from "@emotion/cache";
 import { CacheProvider, ThemeProvider } from "@emotion/react";
 import React, { ReactElement, useMemo } from "react";
 import { StyleSheetManager } from "styled-components";
-
-import theme from "../theme/theme";
+import theme from "theme";
 
 export interface WrappedTileProps {
   // Tile jsx

@@ -28,11 +28,11 @@ import ReactMarkdown from "react-markdown";
 import { Input, InputGroup } from "reactstrap";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
+import theme from "theme";
 
 import SimpleText from "../../components/content/simple_text";
 import { Search } from "../../components/elements/icons/search";
 import { Link, LinkBox } from "../../components/elements/link_box";
-import theme from "../../theme/theme";
 import { stringifyFn } from "../../utils/axios";
 import {
   getInArcSubsectionElementId,

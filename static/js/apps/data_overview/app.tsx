@@ -23,9 +23,9 @@
 
 import { ThemeProvider } from "@emotion/react";
 import React, { ReactElement } from "react";
+import theme from "theme";
 
 import { Section } from "../../components/elements/layout/section";
-import theme from "../../theme/theme";
 import { DataOverviewPage } from "./components/data_overview_page";
 import { PlaceDataOverview } from "./place_data";
 import placeDataOverviewData from "./place_data.json";

@@ -19,15 +19,15 @@
  */
 
 import { ThemeProvider } from "@emotion/react";
-import React from "react";
+import React, { ReactElement } from "react";
 import { RawIntlProvider } from "react-intl";
+import theme from "theme";
 
 import { SubjectPageMainPane } from "../../components/subject_page/main_pane";
 import { SubjectPageSidebar } from "../../components/subject_page/sidebar";
 import { intl } from "../../i18n/i18n";
 import { ChildPlaces } from "../../shared/child_places";
 import { ParentBreadcrumbs } from "../../shared/parent_breadcrumbs";
-import theme from "../../theme/theme";
 import { SubjectPageMetadata } from "../../types/subject_page_types";
 
 const PAGE_ID = "sustainability";
@@ -39,7 +39,7 @@ interface AppPropType {
   metadata: SubjectPageMetadata;
 }
 
-export function App(props: AppPropType): JSX.Element {
+export function App(props: AppPropType): ReactElement {
   return (
     <ThemeProvider theme={theme}>
       <RawIntlProvider value={intl}>

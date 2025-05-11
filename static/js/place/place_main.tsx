@@ -25,6 +25,7 @@ import styled from "@emotion/styled";
 import _ from "lodash";
 import React, { useEffect, useState } from "react";
 import { RawIntlProvider } from "react-intl";
+import theme from "theme";
 
 import { Loading } from "../components/elements/loading";
 import { ScrollToTopButton } from "../components/elements/scroll_to_top_button";
@@ -33,7 +34,6 @@ import { intl, LocalizedLink } from "../i18n/i18n";
 import { pageMessages } from "../i18n/i18n_place_messages";
 import { useQueryStore } from "../shared/stores/query_store_hook";
 import { NamedTypedPlace } from "../shared/types";
-import theme from "../theme/theme";
 import { SubjectPageConfig } from "../types/subject_page_proto_types";
 import { defaultDataCommonsWebClient } from "../utils/data_commons_client";
 import { PlaceOverview } from "./place_overview";

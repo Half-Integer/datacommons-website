@@ -25,6 +25,7 @@ import queryString from "query-string";
 import React, { ReactElement, useEffect, useRef, useState } from "react";
 import { RawIntlProvider } from "react-intl";
 import { Container } from "reactstrap";
+import theme from "theme";
 
 import { Spinner } from "../../components/spinner";
 import {
@@ -46,7 +47,6 @@ import {
   triggerGAEvent,
 } from "../../shared/ga_events";
 import { useQueryStore } from "../../shared/stores/query_store_hook";
-import theme from "../../theme/theme";
 import { QueryResult, UserMessageInfo } from "../../types/app/explore_types";
 import { FacetMetadata } from "../../types/facet_metadata";
 import { SubjectPageMetadata } from "../../types/subject_page_types";

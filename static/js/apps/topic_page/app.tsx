@@ -19,8 +19,9 @@
  */
 
 import { ThemeProvider } from "@emotion/react";
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { RawIntlProvider } from "react-intl";
+import theme from "theme";
 
 import { SubjectPageMainPane } from "../../components/subject_page/main_pane";
 import {
@@ -30,7 +31,6 @@ import {
 import { intl } from "../../i18n/i18n";
 import { SdgContext } from "../../shared/context";
 import { NamedTypedPlace } from "../../shared/types";
-import theme from "../../theme/theme";
 import { TopicsSummary } from "../../types/app/topic_page_types";
 import { SubjectPageConfig } from "../../types/subject_page_proto_types";
 import { PageSelector } from "./page_selector";
@@ -61,7 +61,7 @@ interface AppPropType {
 const PAGE_ID = "topic";
 
 const SHOW_WEB_COMPONENTS_URL_PARAM = "wc";
-export function App(props: AppPropType): JSX.Element {
+export function App(props: AppPropType): ReactElement {
   const [sdgIndex, setSdgIndex] = useState(props.topic === "sdg" ? 0 : null);
   const value = { sdgIndex, setSdgIndex };
   const searchParams = new URLSearchParams(location.search);

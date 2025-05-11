@@ -33,7 +33,7 @@ import Cheerio from "cheerio";
 import Enzyme, { mount } from "enzyme";
 import React from "react";
 
-import theme from "../../theme/theme";
+import theme from "../../theme/base_theme";
 import { BarTile } from "./bar_tile";
 
 Enzyme.configure({ adapter: new Adapter() });

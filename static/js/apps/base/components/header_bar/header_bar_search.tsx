@@ -18,6 +18,7 @@
 
 import { useTheme } from "@emotion/react";
 import React, { ReactElement, useEffect } from "react";
+import { Theme } from "theme/types";
 
 import { NlSearchBar } from "../../../../components/nl_search_bar";
 import {
@@ -36,7 +37,6 @@ import {
 } from "../../../../shared/ga_events";
 import { useQueryStore } from "../../../../shared/stores/query_store_hook";
 import { isMobileByWidth } from "../../../../shared/util";
-import { Theme } from "../../../../theme/types";
 import { updateHash } from "../../../../utils/url_utils";
 import { DebugInfo } from "../../../explore/debug_info";
 

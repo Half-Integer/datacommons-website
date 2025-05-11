@@ -15,9 +15,9 @@
  */
 
 import _ from "lodash";
+import { Theme } from "theme/types";
 import { URLSearchParams } from "url";
 
-import { Theme } from "../theme/types";
 import { MAX_DATE, MAX_YEAR, SOURCE_DISPLAY_NAME } from "./constants";
 
 // This has to be in sync with server/__init__.py

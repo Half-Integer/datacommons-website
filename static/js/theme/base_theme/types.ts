@@ -179,18 +179,22 @@ export interface Theme {
       text: {
         fontFamily: string;
         fontStyle: string;
+        fontDisplay?: string;
       };
       heading: {
         fontFamily: string;
         fontStyle: string;
+        fontDisplay?: string;
       };
       extra?: {
         fontFamily: string;
         fontStyle: string;
+        fontDisplay?: string;
       };
       code?: {
         fontFamily: string;
         fontStyle: string;
+        fontDisplay?: string;
       };
     };
     // Text Variants

@@ -29,8 +29,8 @@ import ReactMarkdown from "react-markdown";
 import { Input } from "reactstrap";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
+import theme from "theme";
 
-import theme from "../../theme/theme";
 import { stringifyFn } from "../../utils/axios";
 import { updateHash } from "../../utils/url_utils";
 import { processTableText } from "../eval_retrieval_generation/util";
@@ -57,7 +57,7 @@ interface DisplayedAnswer {
   debugInfo: string;
 }
 
-function getSectionTrigger(title: string, opened: boolean): JSX.Element {
+function getSectionTrigger(title: string, opened: boolean): ReactElement {
   return (
     <div
       css={css`

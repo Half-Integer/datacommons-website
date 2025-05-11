@@ -158,9 +158,9 @@ import React, {
   useRef,
   useState,
 } from "react";
+import theme from "theme";
 
 import { useUniqueId } from "../../../shared/hooks/unique_id";
-import theme from "../../../theme/theme";
 import { Close } from "../icons/close";
 import { tooltipBus, TooltipCallback } from "./tooltip_bus";
 
