@@ -13,14 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import "tsconfig-paths/register";
 
 import express, { Request, Response } from "express";
 import { JSDOM } from "jsdom";
 import _ from "lodash";
 import sharp from "sharp";
+import type {} from "theme/emotion";
 
 import { NamedTypedPlace, StatVarSpec } from "../js/shared/types";
-import type {} from "../js/theme/emotion";
 import {
   EventTypeSpec,
   TileConfig,
