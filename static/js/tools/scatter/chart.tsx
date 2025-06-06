@@ -21,7 +21,7 @@
 import axios from "axios";
 import * as d3 from "d3";
 import _ from "lodash";
-import React, { useEffect, useRef, useState } from "react";
+import React, { ReactElement, useEffect, useRef, useState } from "react";
 import ReactDOMServer from "react-dom/server";
 import { Card } from "reactstrap";
 
@@ -46,7 +46,8 @@ import { NamedPlace } from "../../shared/types";
 import { loadSpinner, removeSpinner } from "../../shared/util";
 import { getStringOrNA } from "../../utils/number_utils";
 import { getDateRange } from "../../utils/string_utils";
-import { ToolChartFooter } from "../shared/tool_chart_footer";
+import { ToolChartFooter } from "../shared/vis_tools/tool_chart_footer";
+import { ToolChartHeader } from "../shared/vis_tools/tool_chart_header";
 import { isChildPlaceOf, shouldShowMapBoundaries } from "../shared_util";
 import { DisplayOptionsWrapper, PlaceInfo } from "./context";
 import { PlotOptions } from "./plot_options";
@@ -76,7 +77,7 @@ const MAP_LEGEND_CONTAINER_ID = "legend-container";
 const CONTAINER_ID = "chart";
 const DEBOUNCE_INTERVAL_MS = 30;
 
-export function Chart(props: ChartPropsType): JSX.Element {
+export function Chart(props: ChartPropsType): ReactElement {
   const svgContainerRef = useRef<HTMLDivElement>();
   const tooltipRef = useRef<HTMLDivElement>();
   const chartContainerRef = useRef<HTMLDivElement>();
@@ -168,6 +169,15 @@ export function Chart(props: ChartPropsType): JSX.Element {
 
   return (
     <div id="chart" className="chart-section-container" ref={chartContainerRef}>
+      <ToolChartHeader
+        chartId="scatter"
+        svFacetId={props.svFacetId}
+        facetList={props.facetList}
+        onSvFacetIdUpdated={props.onSvFacetIdUpdated}
+        hideIsRatio={true}
+      >
+        <PlotOptions />
+      </ToolChartHeader>
       <Card className="chart-card">
         <div className="chart-title">
           <h3>{yTitle}</h3>
@@ -182,17 +192,7 @@ export function Chart(props: ChartPropsType): JSX.Element {
           <div id="scatter-tooltip" ref={tooltipRef} />
         </div>
       </Card>
-      <ToolChartFooter
-        chartId="scatter"
-        sources={props.sources}
-        mMethods={null}
-        svFacetId={props.svFacetId}
-        facetList={props.facetList}
-        onSvFacetIdUpdated={props.onSvFacetIdUpdated}
-        hideIsRatio={true}
-      >
-        <PlotOptions />
-      </ToolChartFooter>
+      <ToolChartFooter sources={props.sources} mMethods={null} />
       <div id="scatter-chart-screen" className="screen">
         <div id="spinner"></div>
       </div>
@@ -212,7 +212,9 @@ function clearSVGs(): void {
  * Plots the chart which could either be a scatter plot or map.
  * @param svgContainerRef Ref for the container to plot the chart within
  * @param tooltipRef Ref for the tooltip div
+ * @param mapLegendRef Ref for the map legend
  * @param props Options and information about the chart
+ * @param geoJsonData
  */
 function plot(
   svgContainerRef: React.MutableRefObject<HTMLDivElement>,
@@ -313,7 +315,7 @@ function getTooltipElement(
   yLabel: string,
   xPerCapita: boolean,
   yPerCapita: boolean
-): JSX.Element {
+): ReactElement {
   let supIndex = 0;
   const xPopDateMessage =
     xPerCapita && point.xPopDate && !point.xDate.includes(point.xPopDate)

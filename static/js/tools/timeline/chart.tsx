@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import _ from "lodash";
-import React, { Component } from "react";
+import React, { Component, ReactElement } from "react";
 import { FormGroup, Input, Label } from "reactstrap";
 
 import { computePlotParams, PlotParams } from "../../chart/base";
@@ -33,7 +33,8 @@ import {
 } from "../../shared/ga_events";
 import { StatMetadata } from "../../shared/stat_types";
 import { StatVarInfo } from "../../shared/stat_var";
-import { ToolChartFooter } from "../shared/tool_chart_footer";
+import { ToolChartFooter } from "../shared/vis_tools/tool_chart_footer";
+import { ToolChartHeader } from "../shared/vis_tools/tool_chart_header";
 import { isIpccStatVarWithMultipleModels } from "../shared_util";
 import {
   convertToDelta,
@@ -96,7 +97,7 @@ class Chart extends Component<ChartPropsType, ChartStateType> {
     this.state = { rawData: null, statData: null, ipccModels: null };
   }
 
-  render(): JSX.Element {
+  render(): ReactElement {
     const statVars = Object.keys(this.props.statVarInfos);
     // TODO(shifucun): investigate on stats var title, now this is updated
     // several times.
@@ -117,39 +118,8 @@ class Chart extends Component<ChartPropsType, ChartStateType> {
     }
     return (
       <div className={`chart-container ${ASYNC_ELEMENT_HOLDER_CLASS}`}>
-        <div className="card">
-          <div className="statVarChipRegion">
-            {statVars.map((statVar) => {
-              let color: string;
-              if (statVars.length > 1) {
-                color = this.plotParams.lines[placeName + statVar].color;
-              }
-              return (
-                <Chip
-                  key={statVar}
-                  id={statVar}
-                  title={this.props.statVarInfos[statVar].title}
-                  color={color}
-                  removeChip={this.props.removeStatVar}
-                  onTextClick={(): WindowProxy | null =>
-                    window.open(`/tools/statvar#sv=${statVar}`)
-                  }
-                />
-              );
-            })}
-          </div>
-          <div ref={this.svgContainer} className="chart-svg"></div>
-        </div>
-        <ToolChartFooter
+        <ToolChartHeader
           chartId={this.props.chartId}
-          sources={
-            this.state.statData ? this.state.statData.sources : new Set()
-          }
-          mMethods={
-            this.state.statData
-              ? this.state.statData.measurementMethods
-              : new Set()
-          }
           svFacetId={svFacetId}
           facetList={facetList}
           onSvFacetIdUpdated={(svFacetId): void => setMetahash(svFacetId)}
@@ -185,7 +155,40 @@ class Chart extends Component<ChartPropsType, ChartStateType> {
               </Label>
             </FormGroup>
           </span>
-        </ToolChartFooter>
+        </ToolChartHeader>
+        <div className="card">
+          <div className="statVarChipRegion">
+            {statVars.map((statVar) => {
+              let color: string;
+              if (statVars.length > 1) {
+                color = this.plotParams.lines[placeName + statVar].color;
+              }
+              return (
+                <Chip
+                  key={statVar}
+                  id={statVar}
+                  title={this.props.statVarInfos[statVar].title}
+                  color={color}
+                  removeChip={this.props.removeStatVar}
+                  onTextClick={(): WindowProxy | null =>
+                    window.open(`/tools/statvar#sv=${statVar}`)
+                  }
+                />
+              );
+            })}
+          </div>
+          <div ref={this.svgContainer} className="chart-svg"></div>
+        </div>
+        <ToolChartFooter
+          sources={
+            this.state.statData ? this.state.statData.sources : new Set()
+          }
+          mMethods={
+            this.state.statData
+              ? this.state.statData.measurementMethods
+              : new Set()
+          }
+        />
       </div>
     );
   }
