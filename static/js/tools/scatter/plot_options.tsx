@@ -22,8 +22,7 @@
 
 import { css, useTheme } from "@emotion/react";
 import React, { useContext, useState } from "react";
-import { Button, Card, FormGroup, Input, Label } from "reactstrap";
-import { Container } from "reactstrap";
+import { Button, Input, Label } from "reactstrap";
 
 import {
   GA_EVENT_TOOL_CHART_OPTION_CLICK,
@@ -198,300 +197,320 @@ function PlotOptions(): JSX.Element {
         }
       `}
     >
-      <Container fluid={true}>
-        <div className="plot-options-row">
-          <div className="plot-options-label" style={axisLabelStyle}>
-            {yAxisLabel}:
+      <div
+        css={css`
+          background: green;
+        `}
+      >
+        <p
+          css={css`
+            background: red;
+          `}
+        >
+          {yAxisLabel}:
+        </p>
+
+        <label>
+          <input
+            id="per-capita-y"
+            type="checkbox"
+            checked={y.value.perCapita}
+            onChange={(e): void => {
+              y.setPerCapita(e.target.checked);
+              if (!y.value.perCapita) {
+                triggerGAEvent(GA_EVENT_TOOL_CHART_OPTION_CLICK, {
+                  [GA_PARAM_TOOL_CHART_OPTION]:
+                    GA_VALUE_TOOL_CHART_OPTION_PER_CAPITA,
+                });
+              }
+            }}
+          />
+          Per Capita
+        </label>
+
+        <label>
+          <input
+            id="log-y"
+            type="checkbox"
+            checked={y.value.log}
+            onChange={(e): void => {
+              checkLog(y, e);
+              if (!y.value.log) {
+                triggerGAEvent(GA_EVENT_TOOL_CHART_OPTION_CLICK, {
+                  [GA_PARAM_TOOL_CHART_OPTION]:
+                    GA_VALUE_TOOL_CHART_OPTION_LOG_SCALE,
+                });
+              }
+            }}
+          />
+          Log scale
+        </label>
+      </div>
+
+      <div
+        css={css`
+          background: green;
+        `}
+      >
+        <p
+          css={css`
+            background: red;
+          `}
+        >
+          {xAxisLabel}:
+        </p>
+
+        <label>
+          <input
+            id="per-capita-x"
+            type="checkbox"
+            checked={x.value.perCapita}
+            onChange={(e): void => {
+              x.setPerCapita(e.target.checked);
+              if (!x.value.perCapita) {
+                triggerGAEvent(GA_EVENT_TOOL_CHART_OPTION_CLICK, {
+                  [GA_PARAM_TOOL_CHART_OPTION]:
+                    GA_VALUE_TOOL_CHART_OPTION_PER_CAPITA,
+                });
+              }
+            }}
+          />
+          Per Capita
+        </label>
+
+        <label>
+          <input
+            id="log-x"
+            type="checkbox"
+            checked={x.value.log}
+            onChange={(e): void => {
+              checkLog(x, e);
+              if (!x.value.log) {
+                triggerGAEvent(GA_EVENT_TOOL_CHART_OPTION_CLICK, {
+                  [GA_PARAM_TOOL_CHART_OPTION]:
+                    GA_VALUE_TOOL_CHART_OPTION_LOG_SCALE,
+                });
+              }
+            }}
+          />
+          Log scale
+        </label>
+      </div>
+
+      {display.chartType === ScatterChartType.SCATTER && (
+        <>
+          <div
+            css={css`
+              background: pink;
+              @media (max-width: ${theme.breakpoints.sm}px) {
+                background: blue;
+              }
+            `}
+          >
+            <p
+              css={css`
+                background: red;
+              `}
+            >
+              Display:
+            </p>
+
+            <Button
+              id="swap-axes"
+              size="sm"
+              color="light"
+              onClick={(): void => {
+                swapAxes(x, y);
+                triggerGAEvent(GA_EVENT_TOOL_CHART_OPTION_CLICK, {
+                  [GA_PARAM_TOOL_CHART_OPTION]: GA_VALUE_TOOL_CHART_OPTION_SWAP,
+                });
+              }}
+              className="plot-options-swap-button"
+            >
+              Swap X and Y axes
+            </Button>
+
+            <label>
+              <input
+                id="quadrants"
+                type="checkbox"
+                checked={display.showQuadrants}
+                onChange={(e): void => {
+                  checkQuadrants(display, e);
+                  if (!display.showQuadrants) {
+                    triggerGAEvent(GA_EVENT_TOOL_CHART_OPTION_CLICK, {
+                      [GA_PARAM_TOOL_CHART_OPTION]:
+                        GA_VALUE_TOOL_CHART_OPTION_SHOW_QUADRANTS,
+                    });
+                  }
+                }}
+              />
+              Show quadrants
+            </label>
+
+            <label>
+              <input
+                id="quadrants"
+                type="checkbox"
+                checked={display.showLabels}
+                onChange={(e): void => {
+                  checkLabels(display, e);
+                  if (!display.showLabels) {
+                    triggerGAEvent(GA_EVENT_TOOL_CHART_OPTION_CLICK, {
+                      [GA_PARAM_TOOL_CHART_OPTION]:
+                        GA_VALUE_TOOL_CHART_OPTION_SHOW_LABELS,
+                    });
+                  }
+                }}
+              />
+              Show labels
+            </label>
+
+            <label>
+              <input
+                id="density"
+                type="checkbox"
+                checked={display.showDensity}
+                onChange={(e): void => {
+                  checkDensity(display, e);
+                  if (!display.showDensity) {
+                    triggerGAEvent(GA_EVENT_TOOL_CHART_OPTION_CLICK, {
+                      [GA_PARAM_TOOL_CHART_OPTION]:
+                        GA_VALUE_TOOL_CHART_OPTION_SHOW_DENSITY,
+                    });
+                  }
+                }}
+              />
+              Show density
+            </label>
           </div>
-          <div className="plot-options-input-section">
-            <div className="plot-options-input">
-              <FormGroup check>
-                <Label check>
-                  <Input
-                    id="per-capita-y"
-                    type="checkbox"
-                    checked={y.value.perCapita}
-                    onChange={(e): void => {
-                      y.setPerCapita(e.target.checked);
-                      if (!y.value.perCapita) {
-                        triggerGAEvent(GA_EVENT_TOOL_CHART_OPTION_CLICK, {
-                          [GA_PARAM_TOOL_CHART_OPTION]:
-                            GA_VALUE_TOOL_CHART_OPTION_PER_CAPITA,
-                        });
-                      }
-                    }}
-                  />
-                  Per Capita
-                </Label>
-              </FormGroup>
-            </div>
-            <div className="plot-options-input">
-              <FormGroup check>
-                <Input
-                  id="log-y"
-                  type="checkbox"
-                  checked={y.value.log}
+
+          <div
+            css={css`
+              background: pink;
+              @media (max-width: ${theme.breakpoints.sm}px) {
+                background: blue;
+              }
+            `}
+          >
+            <p
+              css={css`
+                background: red;
+              `}
+            >
+              Scale points by population:
+            </p>
+
+            <div>
+              <label>
+                <input
+                  checked={display.showPopulation === SHOW_POPULATION_OFF}
+                  id="show-population-off"
                   onChange={(e): void => {
-                    checkLog(y, e);
-                    if (!y.value.log) {
+                    selectShowPopulation(display, e);
+                    if (display.showPopulation !== SHOW_POPULATION_OFF) {
                       triggerGAEvent(GA_EVENT_TOOL_CHART_OPTION_CLICK, {
                         [GA_PARAM_TOOL_CHART_OPTION]:
-                          GA_VALUE_TOOL_CHART_OPTION_LOG_SCALE,
+                          GA_VALUE_TOOL_CHART_OPTION_SHOW_POPULATION_OFF,
                       });
                     }
                   }}
+                  type="radio"
+                  value={SHOW_POPULATION_OFF}
                 />
-                <Label check>Log scale</Label>
-              </FormGroup>
-            </div>
-          </div>
-        </div>
-        <div className="plot-options-row">
-          <div className="plot-options-label" style={axisLabelStyle}>
-            {xAxisLabel}:
-          </div>
-          <div className="plot-options-input-section">
-            <div className="plot-options-input">
-              <FormGroup check>
-                <Label check>
-                  <Input
-                    id="per-capita-x"
-                    type="checkbox"
-                    checked={x.value.perCapita}
-                    onChange={(e): void => {
-                      x.setPerCapita(e.target.checked);
-                      if (!x.value.perCapita) {
-                        triggerGAEvent(GA_EVENT_TOOL_CHART_OPTION_CLICK, {
-                          [GA_PARAM_TOOL_CHART_OPTION]:
-                            GA_VALUE_TOOL_CHART_OPTION_PER_CAPITA,
-                        });
-                      }
-                    }}
-                  />
-                  Per Capita
-                </Label>
-              </FormGroup>
-            </div>
-            <div className="plot-options-input">
-              <FormGroup check>
-                <Input
-                  id="log-x"
-                  type="checkbox"
-                  checked={x.value.log}
+                Off
+              </label>
+              <label>
+                <input
+                  checked={display.showPopulation === SHOW_POPULATION_LINEAR}
+                  id="show-population-linear"
                   onChange={(e): void => {
-                    checkLog(x, e);
-                    if (!x.value.log) {
+                    selectShowPopulation(display, e);
+                    if (display.showPopulation !== SHOW_POPULATION_LINEAR) {
                       triggerGAEvent(GA_EVENT_TOOL_CHART_OPTION_CLICK, {
                         [GA_PARAM_TOOL_CHART_OPTION]:
-                          GA_VALUE_TOOL_CHART_OPTION_LOG_SCALE,
+                          GA_VALUE_TOOL_CHART_OPTION_SHOW_POPULATION_LINEAR,
                       });
                     }
                   }}
+                  type="radio"
+                  value={SHOW_POPULATION_LINEAR}
                 />
-                <Label check>Log scale</Label>
-              </FormGroup>
-            </div>
-          </div>
-        </div>
-        {display.chartType === ScatterChartType.SCATTER && (
-          <>
-            <div className="plot-options-row">
-              <div className="plot-options-label">Display:</div>
-              <div className="plot-options-input-section">
-                <div className="plot-options-input">
-                  <Button
-                    id="swap-axes"
-                    size="sm"
-                    color="light"
-                    onClick={(): void => {
-                      swapAxes(x, y);
+                Linear scale
+              </label>
+              <label>
+                <input
+                  checked={display.showPopulation === SHOW_POPULATION_LOG}
+                  id="show-population-log"
+                  onChange={(e): void => {
+                    selectShowPopulation(display, e);
+                    if (display.showPopulation !== SHOW_POPULATION_LOG) {
                       triggerGAEvent(GA_EVENT_TOOL_CHART_OPTION_CLICK, {
                         [GA_PARAM_TOOL_CHART_OPTION]:
-                          GA_VALUE_TOOL_CHART_OPTION_SWAP,
+                          GA_VALUE_TOOL_CHART_OPTION_SHOW_POPULATION_LOG,
                       });
-                    }}
-                    className="plot-options-swap-button"
-                  >
-                    Swap X and Y axes
-                  </Button>
-                </div>
-                <div className="plot-options-input">
-                  <FormGroup check>
-                    <Label check>
-                      <Input
-                        id="quadrants"
-                        type="checkbox"
-                        checked={display.showQuadrants}
-                        onChange={(e): void => {
-                          checkQuadrants(display, e);
-                          if (!display.showQuadrants) {
-                            triggerGAEvent(GA_EVENT_TOOL_CHART_OPTION_CLICK, {
-                              [GA_PARAM_TOOL_CHART_OPTION]:
-                                GA_VALUE_TOOL_CHART_OPTION_SHOW_QUADRANTS,
-                            });
-                          }
-                        }}
-                      />
-                      Show quadrants
-                    </Label>
-                  </FormGroup>
-                </div>
-                <div className="plot-options-input">
-                  <FormGroup check>
-                    <Label check>
-                      <Input
-                        id="quadrants"
-                        type="checkbox"
-                        checked={display.showLabels}
-                        onChange={(e): void => {
-                          checkLabels(display, e);
-                          if (!display.showLabels) {
-                            triggerGAEvent(GA_EVENT_TOOL_CHART_OPTION_CLICK, {
-                              [GA_PARAM_TOOL_CHART_OPTION]:
-                                GA_VALUE_TOOL_CHART_OPTION_SHOW_LABELS,
-                            });
-                          }
-                        }}
-                      />
-                      Show labels
-                    </Label>
-                  </FormGroup>
-                </div>
-                <div className="plot-options-input">
-                  <FormGroup check>
-                    <Label check>
-                      <Input
-                        id="density"
-                        type="checkbox"
-                        checked={display.showDensity}
-                        onChange={(e): void => {
-                          checkDensity(display, e);
-                          if (!display.showDensity) {
-                            triggerGAEvent(GA_EVENT_TOOL_CHART_OPTION_CLICK, {
-                              [GA_PARAM_TOOL_CHART_OPTION]:
-                                GA_VALUE_TOOL_CHART_OPTION_SHOW_DENSITY,
-                            });
-                          }
-                        }}
-                      />
-                      Show density
-                    </Label>
-                  </FormGroup>
-                </div>
-              </div>
+                    }
+                  }}
+                  type="radio"
+                  value={SHOW_POPULATION_LOG}
+                />
+                Log scale
+              </label>
             </div>
-            <div className="plot-options-row">
-              <div className="plot-options-label">
-                Scale points by population:
-              </div>
-              <div className="plot-options-input-radio">
-                <FormGroup>
-                  <Label>
-                    <Input
-                      checked={display.showPopulation === SHOW_POPULATION_OFF}
-                      id="show-population-off"
-                      onChange={(e): void => {
-                        selectShowPopulation(display, e);
-                        if (display.showPopulation !== SHOW_POPULATION_OFF) {
-                          triggerGAEvent(GA_EVENT_TOOL_CHART_OPTION_CLICK, {
-                            [GA_PARAM_TOOL_CHART_OPTION]:
-                              GA_VALUE_TOOL_CHART_OPTION_SHOW_POPULATION_OFF,
-                          });
-                        }
-                      }}
-                      type="radio"
-                      value={SHOW_POPULATION_OFF}
-                    />
-                    Off
-                  </Label>
-                  <Label>
-                    <Input
-                      checked={
-                        display.showPopulation === SHOW_POPULATION_LINEAR
-                      }
-                      id="show-population-linear"
-                      onChange={(e): void => {
-                        selectShowPopulation(display, e);
-                        if (display.showPopulation !== SHOW_POPULATION_LINEAR) {
-                          triggerGAEvent(GA_EVENT_TOOL_CHART_OPTION_CLICK, {
-                            [GA_PARAM_TOOL_CHART_OPTION]:
-                              GA_VALUE_TOOL_CHART_OPTION_SHOW_POPULATION_LINEAR,
-                          });
-                        }
-                      }}
-                      type="radio"
-                      value={SHOW_POPULATION_LINEAR}
-                    />
-                    Linear scale
-                  </Label>
-                  <Label>
-                    <Input
-                      checked={display.showPopulation === SHOW_POPULATION_LOG}
-                      id="show-population-log"
-                      onChange={(e): void => {
-                        selectShowPopulation(display, e);
-                        if (display.showPopulation !== SHOW_POPULATION_LOG) {
-                          triggerGAEvent(GA_EVENT_TOOL_CHART_OPTION_CLICK, {
-                            [GA_PARAM_TOOL_CHART_OPTION]:
-                              GA_VALUE_TOOL_CHART_OPTION_SHOW_POPULATION_LOG,
-                          });
-                        }
-                      }}
-                      type="radio"
-                      value={SHOW_POPULATION_LOG}
-                    />
-                    Log scale
-                  </Label>
-                </FormGroup>
-              </div>
+          </div>
+
+          <div
+            css={css`
+              background: pink;
+              @media (max-width: ${theme.breakpoints.sm}px) {
+                background: blue;
+              }
+            `}
+          >
+            <p
+              css={css`
+                background: red;
+              `}
+            >
+              Filter by population:
+            </p>
+
+            <div>
+              <input
+                className="pop-filter-input"
+                type="number"
+                onChange={(e): void =>
+                  selectLowerBound(place, e, setLowerBound)
+                }
+                value={lowerBound}
+                onBlur={(): void => {
+                  setLowerBound(place.value.lowerBound.toString());
+                  triggerGAEvent(GA_EVENT_TOOL_CHART_OPTION_CLICK, {
+                    [GA_PARAM_TOOL_CHART_OPTION]:
+                      GA_VALUE_TOOL_CHART_OPTION_FILTER_BY_POPULATION,
+                  });
+                }}
+              />
+              <p>to</p>
+              <input
+                className="pop-filter-input"
+                type="number"
+                onChange={(e): void =>
+                  selectUpperBound(place, e, setUpperBound)
+                }
+                value={upperBound}
+                onBlur={(): void => {
+                  setUpperBound(place.value.upperBound.toString());
+                  triggerGAEvent(GA_EVENT_TOOL_CHART_OPTION_CLICK, {
+                    [GA_PARAM_TOOL_CHART_OPTION]:
+                      GA_VALUE_TOOL_CHART_OPTION_FILTER_BY_POPULATION,
+                  });
+                }}
+              />
             </div>
-            <div className="plot-options-row">
-              <div className="plot-options-label">Filter by population:</div>
-              <div className="plot-options-input-section pop-filter">
-                <div className="plot-options-input">
-                  <FormGroup check>
-                    <Input
-                      className="pop-filter-input"
-                      type="number"
-                      onChange={(e): void =>
-                        selectLowerBound(place, e, setLowerBound)
-                      }
-                      value={lowerBound}
-                      onBlur={(): void => {
-                        setLowerBound(place.value.lowerBound.toString());
-                        triggerGAEvent(GA_EVENT_TOOL_CHART_OPTION_CLICK, {
-                          [GA_PARAM_TOOL_CHART_OPTION]:
-                            GA_VALUE_TOOL_CHART_OPTION_FILTER_BY_POPULATION,
-                        });
-                      }}
-                    />
-                  </FormGroup>
-                </div>
-                <span>to</span>
-                <div className="plot-options-input">
-                  <FormGroup check>
-                    <Input
-                      className="pop-filter-input"
-                      type="number"
-                      onChange={(e): void =>
-                        selectUpperBound(place, e, setUpperBound)
-                      }
-                      value={upperBound}
-                      onBlur={(): void => {
-                        setUpperBound(place.value.upperBound.toString());
-                        triggerGAEvent(GA_EVENT_TOOL_CHART_OPTION_CLICK, {
-                          [GA_PARAM_TOOL_CHART_OPTION]:
-                            GA_VALUE_TOOL_CHART_OPTION_FILTER_BY_POPULATION,
-                        });
-                      }}
-                    />
-                  </FormGroup>
-                </div>
-              </div>
-            </div>
-          </>
-        )}
-      </Container>
+          </div>
+        </>
+      )}
     </div>
   );
 }
