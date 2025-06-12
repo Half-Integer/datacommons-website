@@ -49,6 +49,7 @@ import {
 import { setChartOption, setMetahash } from "./util";
 
 const CHART_HEIGHT = 300;
+const FEEDBACK_LINK = "/feedback";
 
 interface ChartPropsType {
   chartId: string; // id used for this chart

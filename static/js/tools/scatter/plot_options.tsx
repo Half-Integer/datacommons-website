@@ -18,7 +18,9 @@
  * Plot options for log scale, per capita, swapping axes, and
  * lower and upper bounds for populations.
  */
+/** @jsxImportSource @emotion/react */
 
+import { css, useTheme } from "@emotion/react";
 import React, { useContext, useState } from "react";
 import { Button, Card, FormGroup, Input, Label } from "reactstrap";
 import { Container } from "reactstrap";
@@ -157,6 +159,7 @@ function selectUpperBound(
 // returns the available dates for the statvar. Then, fill the datapicker with
 // the dates.
 function PlotOptions(): JSX.Element {
+  const theme = useTheme();
   const { place, x, y, display } = useContext(Context);
   const [lowerBound, setLowerBound] = useState(
     place.value.lowerBound.toString()
@@ -187,7 +190,14 @@ function PlotOptions(): JSX.Element {
   }
 
   return (
-    <Card id="plot-options">
+    <div
+      css={css`
+        background: pink;
+        @media (max-width: ${theme.breakpoints.sm}px) {
+          background: blue;
+        }
+      `}
+    >
       <Container fluid={true}>
         <div className="plot-options-row">
           <div className="plot-options-label" style={axisLabelStyle}>
@@ -482,7 +492,7 @@ function PlotOptions(): JSX.Element {
           </>
         )}
       </Container>
-    </Card>
+    </div>
   );
 }
 

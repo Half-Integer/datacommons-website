@@ -17,7 +17,9 @@
 /**
  * Footer for charts created by the different tools
  */
+/** @jsxImportSource @emotion/react */
 
+import { css, useTheme } from "@emotion/react";
 import React, { ReactElement } from "react";
 import { FormGroup, Input, Label } from "reactstrap";
 
@@ -55,47 +57,56 @@ interface ToolChartHeaderProps {
 const SELECTOR_PREFIX = "chart-header";
 
 export function ToolChartHeader(props: ToolChartHeaderProps): ReactElement {
+  const theme = useTheme();
   const ratioCheckboxId = props.chartId + "-ratio";
 
   return (
-    <>
-      <div className={`${SELECTOR_PREFIX}-options-section`}>
-        {!props.hideIsRatio && (
-          <span className="chart-option">
-            <FormGroup check>
-              <Label check>
-                <Input
-                  id={ratioCheckboxId}
-                  type="checkbox"
-                  checked={props.isPerCapita}
-                  onChange={(): void => {
-                    props.onIsPerCapitaUpdated(!props.isPerCapita);
-                    if (!props.isPerCapita) {
-                      triggerGAEvent(GA_EVENT_TOOL_CHART_OPTION_CLICK, {
-                        [GA_PARAM_TOOL_CHART_OPTION]:
-                          GA_VALUE_TOOL_CHART_OPTION_PER_CAPITA,
-                      });
-                    }
-                  }}
-                />
-                Per Capita
-              </Label>
-            </FormGroup>
-          </span>
-        )}
-        {props.children}
-        <FacetSelector
-          svFacetId={props.svFacetId}
-          facetListPromise={Promise.resolve(props.facetList)}
-          onSvFacetIdUpdated={(svFacetId): void => {
-            props.onSvFacetIdUpdated(svFacetId);
-            triggerGAEvent(GA_EVENT_TOOL_CHART_OPTION_CLICK, {
-              [GA_PARAM_TOOL_CHART_OPTION]:
-                GA_VALUE_TOOL_CHART_OPTION_EDIT_SOURCES,
-            });
-          }}
-        />
-      </div>
-    </>
+    <div
+      css={css`
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-bottom: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 15px 15px 0 15px;
+        font-size: 0.8rem;
+        border-radius: 0.25rem 0;
+        background: white;
+      `}
+    >
+      {!props.hideIsRatio && (
+        <FormGroup check>
+          <Label check>
+            <Input
+              id={ratioCheckboxId}
+              type="checkbox"
+              checked={props.isPerCapita}
+              onChange={(): void => {
+                props.onIsPerCapitaUpdated(!props.isPerCapita);
+                if (!props.isPerCapita) {
+                  triggerGAEvent(GA_EVENT_TOOL_CHART_OPTION_CLICK, {
+                    [GA_PARAM_TOOL_CHART_OPTION]:
+                      GA_VALUE_TOOL_CHART_OPTION_PER_CAPITA,
+                  });
+                }
+              }}
+            />
+            Per Capita
+          </Label>
+        </FormGroup>
+      )}
+      {props.children}
+      <FacetSelector
+        svFacetId={props.svFacetId}
+        facetListPromise={Promise.resolve(props.facetList)}
+        onSvFacetIdUpdated={(svFacetId): void => {
+          props.onSvFacetIdUpdated(svFacetId);
+          triggerGAEvent(GA_EVENT_TOOL_CHART_OPTION_CLICK, {
+            [GA_PARAM_TOOL_CHART_OPTION]:
+              GA_VALUE_TOOL_CHART_OPTION_EDIT_SOURCES,
+          });
+        }}
+      />
+    </div>
   );
 }

@@ -206,9 +206,11 @@
 }
 
 .chart-card.card {
+  border-top: none;
   border-bottom: none;
+  margin-top: 0;
   margin-bottom: 0;
-  border-radius: 0.25rem 0.25rem 0 0;
+  border-radius: 0;
 }
 
 #plot-options {

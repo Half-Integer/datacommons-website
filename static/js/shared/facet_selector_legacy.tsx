@@ -23,11 +23,13 @@
 
 // TODO (nick-next): remove if/when old tools are converted.
 
+/** @jsxImportSource @emotion/react */
+
+import { css } from "@emotion/react";
 import _ from "lodash";
 import React, { useEffect, useState } from "react";
 import Collapsible from "react-collapsible";
 import {
-  Button,
   FormGroup,
   Input,
   Label,
@@ -37,6 +39,7 @@ import {
   ModalHeader,
 } from "reactstrap";
 
+import { Button } from "../components/elements/button/button";
 import { StatMetadata } from "./stat_types";
 
 const MODAL_MAX_WIDTH = "90vw";
@@ -112,9 +115,12 @@ export function FacetSelectorLegacy(props: FacetSelectorPropType): JSX.Element {
     <>
       <Button
         className={`${SELECTOR_PREFIX}-open-modal-button`}
-        size="sm"
-        color="light"
+        variant="flat"
         onClick={(): void => setModalOpen(true)}
+        css={css`
+          flex-shrink: 0;
+          visibility: ${loading ? "hidden" : "visible"};
+        `}
       >
         Edit {Object.keys(props.svFacetId).length > 1 ? "Sources" : "Source"}
       </Button>
