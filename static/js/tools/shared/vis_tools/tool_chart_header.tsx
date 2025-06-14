@@ -21,7 +21,7 @@
 
 import { css, useTheme } from "@emotion/react";
 import React, { ReactElement } from "react";
-import { FormGroup, Input, Label } from "reactstrap";
+import { Input } from "reactstrap";
 
 import {
   FacetSelector,
@@ -65,7 +65,7 @@ export function ToolChartHeader(props: ToolChartHeaderProps): ReactElement {
         border-bottom: none;
         display: flex;
         justify-content: space-between;
-        align-items: flex-star;Add commentMore actions
+        align-items: flex-star;
         gap: ${theme.spacing.xl}px;
         align-items: flex-start;
         border-bottom: 1px solid ${theme.colors.box.tooltip.pill};

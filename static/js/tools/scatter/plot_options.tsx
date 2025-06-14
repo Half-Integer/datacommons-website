@@ -20,7 +20,7 @@
  */
 /** @jsxImportSource @emotion/react */
 
-import { css, Theme, useTheme } from "@emotion/react";
+import { css, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 import React, { useContext, useState } from "react";
 import { Button } from "reactstrap";
@@ -328,7 +328,6 @@ function PlotOptions(): JSX.Element {
                   [GA_PARAM_TOOL_CHART_OPTION]: GA_VALUE_TOOL_CHART_OPTION_SWAP,
                 });
               }}
-              className="plot-options-swap-button"
             >
               Swap X and Y axes
             </Button>
