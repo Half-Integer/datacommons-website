@@ -54,8 +54,6 @@ interface ToolChartHeaderProps {
   children?: React.ReactNode;
 }
 
-const SELECTOR_PREFIX = "chart-header";
-
 export function ToolChartHeader(props: ToolChartHeaderProps): ReactElement {
   const theme = useTheme();
   const ratioCheckboxId = props.chartId + "-ratio";
@@ -67,35 +65,15 @@ export function ToolChartHeader(props: ToolChartHeaderProps): ReactElement {
         border-bottom: none;
         display: flex;
         justify-content: space-between;
+        align-items: flex-star;Add commentMore actions
+        gap: ${theme.spacing.xl}px;
         align-items: flex-start;
-        padding: 15px 15px 0 15px;
-        font-size: 0.8rem;
+        border-bottom: 1px solid ${theme.colors.box.tooltip.pill};
+        padding: 15px;
         border-radius: 0.25rem 0;
         background: white;
       `}
     >
-      {!props.hideIsRatio && (
-        <FormGroup check>
-          <Label check>
-            <Input
-              id={ratioCheckboxId}
-              type="checkbox"
-              checked={props.isPerCapita}
-              onChange={(): void => {
-                props.onIsPerCapitaUpdated(!props.isPerCapita);
-                if (!props.isPerCapita) {
-                  triggerGAEvent(GA_EVENT_TOOL_CHART_OPTION_CLICK, {
-                    [GA_PARAM_TOOL_CHART_OPTION]:
-                      GA_VALUE_TOOL_CHART_OPTION_PER_CAPITA,
-                  });
-                }
-              }}
-            />
-            Per Capita
-          </Label>
-        </FormGroup>
-      )}
-      {props.children}
       <FacetSelector
         svFacetId={props.svFacetId}
         facetListPromise={Promise.resolve(props.facetList)}
@@ -107,6 +85,66 @@ export function ToolChartHeader(props: ToolChartHeaderProps): ReactElement {
           });
         }}
       />
+      {!props.hideIsRatio && (
+        <div
+          css={css`
+            display: flex;
+            flex-shrink: 3;
+            flex-wrap: wrap;
+            gap: ${theme.spacing.md}px;
+            align-items: center;
+          `}
+        >
+          <div
+            css={css`
+              display: flex;
+              flex-wrap: wrap;
+              flex-shrink: 3;
+              align-items: center;
+              padding: ${theme.spacing.sm}px ${theme.spacing.md}px;
+              gap: ${theme.spacing.sm}px;
+              background: ${theme.colors.box.tooltip.pill};
+              ${theme.typography.family.text}
+              ${theme.typography.text.sm}
+            `}
+          >
+            <label
+              css={css`
+                display: flex;
+                align-items: center;
+                gap: ${theme.spacing.xs}px;
+                flex-shrink: 3;
+                flex-wrap: wrap;
+                margin: 0;
+                padding: 0;
+                && {
+                  input {
+                    position: inherit;
+                    margin: 0;
+                    padding: 0;
+                  }
+              `}
+            >
+              <Input
+                id={ratioCheckboxId}
+                type="checkbox"
+                checked={props.isPerCapita}
+                onChange={(): void => {
+                  props.onIsPerCapitaUpdated(!props.isPerCapita);
+                  if (!props.isPerCapita) {
+                    triggerGAEvent(GA_EVENT_TOOL_CHART_OPTION_CLICK, {
+                      [GA_PARAM_TOOL_CHART_OPTION]:
+                        GA_VALUE_TOOL_CHART_OPTION_PER_CAPITA,
+                    });
+                  }
+                }}
+              />
+              Per Capita
+            </label>
+          </div>
+        </div>
+      )}
+      {props.children}
     </div>
   );
 }

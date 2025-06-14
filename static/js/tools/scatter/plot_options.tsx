@@ -20,9 +20,10 @@
  */
 /** @jsxImportSource @emotion/react */
 
-import { css, useTheme } from "@emotion/react";
+import { css, Theme, useTheme } from "@emotion/react";
+import styled from "@emotion/styled";
 import React, { useContext, useState } from "react";
-import { Button, Input, Label } from "reactstrap";
+import { Button } from "reactstrap";
 
 import {
   GA_EVENT_TOOL_CHART_OPTION_CLICK,
@@ -159,6 +160,40 @@ function selectUpperBound(
 // the dates.
 function PlotOptions(): JSX.Element {
   const theme = useTheme();
+
+  const StyledLabel = styled.label`
+    display: flex;
+    align-items: center;
+    gap: ${theme.spacing.xs}px;
+    flex-shrink: 3;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    && {
+      input {
+        position: inherit;
+        margin: 0;
+        padding: 0;
+      }
+  `;
+
+  const StyledSection = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    flex-shrink: 3;
+    align-items: center;
+    padding: ${theme.spacing.sm}px ${theme.spacing.md}px;
+    gap: ${theme.spacing.sm}px;
+    background: ${theme.colors.box.tooltip.pill};
+    ${theme.typography.family.text}
+    ${theme.typography.text.sm}
+  `;
+
+  const StyledSectionTitle = styled.p`
+    margin: 0;
+    font-weight: 900;
+  `;
+
   const { place, x, y, display } = useContext(Context);
   const [lowerBound, setLowerBound] = useState(
     place.value.lowerBound.toString()
@@ -191,26 +226,17 @@ function PlotOptions(): JSX.Element {
   return (
     <div
       css={css`
-        background: pink;
-        @media (max-width: ${theme.breakpoints.sm}px) {
-          background: blue;
-        }
+        display: flex;
+        flex-shrink: 3;
+        flex-wrap: wrap;
+        gap: ${theme.spacing.md}px;
+        align-items: center;
       `}
     >
-      <div
-        css={css`
-          background: green;
-        `}
-      >
-        <p
-          css={css`
-            background: red;
-          `}
-        >
-          {yAxisLabel}:
-        </p>
+      <StyledSection>
+        <StyledSectionTitle>{yAxisLabel}:</StyledSectionTitle>
 
-        <label>
+        <StyledLabel>
           <input
             id="per-capita-y"
             type="checkbox"
@@ -226,9 +252,9 @@ function PlotOptions(): JSX.Element {
             }}
           />
           Per Capita
-        </label>
+        </StyledLabel>
 
-        <label>
+        <StyledLabel>
           <input
             id="log-y"
             type="checkbox"
@@ -244,23 +270,13 @@ function PlotOptions(): JSX.Element {
             }}
           />
           Log scale
-        </label>
-      </div>
+        </StyledLabel>
+      </StyledSection>
 
-      <div
-        css={css`
-          background: green;
-        `}
-      >
-        <p
-          css={css`
-            background: red;
-          `}
-        >
-          {xAxisLabel}:
-        </p>
+      <StyledSection>
+        <StyledSectionTitle>{xAxisLabel}:</StyledSectionTitle>
 
-        <label>
+        <StyledLabel>
           <input
             id="per-capita-x"
             type="checkbox"
@@ -276,9 +292,9 @@ function PlotOptions(): JSX.Element {
             }}
           />
           Per Capita
-        </label>
+        </StyledLabel>
 
-        <label>
+        <StyledLabel>
           <input
             id="log-x"
             type="checkbox"
@@ -294,26 +310,13 @@ function PlotOptions(): JSX.Element {
             }}
           />
           Log scale
-        </label>
-      </div>
+        </StyledLabel>
+      </StyledSection>
 
       {display.chartType === ScatterChartType.SCATTER && (
         <>
-          <div
-            css={css`
-              background: pink;
-              @media (max-width: ${theme.breakpoints.sm}px) {
-                background: blue;
-              }
-            `}
-          >
-            <p
-              css={css`
-                background: red;
-              `}
-            >
-              Display:
-            </p>
+          <StyledSection>
+            <StyledSectionTitle>Display:</StyledSectionTitle>
 
             <Button
               id="swap-axes"
@@ -330,7 +333,7 @@ function PlotOptions(): JSX.Element {
               Swap X and Y axes
             </Button>
 
-            <label>
+            <StyledLabel>
               <input
                 id="quadrants"
                 type="checkbox"
@@ -346,9 +349,9 @@ function PlotOptions(): JSX.Element {
                 }}
               />
               Show quadrants
-            </label>
+            </StyledLabel>
 
-            <label>
+            <StyledLabel>
               <input
                 id="quadrants"
                 type="checkbox"
@@ -364,9 +367,9 @@ function PlotOptions(): JSX.Element {
                 }}
               />
               Show labels
-            </label>
+            </StyledLabel>
 
-            <label>
+            <StyledLabel>
               <input
                 id="density"
                 type="checkbox"
@@ -382,27 +385,14 @@ function PlotOptions(): JSX.Element {
                 }}
               />
               Show density
-            </label>
-          </div>
+            </StyledLabel>
+          </StyledSection>
 
-          <div
-            css={css`
-              background: pink;
-              @media (max-width: ${theme.breakpoints.sm}px) {
-                background: blue;
-              }
-            `}
-          >
-            <p
-              css={css`
-                background: red;
-              `}
-            >
-              Scale points by population:
-            </p>
+          <StyledSection>
+            <StyledSectionTitle>Scale points by population:</StyledSectionTitle>
 
             <div>
-              <label>
+              <StyledLabel>
                 <input
                   checked={display.showPopulation === SHOW_POPULATION_OFF}
                   id="show-population-off"
@@ -419,8 +409,8 @@ function PlotOptions(): JSX.Element {
                   value={SHOW_POPULATION_OFF}
                 />
                 Off
-              </label>
-              <label>
+              </StyledLabel>
+              <StyledLabel>
                 <input
                   checked={display.showPopulation === SHOW_POPULATION_LINEAR}
                   id="show-population-linear"
@@ -437,8 +427,8 @@ function PlotOptions(): JSX.Element {
                   value={SHOW_POPULATION_LINEAR}
                 />
                 Linear scale
-              </label>
-              <label>
+              </StyledLabel>
+              <StyledLabel>
                 <input
                   checked={display.showPopulation === SHOW_POPULATION_LOG}
                   id="show-population-log"
@@ -455,25 +445,12 @@ function PlotOptions(): JSX.Element {
                   value={SHOW_POPULATION_LOG}
                 />
                 Log scale
-              </label>
+              </StyledLabel>
             </div>
-          </div>
+          </StyledSection>
 
-          <div
-            css={css`
-              background: pink;
-              @media (max-width: ${theme.breakpoints.sm}px) {
-                background: blue;
-              }
-            `}
-          >
-            <p
-              css={css`
-                background: red;
-              `}
-            >
-              Filter by population:
-            </p>
+          <StyledSection>
+            <StyledSectionTitle>Filter by population:</StyledSectionTitle>
 
             <div>
               <input
@@ -508,7 +485,7 @@ function PlotOptions(): JSX.Element {
                 }}
               />
             </div>
-          </div>
+          </StyledSection>
         </>
       )}
     </div>

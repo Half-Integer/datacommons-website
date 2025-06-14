@@ -13,9 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/** @jsxImportSource @emotion/react */
+
+import { css, useTheme } from "@emotion/react";
 import _ from "lodash";
 import React, { Component, ReactElement } from "react";
-import { FormGroup, Input, Label } from "reactstrap";
+import { Input } from "reactstrap";
 
 import { computePlotParams, PlotParams } from "../../chart/base";
 import { drawGroupLineChart } from "../../chart/draw_line";
@@ -49,7 +52,6 @@ import {
 import { setChartOption, setMetahash } from "./util";
 
 const CHART_HEIGHT = 300;
-const FEEDBACK_LINK = "/feedback";
 
 interface ChartPropsType {
   chartId: string; // id used for this chart
@@ -117,6 +119,7 @@ class Chart extends Component<ChartPropsType, ChartStateType> {
       svFacetId[sv] =
         sv in this.props.svFacetId ? this.props.svFacetId[sv] : "";
     }
+    const theme = useTheme();
     return (
       <div className={`chart-container ${ASYNC_ELEMENT_HOLDER_CLASS}`}>
         <ToolChartHeader
@@ -130,9 +133,45 @@ class Chart extends Component<ChartPropsType, ChartStateType> {
             setChartOption(this.props.chartId, "pc", isPerCapita)
           }
         >
-          <span className="chart-option">
-            <FormGroup check>
-              <Label check>
+          <div
+            css={css`
+              display: flex;
+              flex-shrink: 3;
+              flex-wrap: wrap;
+              gap: ${theme.spacing.md}px;
+              align-items: center;
+            `}
+          >
+            <div
+              css={css`
+                display: flex;
+                flex-wrap: wrap;
+                flex-shrink: 3;
+                align-items: center;
+                padding: ${theme.spacing.sm}px ${theme.spacing.md}px;
+                gap: ${theme.spacing.sm}px;
+                background: ${theme.colors.box.tooltip.pill};
+                ${theme.typography.family.text}
+                ${theme.typography.text.sm}
+              `}
+            >
+              <label
+                css={css`
+                  display: flex;
+                  align-items: center;
+                  gap: ${theme.spacing.xs}px;
+                  flex-shrink: 3;
+                  flex-wrap: wrap;
+                  margin: 0;
+                  padding: 0;
+                  && {
+                    input {
+                      position: inherit;
+                      margin: 0;
+                      padding: 0;
+                    }
+                `}
+              >
                 <Input
                   id={deltaCheckboxId}
                   className="is-delta-input"
@@ -153,9 +192,9 @@ class Chart extends Component<ChartPropsType, ChartStateType> {
                   }}
                 />
                 Delta
-              </Label>
-            </FormGroup>
-          </span>
+              </label>
+            </div>
+          </div>
         </ToolChartHeader>
         <div className="card">
           <div className="statVarChipRegion">
