@@ -40,6 +40,7 @@ import { intl } from "../../i18n/i18n";
 import { messages } from "../../i18n/i18n_messages";
 import { DATE_HIGHEST_COVERAGE, DATE_LATEST } from "../../shared/constants";
 import { NamedPlace, NamedTypedPlace, StatVarSpec } from "../../shared/types";
+import { FacetMetadata } from "../../types/facet_metadata";
 import { ColumnConfig, TileConfig } from "../../types/subject_page_proto_types";
 import { highestCoverageDatesEqualLatestDates } from "../../utils/app/explore_utils";
 import { stringifyFn } from "../../utils/axios";
@@ -113,6 +114,7 @@ export interface BlockPropType {
   startWithDenom?: boolean;
   // Whether to render tiles as web components
   showWebComponents?: boolean;
+  highlightFacet?: FacetMetadata;
 }
 
 const NO_MAP_TOOL_PLACE_TYPES = new Set(["UNGeoRegion", "GeoRegion"]);
@@ -184,6 +186,7 @@ export function Block(props: BlockPropType): JSX.Element {
   const [overridePlaceTypes, setOverridePlaceTypes] =
     useState<Record<string, NamedTypedPlace>>();
   const [useDenom, setUseDenom] = useState(props.startWithDenom);
+  const [denom, setDenom] = useState<string>("");
   const isEligibleForSnapToHighestCoverage = eligibleForSnapToHighestCoverage(
     props.columns,
     props.statVarProvider
@@ -239,14 +242,23 @@ export function Block(props: BlockPropType): JSX.Element {
           props.statVarProvider
         );
       setEnableSnapToLatestData(enableSnapToHighestCoverage);
-      setShowSnapToHighestCoverageCheckbox(true);
+
+      // We want to disable the block controls for the highlight chart.
+      setShowSnapToHighestCoverageCheckbox(!props.highlightFacet);
     })();
   }, [props]);
+
+  useEffect(() => {
+    setDenom(props.denom || "");
+    if (props.highlightFacet) {
+      setDenom("");
+    }
+  }, [props.highlightFacet, props.denom]);
 
   return (
     <>
       <div className="block-controls">
-        {props.denom && (
+        {denom && (
           <span className="block-toggle">
             <label>
               <Input
@@ -326,7 +338,7 @@ export function Block(props: BlockPropType): JSX.Element {
                         minIdxToHide,
                         overridePlaceTypes,
                         columnTileClassName,
-                        useDenom ? props.denom : "",
+                        useDenom ? denom : "",
                         snapToHighestCoverage
                           ? DATE_HIGHEST_COVERAGE
                           : undefined
@@ -338,7 +350,7 @@ export function Block(props: BlockPropType): JSX.Element {
                         minIdxToHide,
                         overridePlaceTypes,
                         columnTileClassName,
-                        useDenom ? props.denom : "",
+                        useDenom ? denom : "",
                         snapToHighestCoverage
                           ? DATE_HIGHEST_COVERAGE
                           : undefined
@@ -420,6 +432,7 @@ function renderTiles(
               blockDate,
               blockDenom,
             })}
+            highlightFacet={props.highlightFacet}
           />
         );
       }
@@ -485,6 +498,7 @@ function renderTiles(
             startDate={tile.lineTileSpec?.startDate}
             endDate={tile.lineTileSpec?.endDate}
             highlightDate={tile.lineTileSpec?.highlightDate}
+            highlightFacet={props.highlightFacet}
           />
         );
       case "RANKING":
@@ -552,6 +566,7 @@ function renderTiles(
               tile.barTileSpec?.variableNameRegex,
               tile.barTileSpec?.defaultVariableName
             )}
+            highlightFacet={props.highlightFacet}
           />
         );
       case "SCATTER": {

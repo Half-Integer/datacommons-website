@@ -12,11 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import time
+
 import pytest
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
+from server.webdriver.base_utils import find_elem
+from server.webdriver.base_utils import find_elems
 import server.webdriver.shared as shared
 
 TIMELINE_URL = '/tools/visualization#visType=timeline'
@@ -75,9 +79,10 @@ class VisTimelineTestMixin():
     stat_var_chips = self.driver.find_elements(
         By.CSS_SELECTOR, '.selected-option-chip.stat-var .chip-content')
     self.assertEqual(len(stat_var_chips), 3)
-    self.assertTrue('Median Age of Population' in stat_var_chips[0].text)
-    self.assertTrue('Female Population' in stat_var_chips[1].text)
-    self.assertTrue('Male Population' in stat_var_chips[2].text)
+    self.assertTrue(
+        'median age of population' in stat_var_chips[0].text.lower())
+    self.assertTrue('female population' in stat_var_chips[1].text.lower())
+    self.assertTrue('male population' in stat_var_chips[2].text.lower())
 
     # Assert charts are correct
     charts = self.driver.find_elements(By.CSS_SELECTOR, '.chart.timeline')
@@ -89,8 +94,7 @@ class VisTimelineTestMixin():
 
     # Click per capita and assert results are correct
     per_capita_checkbox = self.driver.find_element(
-        By.CSS_SELECTOR,
-        '.chart-footer-options .chart-option .form-check-input')
+        By.CSS_SELECTOR, '.chart-options .option-inputs .form-check-input')
     per_capita_checkbox.click()
     shared.wait_for_loading(self.driver)
     element_present = EC.presence_of_element_located(
@@ -122,8 +126,8 @@ class VisTimelineTestMixin():
     WebDriverWait(self.driver, self.TIMEOUT_SEC).until(element_present)
     shared.select_source(self.driver, "OECDRegionalStatistics",
                          'Count_Person_Female')
-    update_button = self.driver.find_element(By.CSS_SELECTOR,
-                                             '.modal-footer .btn')
+    update_button = self.driver.find_element(
+        By.CLASS_NAME, 'source-selector-update-source-button')
     update_button.click()
     shared.wait_for_loading(self.driver)
     chart_sources = self.driver.find_element(By.CLASS_NAME, 'sources')
@@ -142,15 +146,8 @@ class VisTimelineTestMixin():
     self.driver.get(self.url_ + TIMELINE_URL.replace('#visType=timeline', ''))
 
     # Click the timeline tab
-    vis_types_clickable = EC.element_to_be_clickable(
-        (By.CLASS_NAME, 'vis-type-option'))
-    WebDriverWait(self.driver, self.TIMEOUT_SEC).until(vis_types_clickable)
-    vis_type_options = self.driver.find_elements(By.CLASS_NAME,
-                                                 'vis-type-option')
-    for vis_type in vis_type_options:
-      if 'Timeline' in vis_type.text:
-        vis_type.click()
-        break
+    timeline_tab_xpath = "//*[contains(@class, 'vis-type-option') and .//*[contains(text(), 'Timeline')]]"
+    shared.click_el(self.driver, (By.XPATH, timeline_tab_xpath))
     page_header_locator = (By.CSS_SELECTOR, '.info-content h3')
     WebDriverWait(self.driver, self.TIMEOUT_SEC).until(
         EC.text_to_be_present_in_element(page_header_locator, 'Timeline'))
@@ -226,3 +223,44 @@ class VisTimelineTestMixin():
     self.assertEqual(len(charts), 1)
     chart_lines = charts[0].find_elements(By.CLASS_NAME, 'line')
     self.assertEqual(len(chart_lines), 3)
+
+  def test_select_different_facet(self):
+    """Test selecting a different facet of the metadata and verify the line changes."""
+    self.driver.get(self.url_ + TIMELINE_URL + URL_HASH_1)
+
+    shared.wait_for_loading(self.driver)
+
+    original_source_text = find_elems(self.driver,
+                                      value='sources',
+                                      path_to_elem=['chart'])[0].text
+    self.assertEqual(original_source_text, 'Source: census.gov • Show metadata')
+
+    # Click on the button to open the source selector modal
+    find_elem(self.driver, value='source-selector-open-modal-button').click()
+
+    WebDriverWait(self.driver,
+                  self.TIMEOUT_SEC).until(lambda d: d.find_elements(
+                      By.CSS_SELECTOR, '.source-selector-facet-option-title'))
+    source_options = self.driver.find_elements(
+        By.CSS_SELECTOR, '.source-selector-facet-option-title')
+    self.assertEqual(len(source_options), 18)
+
+    source_options[7].click()
+
+    # Click the modal-footer button to apply the changes
+    modal_footer_button = find_elem(
+        self.driver,
+        value='source-selector-update-source-button',
+        path_to_elem=['dialog-actions'])
+    modal_footer_button.click()
+
+    # Wait for the chart to reload
+    shared.wait_for_loading(self.driver)
+
+    # Verify the source text has changed
+    updated_source_text = find_elem(self.driver,
+                                    value='sources',
+                                    path_to_elem=['chart']).text
+    self.assertEqual(
+        updated_source_text,
+        'Sources: census.gov, data-explorer.oecd.org • Show metadata')

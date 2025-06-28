@@ -36,11 +36,23 @@ export const messages = defineMessages({
     description:
       "Title indicating that the chart data comes from the following multiple sources",
   },
+  sourcesLowercase: {
+    id: "sources.lowercase",
+    defaultMessage: "sources",
+    description:
+      "Same as “Sources” but in lowercase (for sentence-case labels)",
+  },
   source: {
     id: "source",
     defaultMessage: "Source",
     description:
       "Title indicating that the chart data comes from the following single source",
+  },
+  metadata: {
+    id: "metadata",
+    defaultMessage: "Metadata",
+    description:
+      "Title for metadata section (such as in dialog), akin to definition here https://en.wikipedia.org/wiki/Metadata",
   },
   showMetadata: {
     id: "showMetadata",
@@ -60,10 +72,18 @@ export const messages = defineMessages({
     description:
       "Subtitle for the metadata modal showing the list of variables to show source information for",
   },
+  cancel: {
+    id: "cancel",
+    defaultMessage: "Cancel",
+    description:
+      "Button to close a modal or other interactive element without applying changes",
+  },
   close: {
     id: "close",
     defaultMessage: "Close",
-    description: "Button to close the metadata modal",
+    description:
+      "Button to close a modal or other interactive element. Unlike 'Cancel', this doesn not imply abandoning " +
+      "changes; it simply dismisses the dialog. It is used when there are no contrasting actions.",
   },
   download: {
     id: "download",
@@ -125,5 +145,27 @@ export const messages = defineMessages({
     defaultMessage: "Enter a question to explore",
     description:
       "Placeholder text for the Data Commons search bar query input field",
+  },
+  perCapitaErrorMessage: {
+    id: "perCapitaErrorMessage",
+    defaultMessage: "Could not calculate per capita.",
+    description: "Error message for per capita calculation",
+  },
+  noDataErrorMessage: {
+    id: "noDataErrorMessage",
+    defaultMessage: "No data available.",
+    description: "Error message for no data available",
+  },
+  inPlacesAndLastPlace: {
+    id: "in_places_and_last_place",
+    defaultMessage: "in {places} and {lastPlace}",
+    description:
+      "Text to display when we have a list of places, and need to add 'and' before the last place. For example, 'California, Texas, and New York'.",
+  },
+  inPlace: {
+    id: "in_place",
+    defaultMessage: "in {place}",
+    description:
+      "Text to display when we have a single place, and need to add the 'in' before the place. For example, 'in California'.",
   },
 });

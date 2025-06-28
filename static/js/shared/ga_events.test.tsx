@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import theme from "../theme/theme";
+
 jest.mock("axios");
 jest.mock("../chart/draw_d3_map");
 jest.mock("../chart/draw_map_utils");
@@ -54,12 +56,12 @@ jest.mock("../chart/draw_utils", () => {
   };
 });
 
+import { ThemeProvider } from "@emotion/react";
 import { cleanup, fireEvent, render, waitFor } from "@testing-library/react";
 import axios from "axios";
 import React from "react";
 
 import { chartTypeEnum, GeoJsonData, MapPoint } from "../chart/types";
-import { DataPointMetadata } from "../shared/types";
 import { StatVarHierarchy } from "../stat_var_hierarchy/stat_var_hierarchy";
 import { StatVarHierarchySearch } from "../stat_var_hierarchy/stat_var_search";
 import { Chart as MapToolChart, MAP_TYPE } from "../tools/map/chart";
@@ -83,7 +85,10 @@ import { ScatterChartType } from "../tools/scatter/util";
 import { Chart as TimelineToolChart } from "../tools/timeline/chart";
 import * as dataFetcher from "../tools/timeline/data_fetcher";
 import { axiosMock } from "../tools/timeline/mock_functions";
+import { FacetSelectorFacetInfo } from "./facet_selector";
 import {
+  GA_EVENT_STATVAR_HIERARCHY_CLICK,
+  GA_EVENT_STATVAR_SEARCH_TRIGGERED,
   GA_EVENT_TOOL_CHART_OPTION_CLICK,
   GA_EVENT_TOOL_CHART_PLOT,
   GA_EVENT_TOOL_PLACE_ADD,
@@ -91,6 +96,7 @@ import {
   GA_EVENT_TOOL_STAT_VAR_SEARCH_NO_RESULT,
   GA_PARAM_PLACE_DCID,
   GA_PARAM_SEARCH_TERM,
+  GA_PARAM_SOURCE,
   GA_PARAM_STAT_VAR,
   GA_PARAM_TOOL_CHART_OPTION,
   GA_VALUE_TOOL_CHART_OPTION_DELTA,
@@ -102,9 +108,11 @@ import {
   GA_VALUE_TOOL_CHART_OPTION_SHOW_LABELS,
   GA_VALUE_TOOL_CHART_OPTION_SHOW_QUADRANTS,
   GA_VALUE_TOOL_CHART_OPTION_SWAP,
+  GA_VALUE_TOOL_STAT_VAR_OPTION_HIERARCHY,
 } from "./ga_events";
 import { PlaceSelector } from "./place_selector";
 import { StatVarInfo } from "./stat_var";
+import { DataPointMetadata } from "./types";
 import { NamedTypedPlace, StatVarHierarchyType, StatVarSummary } from "./types";
 
 const CATEGORY = "Economics";
@@ -169,6 +177,8 @@ const MAP_PROPS = {
       name: STAT_VAR_1,
     },
   ],
+  facetListError: false,
+  facetListLoading: false,
   sampleDates: [],
   metahash: "",
   onPlay: (): null => null,
@@ -239,6 +249,8 @@ const SCATTER_PROPS = {
       metadataMap: {},
     },
   ],
+  facetListLoading: false,
+  facetListError: false,
   onSvFacetIdUpdated: (): null => null,
 };
 
@@ -400,9 +412,11 @@ describe("test ga event tool chart plot", () => {
 
     // When the component is mounted.
     const { rerender } = render(
-      <MapContext.Provider value={MAP_CONTEXT}>
-        <MapToolChart {...MAP_PROPS} />
-      </MapContext.Provider>
+      <ThemeProvider theme={theme}>
+        <MapContext.Provider value={MAP_CONTEXT}>
+          <MapToolChart {...MAP_PROPS} />
+        </MapContext.Provider>
+      </ThemeProvider>
     );
     await waitFor(() => {
       // Check the parameters passed to gtag.
@@ -420,9 +434,11 @@ describe("test ga event tool chart plot", () => {
 
     // When the component is rerendered with the same props.
     rerender(
-      <MapContext.Provider value={MAP_CONTEXT}>
-        <MapToolChart {...MAP_PROPS} />
-      </MapContext.Provider>
+      <ThemeProvider theme={theme}>
+        <MapContext.Provider value={MAP_CONTEXT}>
+          <MapToolChart {...MAP_PROPS} />
+        </MapContext.Provider>
+      </ThemeProvider>
     );
     await waitFor(() =>
       // Check gtag is not called.
@@ -432,9 +448,11 @@ describe("test ga event tool chart plot", () => {
     // When stat var changes.
     MAP_CONTEXT.statVar.value.dcid = STAT_VAR_2;
     rerender(
-      <MapContext.Provider value={MAP_CONTEXT}>
-        <MapToolChart {...MAP_PROPS} />
-      </MapContext.Provider>
+      <ThemeProvider theme={theme}>
+        <MapContext.Provider value={MAP_CONTEXT}>
+          <MapToolChart {...MAP_PROPS} />
+        </MapContext.Provider>
+      </ThemeProvider>
     );
     await waitFor(() => {
       // Check gtag is called once, two time in total.
@@ -460,7 +478,11 @@ describe("test ga event tool chart plot", () => {
       .mockImplementation(() => Promise.resolve(null));
 
     // When the component is mounted.
-    const { rerender } = render(<TimelineToolChart {...TIMELINE_PROPS} />);
+    const { rerender } = render(
+      <ThemeProvider theme={theme}>
+        <TimelineToolChart {...TIMELINE_PROPS} />)
+      </ThemeProvider>
+    );
     await waitFor(() => {
       // Check the parameters passed to gtag.
       expect(mockgtag.mock.lastCall).toEqual([
@@ -476,7 +498,11 @@ describe("test ga event tool chart plot", () => {
     });
 
     // When the component is rerendered with the same props.
-    rerender(<TimelineToolChart {...TIMELINE_PROPS} />);
+    rerender(
+      <ThemeProvider theme={theme}>
+        <TimelineToolChart {...TIMELINE_PROPS} />
+      </ThemeProvider>
+    );
     await waitFor(() =>
       // Check gtag is called.
       expect(mockgtag.mock.calls.length).toEqual(1)
@@ -484,7 +510,11 @@ describe("test ga event tool chart plot", () => {
 
     // When stat var changes.
     TIMELINE_PROPS.statVarInfos = { [STAT_VAR_2]: { title: null } };
-    rerender(<TimelineToolChart {...TIMELINE_PROPS} />);
+    rerender(
+      <ThemeProvider theme={theme}>
+        <TimelineToolChart {...TIMELINE_PROPS} />
+      </ThemeProvider>
+    );
     await waitFor(() => {
       // Check gtag is called once, two time in total.
       expect(mockgtag.mock.calls.length).toEqual(2);
@@ -506,9 +536,11 @@ describe("test ga event tool chart plot", () => {
 
     // When the component is mounted.
     const { rerender } = render(
-      <ScatterContext.Provider value={SCATTER_CONTEXT}>
-        <ScatterToolChart {...SCATTER_PROPS} />
-      </ScatterContext.Provider>
+      <ThemeProvider theme={theme}>
+        <ScatterContext.Provider value={SCATTER_CONTEXT}>
+          <ScatterToolChart {...SCATTER_PROPS} />
+        </ScatterContext.Provider>
+      </ThemeProvider>
     );
     await waitFor(() => {
       // Check the parameters passed to the gtag.
@@ -526,9 +558,11 @@ describe("test ga event tool chart plot", () => {
 
     // When the component is rerendered with the same props.
     rerender(
-      <ScatterContext.Provider value={SCATTER_CONTEXT}>
-        <ScatterToolChart {...SCATTER_PROPS} />
-      </ScatterContext.Provider>
+      <ThemeProvider theme={theme}>
+        <ScatterContext.Provider value={SCATTER_CONTEXT}>
+          <ScatterToolChart {...SCATTER_PROPS} />
+        </ScatterContext.Provider>
+      </ThemeProvider>
     );
     await waitFor(() =>
       // Check gtag is not called.
@@ -549,9 +583,11 @@ describe("test ga event tool chart plot", () => {
       },
     ];
     rerender(
-      <ScatterContext.Provider value={SCATTER_CONTEXT}>
-        <ScatterToolChart {...SCATTER_PROPS} />
-      </ScatterContext.Provider>
+      <ThemeProvider theme={theme}>
+        <ScatterContext.Provider value={SCATTER_CONTEXT}>
+          <ScatterToolChart {...SCATTER_PROPS} />
+        </ScatterContext.Provider>
+      </ThemeProvider>
     );
     await waitFor(() => {
       // Check gtag is called once, two times in total.
@@ -607,13 +643,20 @@ describe("test ga event tool stat var click", () => {
       target: { checked: true },
     });
     await waitFor(() => {
-      // Check gtag is called once.
-      expect(mockgtag.mock.calls.length).toEqual(1);
+      // Check gtag is called.
+      expect(mockgtag.mock.calls.length).toEqual(2);
+      // Check that the first event called is GA_EVENT_STATVAR_HIERARCHY_CLICK
+      expect(mockgtag.mock.calls[0]).toEqual([
+        "event",
+        GA_EVENT_STATVAR_HIERARCHY_CLICK,
+        {},
+      ]);
       // Check the parameters passed to the gtag.
       expect(mockgtag.mock.lastCall).toEqual([
         "event",
         GA_EVENT_TOOL_STAT_VAR_CLICK,
         {
+          [GA_PARAM_SOURCE]: GA_VALUE_TOOL_STAT_VAR_OPTION_HIERARCHY,
           [GA_PARAM_STAT_VAR]: STAT_VAR_3,
         },
       ]);
@@ -696,8 +739,14 @@ describe("test ga event tool stat var search no result", () => {
       { target: { value: STAT_VAR_1 } }
     );
     await waitFor(() => {
-      // Check the gtag is called once.
-      expect(mockgtag.mock.calls.length).toEqual(1);
+      // Check the gtag is called.
+      expect(mockgtag.mock.calls.length).toEqual(2);
+      // Check that the first event is GA_EVENT_STATVAR_SEARCH_TRIGGERED
+      expect(mockgtag.mock.calls[0]).toEqual([
+        "event",
+        GA_EVENT_STATVAR_SEARCH_TRIGGERED,
+        {},
+      ]);
       // Check the parameters passed to the gtag.
       expect(mockgtag.mock.lastCall).toEqual([
         "event",
@@ -721,7 +770,11 @@ describe("test ga event tool chart plot option", () => {
       .mockImplementation(() => Promise.resolve(null));
 
     // Render the component.
-    const timelineToolChart = render(<TimelineToolChart {...TIMELINE_PROPS} />);
+    const timelineToolChart = render(
+      <ThemeProvider theme={theme}>
+        <TimelineToolChart {...TIMELINE_PROPS} />
+      </ThemeProvider>
+    );
     // Wait for gtag event tool chart plot to be called.
     await waitFor(() => expect(mockgtag.mock.calls.length).toEqual(1));
 
@@ -762,25 +815,6 @@ describe("test ga event tool chart plot option", () => {
         },
       ]);
     });
-
-    // Click the update button.
-    fireEvent.click(timelineToolChart.getByText("Edit Source"));
-    await waitFor(() =>
-      expect(timelineToolChart.getByText("Update")).toBeTruthy()
-    );
-    fireEvent.click(timelineToolChart.getByText("Update"));
-    await waitFor(() => {
-      // Check the gtag is called once, four times in total.
-      expect(mockgtag.mock.calls.length).toEqual(4);
-      // Check the parameters passed to the gtag.
-      expect(mockgtag.mock.lastCall).toEqual([
-        "event",
-        GA_EVENT_TOOL_CHART_OPTION_CLICK,
-        {
-          [GA_PARAM_TOOL_CHART_OPTION]: GA_VALUE_TOOL_CHART_OPTION_EDIT_SOURCES,
-        },
-      ]);
-    });
   });
   test("call gtag when scatter tool chart option is clicked", async () => {
     // Mock gtag.
@@ -789,9 +823,11 @@ describe("test ga event tool chart plot option", () => {
 
     // Render the component.
     const scatterToolChart = render(
-      <ScatterContext.Provider value={SCATTER_CONTEXT}>
-        <ScatterToolChart {...SCATTER_PROPS} />
-      </ScatterContext.Provider>
+      <ThemeProvider theme={theme}>
+        <ScatterContext.Provider value={SCATTER_CONTEXT}>
+          <ScatterToolChart {...SCATTER_PROPS} />
+        </ScatterContext.Provider>
+      </ThemeProvider>
     );
     // Wait for gtag event tool chart plot to be called.
     await waitFor(() => expect(mockgtag.mock.calls.length).toEqual(1));
@@ -915,25 +951,6 @@ describe("test ga event tool chart plot option", () => {
       // Check gtag is called once, eight times in total.
       expect(mockgtag.mock.calls.length).toEqual(8);
     });
-
-    // Click the update button.
-    fireEvent.click(scatterToolChart.getByText("Edit Source"));
-    await waitFor(() =>
-      expect(scatterToolChart.getByText("Update")).toBeTruthy()
-    );
-    fireEvent.click(scatterToolChart.getByText("Update"));
-    await waitFor(() => {
-      // Check gtag is called once, nine times in total.
-      expect(mockgtag.mock.calls.length).toEqual(9);
-      // Check the parameters passed to the gtag.
-      expect(mockgtag.mock.lastCall).toEqual([
-        "event",
-        GA_EVENT_TOOL_CHART_OPTION_CLICK,
-        {
-          [GA_PARAM_TOOL_CHART_OPTION]: GA_VALUE_TOOL_CHART_OPTION_EDIT_SOURCES,
-        },
-      ]);
-    });
   });
   test("call gtag when map tool chart option is clicked", async () => {
     // Mock gtag.
@@ -942,9 +959,11 @@ describe("test ga event tool chart plot option", () => {
 
     // Render the component.
     const mapToolChart = render(
-      <MapContext.Provider value={MAP_CONTEXT}>
-        <MapToolChart {...MAP_PROPS} />
-      </MapContext.Provider>
+      <ThemeProvider theme={theme}>
+        <MapContext.Provider value={MAP_CONTEXT}>
+          <MapToolChart {...MAP_PROPS} />
+        </MapContext.Provider>
+      </ThemeProvider>
     );
     await waitFor(() => expect(mockgtag.mock.calls.length).toEqual(1));
 
@@ -965,22 +984,72 @@ describe("test ga event tool chart plot option", () => {
         },
       ]);
     });
+  });
+});
 
-    // Click the update button.
-    fireEvent.click(mapToolChart.getByText("Edit Source"));
-    await waitFor(() => expect(mapToolChart.getByText("Update")).toBeTruthy());
-    fireEvent.click(mapToolChart.getByText("Update"));
+describe("test ga event for the FacetSelector component", () => {
+  test("triggers GA event when FacetSelector's update button is clicked", async () => {
+    const { ToolChartHeader } = await import(
+      "../tools/shared/vis_tools/tool_chart_header"
+    );
+
+    // Mock gtag
+    const mockgtag = jest.fn();
+    window.gtag = mockgtag;
+
+    // Mock facet list to allow the dialog to open.
+    const mockFacetList: FacetSelectorFacetInfo[] = [
+      {
+        dcid: STAT_VAR_1,
+        name: STAT_VAR_1,
+        metadataMap: {
+          facet1: {
+            importName: "Test Import",
+            measurementMethod: "Test Method",
+            observationPeriod: "P1Y",
+            scalingFactor: "1",
+            unit: "USD",
+          },
+        },
+      },
+    ];
+
+    const mockOnSvFacetIdUpdated = jest.fn();
+    const svFacetId = { [STAT_VAR_1]: "facet1" };
+
+    const { getByText } = render(
+      <ThemeProvider theme={theme}>
+        <ToolChartHeader
+          svFacetId={svFacetId}
+          facetList={mockFacetList}
+          facetListLoading={false}
+          facetListError={false}
+          onSvFacetIdUpdated={mockOnSvFacetIdUpdated}
+        />
+      </ThemeProvider>
+    );
+
     await waitFor(() => {
-      // Check the gtag is called once, three times in total.
-      expect(mockgtag.mock.calls.length).toEqual(3);
-      // Check the parameters passed to the gtag.
-      expect(mockgtag.mock.lastCall).toEqual([
+      const button = getByText(/Select (?:a\s+)?dataset/i);
+      expect((button as HTMLButtonElement).disabled).toBe(false);
+    });
+
+    fireEvent.click(getByText(/Select (?:a\s+)?dataset/i));
+
+    await waitFor(() => {
+      expect(getByText("Update")).toBeTruthy();
+    });
+
+    fireEvent.click(getByText("Update"));
+
+    await waitFor(() => {
+      expect(mockgtag).toHaveBeenCalledWith(
         "event",
         GA_EVENT_TOOL_CHART_OPTION_CLICK,
         {
           [GA_PARAM_TOOL_CHART_OPTION]: GA_VALUE_TOOL_CHART_OPTION_EDIT_SOURCES,
-        },
-      ]);
+        }
+      );
     });
   });
 });

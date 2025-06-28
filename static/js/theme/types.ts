@@ -67,6 +67,19 @@ export interface Theme {
     width: number;
   };
   colors: {
+    blacks?: {
+      A000: string;
+      A100: string;
+      A200: string;
+      A300: string;
+      A400: string;
+      A500: string;
+      A600: string;
+      A700: string;
+      A800: string;
+      A900: string;
+      A950: string;
+    };
     text?: {
       primary?: {
         base?: string;
@@ -184,22 +197,18 @@ export interface Theme {
     family: {
       text: {
         fontFamily: string;
-        fontDisplay: string;
         fontStyle: string;
       };
       heading: {
         fontFamily: string;
-        fontDisplay: string;
         fontStyle: string;
       };
       extra?: {
         fontFamily: string;
-        fontDisplay: string;
         fontStyle: string;
       };
       code?: {
         fontFamily: string;
-        fontDisplay: string;
         fontStyle: string;
       };
     };
@@ -252,6 +261,77 @@ export interface Theme {
           };
     };
   };
+  button: {
+    variant: {
+      standard?: {
+        backgroundColor: string;
+        color: string;
+        border: string;
+        borderRadius: string;
+        [key: string]:
+          | string
+          | number
+          | {
+              backgroundColor: string;
+              color: string;
+              border: string;
+            };
+      };
+      inverted?: {
+        backgroundColor: string;
+        color: string;
+        border: string;
+        borderRadius: string;
+        [key: string]:
+          | string
+          | number
+          | {
+              backgroundColor: string;
+              color: string;
+              border: string;
+            };
+      };
+      text?: {
+        backgroundColor: string;
+        color: string;
+        border: string;
+        borderRadius: string;
+        [key: string]:
+          | string
+          | number
+          | {
+              backgroundColor: string;
+              color: string;
+              border: string;
+            };
+      };
+      flat?: {
+        backgroundColor: string;
+        color: string;
+        border: string;
+        borderRadius: string;
+        [key: string]:
+          | string
+          | number
+          | {
+              backgroundColor: string;
+              color: string;
+              border: string;
+            };
+      };
+    };
+    size: {
+      sm?: {
+        padding: string;
+      };
+      md?: {
+        padding: string;
+      };
+      lg?: {
+        padding: string;
+      };
+    };
+  };
   elevation: {
     none: {
       boxShadow: string;
@@ -292,9 +372,8 @@ export interface Theme {
     };
   };
   zIndex: {
-    primary?: number;
-    secondary?: number;
-    tertiary?: number;
+    tooltip: number;
+    dialog: number;
   };
   tooltip: {
     width?: string;
