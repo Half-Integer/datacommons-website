@@ -75,6 +75,7 @@ export function EvalList(props: EvalListPropType): JSX.Element {
         className="eval-list-modal"
         isOpen={modalOpen}
         toggle={toggleModal}
+        zIndex={"10001"}
       >
         <div className="header">
           <div className="title">

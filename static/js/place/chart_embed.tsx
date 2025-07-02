@@ -409,6 +409,7 @@ class ChartEmbed extends React.Component<
         container={this.props.container}
         onOpened={this.onOpened}
         id={this.modalId}
+        zIndex={"10001"}
       >
         <ModalHeader toggle={this.toggle}>
           {intl.formatMessage({

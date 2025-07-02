@@ -166,7 +166,12 @@ export function StatVarChooser(props: StatVarChooserProps): JSX.Element {
         }
       />
       {/* Modal for selecting 2 stat vars when a third is selected */}
-      <Modal isOpen={modalOpen} backdrop="static" id="statvar-modal">
+      <Modal
+        isOpen={modalOpen}
+        backdrop="static"
+        id="statvar-modal"
+        zIndex={"10001"}
+      >
         <ModalHeader toggle={closeModal}>
           Only Two Statistical Variables Supported
         </ModalHeader>

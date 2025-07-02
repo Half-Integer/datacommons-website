@@ -144,6 +144,7 @@ export function StatVarWidget(props: StatVarWidgetPropsType): JSX.Element {
         className="modal-dialog-centered modal-lg"
         contentClassName="modal-sv-widget"
         scrollable={true}
+        zIndex={"10001"}
       >
         <ModalHeader toggle={props.openSvHierarchyModalCallback}>
           Select Variables
