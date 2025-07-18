@@ -148,15 +148,15 @@ export function TileMetadataModalSimple(
               gap: ${theme.spacing.lg}px;
               && {
                 h4 {
-                  ${theme.typography.family.text}
-                  ${theme.typography.text.md}
+                  ${theme.font.family.text}
+                  ${theme.font.text.md}
                 font-weight: 900;
                   margin: 0;
                 }
                 p,
                 li {
-                  ${theme.typography.family.text}
-                  ${theme.typography.text.md}
+                  ${theme.font.family.text}
+                  ${theme.font.text.md}
                   white-space: pre-wrap;
                   word-break: break-word;
                 }

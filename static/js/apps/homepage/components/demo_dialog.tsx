@@ -126,7 +126,7 @@ export const DemoDialog = (): ReactElement => {
           grid-template-columns: 1fr;
         }
         .box {
-          ${theme.radius.tertiary};
+          ${theme.radius.md};
           background: ${theme.colors.background.secondary.light};
           padding: ${theme.spacing.lg}px;
         }

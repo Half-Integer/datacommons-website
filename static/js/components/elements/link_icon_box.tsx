@@ -70,10 +70,10 @@ export const LinkIconBox = ({
         }
 
         & a {
-          ${theme.box.primary}
-          ${theme.elevation.primary}
-                ${theme.typography.heading.xs};
-          ${theme.radius.primary}
+          ${theme.linkBox.standard}
+          ${theme.elevation.high}
+                ${theme.font.heading.xs};
+          ${theme.radius.xl}
           display: flex;
           width: 100%;
           height: 100%;

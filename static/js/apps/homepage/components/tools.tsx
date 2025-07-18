@@ -52,8 +52,8 @@ export const Tools = ({ routes }: ToolsProps): ReactElement => {
       >
         <h3
           css={css`
-            ${theme.typography.family.heading};
-            ${theme.typography.heading.md};
+            ${theme.font.family.heading};
+            ${theme.font.heading.md};
             margin-bottom: ${theme.spacing.xl}px;
           `}
         >
@@ -61,8 +61,8 @@ export const Tools = ({ routes }: ToolsProps): ReactElement => {
         </h3>
         <p
           css={css`
-            ${theme.typography.family.text};
-            ${theme.typography.text.lg};
+            ${theme.font.family.text};
+            ${theme.font.text.lg};
           `}
         >
           Data Commons addresses offers data exploration tools and cloud-based

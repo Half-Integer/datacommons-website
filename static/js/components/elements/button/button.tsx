@@ -174,7 +174,7 @@ export const Button = forwardRef<
   const theme = useTheme();
 
   const commonStyles = css`
-    ${theme.typography.family.text}
+    ${theme.font.family.text}
     border: 0;
     margin: 0;
     padding: 0;
@@ -197,17 +197,17 @@ export const Button = forwardRef<
   const sizeStyles = {
     sm: css`
       ${theme.button.size.sm}
-      ${theme.typography.text.sm}
+      ${theme.font.text.sm}
       line-height: 1rem;
     `,
     md: css`
       ${theme.button.size.md}
-      ${theme.typography.text.md}
+      ${theme.font.text.md}
       line-height: 1rem
     `,
     lg: css`
       ${theme.button.size.lg}
-      ${theme.typography.text.lg}
+      ${theme.font.text.lg}
     `,
   };
 

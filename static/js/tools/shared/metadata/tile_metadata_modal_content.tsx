@@ -129,8 +129,8 @@ export const TileMetadataModalContent = ({
             border-top: 1px solid ${theme.colors.border.primary.light};
             && {
               h3 {
-                ${theme.typography.family.heading}
-                ${theme.typography.heading.xs}
+                ${theme.font.family.heading}
+                ${theme.font.heading.xs}
                 margin: 0 0 ${theme.spacing.sm}px 0;
                 padding: 0 0 0 0;
                 ${statVars.length > 4
@@ -138,8 +138,8 @@ export const TileMetadataModalContent = ({
                   : ""}
               }
               p {
-                ${theme.typography.family.text}
-                ${theme.typography.text.md}
+                ${theme.font.family.text}
+                ${theme.font.text.md}
                 white-space: pre-wrap;
                 word-break: break-word;
                 a {

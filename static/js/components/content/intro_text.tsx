@@ -40,13 +40,13 @@ export const IntroText = ({ children }: IntroTextProps): ReactElement => {
         }
         h2,
         h1 {
-          ${theme.typography.family.heading}
-          ${theme.typography.heading.lg}
+          ${theme.font.family.heading}
+          ${theme.font.heading.lg}
           margin-bottom: ${theme.spacing.xl}px;
         }
         p {
-          ${theme.typography.family.text}
-          ${theme.typography.text.md}
+          ${theme.font.family.text}
+          ${theme.font.text.md}
         }
       `}
     >

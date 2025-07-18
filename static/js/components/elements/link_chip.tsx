@@ -60,10 +60,10 @@ export const LinkChip = ({
   const theme = useTheme();
 
   const baseBoxStyle =
-    linkChip.variant === "elevated" ? theme.box.primary : theme.box.secondary;
+    linkChip.variant === "elevated" ? theme.linkBox.standard : theme.linkBox.inverted;
 
   const baseElevation =
-    linkChip.variant === "elevated" ? theme.elevation.primary : "";
+    linkChip.variant === "elevated" ? theme.elevation.high : "";
 
   const primaryTextColor =
     linkChip.variant === "elevated"
@@ -101,9 +101,9 @@ export const LinkChip = ({
     ${baseBoxStyle};
     ${colors}
     ${baseElevation};
-    ${theme.typography.family.text};
-    ${theme.typography.text.md};
-    ${theme.radius.primary};
+    ${theme.font.family.text};
+    ${theme.font.text.md};
+    ${theme.radius.xl};
     line-height: 1rem;
     display: inline-flex;
     justify-content: center;

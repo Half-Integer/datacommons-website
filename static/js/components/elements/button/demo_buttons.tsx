@@ -44,7 +44,7 @@ export const DemoButtons = (): ReactElement => {
         }
 
         .section {
-          ${theme.radius.tertiary};
+          ${theme.radius.md};
           background: ${theme.colors.background.secondary.light};
           padding: ${theme.spacing.lg}px;
         }
@@ -57,8 +57,8 @@ export const DemoButtons = (): ReactElement => {
         }
 
         h3 {
-          ${theme.typography.family.heading};
-          ${theme.typography.heading.xs};
+          ${theme.font.family.heading};
+          ${theme.font.heading.xs};
           margin-bottom: ${theme.spacing.md}px;
         }
       `}

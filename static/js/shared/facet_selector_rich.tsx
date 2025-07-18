@@ -125,8 +125,8 @@ export function FacetSelectorRich({
     return (
       <p
         css={css`
-          ${variant === "small" ? "font-size: 13px;" : theme.typography.text.sm}
-          ${theme.typography.family.text}
+          ${variant === "small" ? "font-size: 13px;" : theme.font.text.sm}
+          ${theme.font.family.text}
           ${theme.button.size.md}
           padding: ${facetVariant === "inline" ? "0px" : "inherit"};
           padding-left: ${facetVariant === "inline" ? "0" : theme.spacing.sm}px;
@@ -198,8 +198,8 @@ export function FacetSelectorRich({
           {facetList?.length > 1 && (
             <p
               css={css`
-                ${theme.typography.family.text}
-                ${theme.typography.text.md}
+                ${theme.font.family.text}
+                ${theme.font.text.md}
                 margin: 0 0 ${theme.spacing.md}px;
                 padding: 0;
               `}
@@ -228,8 +228,8 @@ export function FacetSelectorRich({
                   {facetList.length === 1 && (
                     <p
                       css={css`
-                        ${theme.typography.family.text}
-                        ${theme.typography.text.md}
+                        ${theme.font.family.text}
+                        ${theme.font.text.md}
                         margin: 0;
                         padding: 0;
                       `}
@@ -249,8 +249,8 @@ export function FacetSelectorRich({
                   {facetList.length > 1 && (
                     <p
                       css={css`
-                        ${theme.typography.family.text}
-                        ${theme.typography.text.md}
+                        ${theme.font.family.text}
+                        ${theme.font.text.md}
                         font-weight: 900;
                         margin: 0;
                         padding: 0;
@@ -439,8 +439,8 @@ function FacetOptionContent({
     >
       <p
         css={css`
-          ${theme.typography.family.text}
-          ${theme.typography.text.md}
+          ${theme.font.family.text}
+          ${theme.font.text.md}
           margin: 0;
           padding: 0;
           white-space: pre-wrap;
@@ -451,8 +451,8 @@ function FacetOptionContent({
       </p>
       <ul
         css={css`
-          ${theme.typography.family.text}
-          ${theme.typography.text.sm}
+          ${theme.font.family.text}
+          ${theme.font.text.sm}
           color: ${theme.colors.text.tertiary.dark};
           margin: 0;
           padding: 0;

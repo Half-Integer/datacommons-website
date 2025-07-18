@@ -72,13 +72,13 @@ export const MediaText = ({
               grid-column: 1;
             }
             & > h3 {
-              ${theme.typography.heading.md}
+              ${theme.font.heading.md}
             }
             & > h4 {
-              ${theme.typography.heading.sm}
+              ${theme.font.heading.sm}
             }
             & > p {
-              ${theme.typography.text.md}
+              ${theme.font.text.md}
             }
           `}
         >
@@ -91,8 +91,8 @@ export const MediaText = ({
         {mediaType === "image" ? (
           <figure
             css={css`
-              ${theme.elevation.secondary}
-              ${theme.radius.secondary}
+              ${theme.elevation.low}
+              ${theme.radius.lg}
                 overflow: hidden;
               background-color: ${theme.colors.background.primary.light};
             `}
@@ -110,8 +110,8 @@ export const MediaText = ({
         ) : (
           <div
             css={css`
-              ${theme.elevation.secondary}
-              ${theme.radius.secondary}
+              ${theme.elevation.low}
+              ${theme.radius.lg}
                 box-sizing: border-box;
               position: relative;
               width: 100%;
@@ -155,13 +155,13 @@ export const MediaText = ({
       <div
         css={css`
           & > h3 {
-            ${theme.typography.heading.sm}
+            ${theme.font.heading.sm}
           }
           & > h4 {
-            ${theme.typography.heading.xs}
+            ${theme.font.heading.xs}
           }
           & > p {
-            ${theme.typography.text.md}
+            ${theme.font.text.md}
           }
         `}
       >

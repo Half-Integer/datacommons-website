@@ -69,9 +69,9 @@ export const LinkBox = ({
   `;
 
   const linkStyles = css`
-    ${theme.box.primary};
-    ${theme.elevation.primary};
-    ${theme.radius.primary};
+    ${theme.linkBox.standard};
+    ${theme.elevation.high};
+    ${theme.radius.xl};
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -83,15 +83,15 @@ export const LinkBox = ({
     }
 
     p {
-      color: ${theme.colors.box[color].text};
-      ${theme.typography.text.xl};
+      color: ${theme.cards.variant[color].text};
+      ${theme.font.text.xl};
     }
 
     small {
-      color: ${theme.colors.box[color].tag};
-      background-color: ${theme.colors.box[color].pill};
-      ${theme.typography.text.xs};
-      ${theme.radius.secondary};
+      color: ${theme.cards.variant[color].tag};
+      background-color: ${theme.cards.variant[color].pill};
+      ${theme.font.text.xs};
+      ${theme.radius.lg};
       display: inline-block;
       padding: ${theme.spacing.xs}px ${theme.spacing.sm}px;
     }

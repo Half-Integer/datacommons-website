@@ -44,16 +44,16 @@ export function App(): ReactElement {
             {" "}
             <h1
               css={css`
-                ${theme.typography.family.heading};
-                ${theme.typography.heading.md};
+                ${theme.font.family.heading};
+                ${theme.font.heading.md};
               `}
             >
               Data sources
             </h1>
             <h3
               css={css`
-                ${theme.typography.family.text};
-                ${theme.typography.text.lg};
+                ${theme.font.family.text};
+                ${theme.font.text.lg};
               `}
             >
               Data Commons harmonizes public data from many places around the

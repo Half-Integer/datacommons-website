@@ -145,7 +145,7 @@ function getSectionTrigger(title: string, opened: boolean): JSX.Element {
   return (
     <div
       css={css`
-        ${theme.typography.heading.xs};
+        ${theme.font.heading.xs};
         margin-bottom: ${theme.spacing.sm}px;
         cursor: pointer;
         &:hover {
@@ -324,9 +324,9 @@ function generateRelatedEntityChips(entities: GraphEntity[]): JSX.Element {
             <a
               href={`/browser/${entity.dcid}`}
               css={css`
-                ${theme.box.primary};
-                ${theme.elevation.primary};
-                ${theme.radius.secondary};
+                ${theme.linkBox.standard};
+                ${theme.elevation.high};
+                ${theme.radius.lg};
                 color: ${theme.colors.link.primary.base};
                 line-height: 1rem;
                 display: block;
@@ -350,7 +350,7 @@ function generateRelatedEntityChips(entities: GraphEntity[]): JSX.Element {
               <p
                 css={css`
                   margin: 0;
-                  ${theme.typography.text.md};
+                  ${theme.font.text.md};
                 `}
               >
                 <span
@@ -365,7 +365,7 @@ function generateRelatedEntityChips(entities: GraphEntity[]): JSX.Element {
               <p
                 css={css`
                   margin: 0;
-                  ${theme.typography.text.sm};
+                  ${theme.font.text.sm};
                 `}
               >
                 {entity.dcid}
@@ -515,7 +515,7 @@ export function App(): ReactElement {
           <div className="header">
             <p
               css={css`
-                ${theme.typography.text.sm}
+                ${theme.font.text.sm}
               `}
             >
               Experiments by Data Commons
@@ -598,7 +598,7 @@ export function App(): ReactElement {
               >
                 <div
                   css={css`
-                    ${theme.typography.heading.md};
+                    ${theme.font.heading.md};
                   `}
                 >
                   {queryFinal}

@@ -32,8 +32,8 @@ export const BuildHero = (): ReactElement => {
       <HeroColumns.Left>
         <h2
           css={css`
-            ${theme.typography.family.heading};
-            ${theme.typography.heading.lg};
+            ${theme.font.family.heading};
+            ${theme.font.heading.lg};
             color: ${theme.colors.text.primary.light};
           `}
         >
@@ -44,8 +44,8 @@ export const BuildHero = (): ReactElement => {
             href="https://docs.datacommons.org/custom_dc?utm_source=buildpage_hero"
             title="Build your own Data Commons"
             css={css`
-              ${theme.typography.family.heading};
-              ${theme.typography.heading.lg};
+              ${theme.font.family.heading};
+              ${theme.font.heading.lg};
               color: ${theme.colors.link.primary.light};
             `}
           >
@@ -57,14 +57,14 @@ export const BuildHero = (): ReactElement => {
         <div
           css={css`
             & > h4 {
-              ${theme.typography.family.text};
-              ${theme.typography.text.md};
+              ${theme.font.family.text};
+              ${theme.font.text.md};
               color: ${theme.colors.text.primary.light};
               font-weight: 900;
             }
             & > p {
-              ${theme.typography.family.text};
-              ${theme.typography.text.md};
+              ${theme.font.family.text};
+              ${theme.font.text.md};
               color: ${theme.colors.text.primary.light};
               margin-bottom: ${theme.spacing.xxl}px;
               @media (max-width: ${theme.breakpoints.sm}px) {

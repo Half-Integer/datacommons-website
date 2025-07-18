@@ -541,8 +541,8 @@ export const Dialog = ({
               z-index: 2;
               pointer-events: ${isInteractive ? "auto" : "none"};
               overflow: hidden;
-              ${theme.elevation.primary}
-              ${theme.radius.primary};
+              ${theme.elevation.high}
+              ${theme.radius.xl};
             `,
             widthCss,
             maxWidthCss,
@@ -581,8 +581,8 @@ export const DialogTitle = ({
           padding: ${theme.spacing.lg}px ${theme.spacing.lg}px
             ${theme.spacing.sm}px ${theme.spacing.lg}px;
           && h3 {
-            ${theme.typography.family.heading}
-            ${theme.typography.heading.sm}
+            ${theme.font.family.heading}
+            ${theme.font.heading.sm}
               margin: 0;
             padding: 0 ${theme.spacing.xl}px 0 0;
           }

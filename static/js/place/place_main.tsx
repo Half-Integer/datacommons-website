@@ -45,7 +45,7 @@ import {
 
 const PlaceWarning = styled.div`
   padding: 24px;
-  font-size: ${(p) => p.theme.typography.text.md};
+  font-size: ${(p) => p.theme.font.text.md};
 `;
 
 /**

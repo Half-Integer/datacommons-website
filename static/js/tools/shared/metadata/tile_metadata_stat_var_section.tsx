@@ -71,14 +71,14 @@ export const TileMetadataStatVarSection = ({
       flex-direction: column;
       gap: 0;
       h4 {
-        ${theme.typography.family.text}
-        ${theme.typography.text.md}  
+        ${theme.font.family.text}
+        ${theme.font.text.md}  
         font-weight: 900;
         margin: 0;
       }
       p {
-        ${theme.typography.family.text}
-        ${theme.typography.text.md}
+        ${theme.font.family.text}
+        ${theme.font.text.md}
         white-space: pre-wrap;
         word-break: break-word;
         margin: 0;
@@ -97,8 +97,8 @@ export const TileMetadataStatVarSection = ({
         display: block;
         width: 100%;
         && > h3 {
-          ${theme.typography.family.text}
-          ${theme.typography.text.lg}
+          ${theme.font.family.text}
+          ${theme.font.text.lg}
           ${metadataList.length > 1
             ? "display: flex; justify-content: space-between;"
             : "display: block;"}
@@ -113,8 +113,8 @@ export const TileMetadataStatVarSection = ({
         {metadataList.length > 1 && (
           <small
             css={css`
-              ${theme.typography.family.text}
-              ${theme.typography.text.md}
+              ${theme.font.family.text}
+              ${theme.font.text.md}
             `}
           >
             {metadataList.length}{" "}

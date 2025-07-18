@@ -83,8 +83,8 @@ export const BrickWall = ({ title, bricks }: BrickWallProps): ReactElement => {
         >
           <h3
             css={css`
-              ${theme.typography.family.heading};
-              ${theme.typography.heading.md};
+              ${theme.font.family.heading};
+              ${theme.font.heading.md};
             `}
           >
             {title}
@@ -134,11 +134,11 @@ export const BrickWall = ({ title, bricks }: BrickWallProps): ReactElement => {
                       `}
 
                       a {
-                        ${theme.box.primary}
-                        ${theme.elevation.primary}
-                        ${theme.typography.family.text}
-                        ${theme.typography.text.xl}
-                        ${theme.radius.primary}
+                        ${theme.linkBox.standard}
+                        ${theme.elevation.high}
+                        ${theme.font.family.text}
+                        ${theme.font.text.xl}
+                        ${theme.radius.xl}
                         display: flex;
                         flex-direction: column;
                         align-items: flex-start;

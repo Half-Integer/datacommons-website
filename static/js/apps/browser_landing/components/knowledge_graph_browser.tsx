@@ -55,8 +55,8 @@ export const KnowledgeGraphBrowser = ({
           >
             <h3
               css={css`
-                ${theme.typography.family.heading};
-                ${theme.typography.heading.md};
+                ${theme.font.family.heading};
+                ${theme.font.heading.md};
               `}
             >
               {category.title}
@@ -86,8 +86,8 @@ export const KnowledgeGraphBrowser = ({
               <li
                 key={item.endpoint}
                 css={css`
-                  ${theme.typography.family.text};
-                  ${theme.typography.text.lg};
+                  ${theme.font.family.text};
+                  ${theme.font.text.lg};
                   margin: 0;
                   padding: 0;
                   list-style: none;
@@ -100,8 +100,8 @@ export const KnowledgeGraphBrowser = ({
             {category.categoryEndpoint && (
               <li
                 css={css`
-                  ${theme.typography.family.text};
-                  ${theme.typography.text.lg};
+                  ${theme.font.family.text};
+                  ${theme.font.text.lg};
                   margin: 0;
                   padding: 0;
                   list-style: none;
@@ -111,8 +111,8 @@ export const KnowledgeGraphBrowser = ({
                 <a
                   href={`/browser/${category.categoryEndpoint}`}
                   css={css`
-                    ${theme.typography.family.text};
-                    ${theme.typography.text.lg};
+                    ${theme.font.family.text};
+                    ${theme.font.text.lg};
                     margin: 0;
                     padding: 0;
                     list-style: none;

@@ -184,7 +184,7 @@ export const SampleQuestions = ({
       >
         <h3
           css={css`
-            ${theme.typography.heading.xs}
+            ${theme.font.heading.xs}
           `}
         >
           Sample questions

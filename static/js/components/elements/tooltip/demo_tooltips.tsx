@@ -46,25 +46,25 @@ export const DemoTooltips = (): ReactElement => {
           gap: ${theme.spacing.lg}px;
         }
         .box {
-          ${theme.radius.tertiary};
+          ${theme.radius.md};
           background: ${theme.colors.background.secondary.light};
           padding: ${theme.spacing.lg}px;
         }
         p {
-          ${theme.typography.family.text};
-          ${theme.typography.text.md};
+          ${theme.font.family.text};
+          ${theme.font.text.md};
         }
         ul {
           margin: 0 0 20px 20px;
           padding: 0;
         }
         li {
-          ${theme.typography.family.text};
-          ${theme.typography.text.md};
+          ${theme.font.family.text};
+          ${theme.font.text.md};
         }
         h4 {
-          ${theme.typography.family.heading};
-          ${theme.typography.text.md};
+          ${theme.font.family.heading};
+          ${theme.font.text.md};
           font-weight: 900;
         }
       `}
@@ -72,8 +72,8 @@ export const DemoTooltips = (): ReactElement => {
       <div
         className="box"
         css={css`
-          ${theme.typography.family.text}
-          ${theme.typography.text.sm}
+          ${theme.font.family.text}
+          ${theme.font.text.sm}
         `}
       >
         A simple{" "}
@@ -119,11 +119,11 @@ export const DemoTooltips = (): ReactElement => {
             onClick={(): void => console.log("click")}
             css={css`
               border: 0;
-              ${theme.box.primary}
-              ${theme.elevation.primary}
-              ${theme.typography.family.text};
-              ${theme.typography.text.md};
-              ${theme.radius.primary};
+              ${theme.linkBox.standard}
+              ${theme.elevation.high}
+              ${theme.font.family.text};
+              ${theme.font.text.md};
+              ${theme.radius.xl};
               ${theme.colors.link.primary.base}
               line-height: 1rem;
               display: inline-flex;
@@ -632,8 +632,8 @@ export const DemoTooltips = (): ReactElement => {
       <div
         className="box"
         css={css`
-          ${theme.typography.family.text}
-          ${theme.typography.text.sm}
+          ${theme.font.family.text}
+          ${theme.font.text.sm}
         `}
       >
         You can apply arbitrary{" "}

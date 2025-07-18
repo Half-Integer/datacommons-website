@@ -242,9 +242,9 @@ const TooltipBox = styled.div<{
   $openAsPopover: boolean;
   $showArrow: boolean;
 }>`
-  ${theme.typography.family.text}
-  ${theme.typography.text.sm}
-  ${theme.elevation.primary};
+  ${theme.font.family.text}
+  ${theme.font.text.sm}
+  ${theme.elevation.high};
   max-width: ${({ $maxWidth }): string => $maxWidth};
   background-color: ${theme.colors.box.tooltip.pill};
   color: ${theme.colors.box.tooltip.text};
@@ -265,9 +265,9 @@ const TooltipBox = styled.div<{
 
   ${({ $placement, $showArrow }): string | { borderRadius: string } => {
     if (!$showArrow) {
-      return theme.radius.tertiary;
+      return theme.radius.md;
     }
-    const baseRadius = theme.radius.tertiary.borderRadius;
+    const baseRadius = theme.radius.md.borderRadius;
     const placementRules = [
       { prefix: "top-start", rule: "border-bottom-left-radius: 0px;" },
       { prefix: "top-end", rule: "border-bottom-right-radius: 0px;" },
@@ -287,11 +287,11 @@ const TooltipBox = styled.div<{
         ${match.rule}
       `;
     }
-    return theme.radius.tertiary;
+    return theme.radius.md;
   }}
 
-  ${theme.typography.family.text}
-  ${theme.typography.text.sm}
+  ${theme.font.family.text}
+  ${theme.font.text.sm}
   white-space: pre-wrap;
   word-break: break-word;
   h1,
@@ -302,8 +302,8 @@ const TooltipBox = styled.div<{
   big {
     padding: 0;
     margin: 0;
-    ${theme.typography.family.heading}
-    ${theme.typography.text.sm}
+    ${theme.font.family.heading}
+    ${theme.font.text.sm}
     font-weight: 600;
     white-space: pre-wrap;
     word-break: break-word;

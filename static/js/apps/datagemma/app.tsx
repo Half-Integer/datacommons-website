@@ -61,7 +61,7 @@ function getSectionTrigger(title: string, opened: boolean): JSX.Element {
   return (
     <div
       css={css`
-        ${theme.typography.heading.md};
+        ${theme.font.heading.md};
         margin-bottom: ${theme.spacing.sm}px;
         cursor: pointer;
         &:hover {
@@ -267,7 +267,7 @@ export function App(): ReactElement {
             <div>
               <div
                 css={css`
-                  ${theme.typography.heading.md};
+                  ${theme.font.heading.md};
                   margin-bottom: ${theme.spacing.sm}px;
                 `}
               >
