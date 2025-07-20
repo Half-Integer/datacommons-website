@@ -13,7 +13,8 @@
 # limitations under the License.
 """
 This script retrives the metadata from the data commons API or BigQuery (BQ) table and exports it in the following stages:
-1. Import the existing data commons SVs from either the existing NL SVs or BigQuery. If importing from BQ, separate the table into pages of up to 3000 SVs.
+1. Import the existing data commons SVs from either the existing NL SVs or BigQuery. 
+   If importing from BQ, separate the table into {num_partitions} and only process the SVs from {curr_partition} as specified by flag arguments, returning the data in pages of up to 3000 SVs.
 2. For each page, extract the metadata (either from DC API or BQ) and any constraintProperties to store in a list. 
 3. Optionally, call the Gemini API in parallel batches of up to 100 SVs each to generate approximately 5 alternative sentences per SV based on the metadata. 
    Also translate the metadata if a target language is specified.
@@ -30,12 +31,12 @@ import os
 from datacommons_client.client import DataCommonsClient
 from dotenv import load_dotenv
 from gemini_prompt import get_gemini_prompt
-from google import genai
 from google.api_core.page_iterator import Iterator
 from google.api_core.page_iterator import Page
 from google.cloud import bigquery
 from google.cloud import storage
 from google.genai import types
+import google.genai as genai
 import pandas as pd
 from sv_types import englishSchema
 from sv_types import frenchSchema
@@ -46,7 +47,9 @@ DOTENV_FILE_PATH = "tools/nl/nl_metadata/.env"
 
 BATCH_SIZE = 100
 PAGE_SIZE = 3000
-BIGQUERY_QUERY = "SELECT * FROM `datcom-store.dc_kg_latest.StatisticalVariable` WHERE name IS NOT NULL"
+# BigQuery query to fetch the SVs. Excludes experimental SVs because they are not present in the prod data commons KG.
+# Also excludes SVs with null names, as these don't have enough metadata for Gemini to generate alt sentences.
+BIGQUERY_QUERY_BASE = "SELECT * FROM `datcom-store.dc_kg_latest.StatisticalVariable` WHERE name IS NOT NULL AND prov_id != \"dc/base/ExperimentalStatVars\""
 STAT_VAR_SHEET = "tools/nl/embeddings/input/base/sheets_svs.csv"
 EXPORTED_FILE_DIR = "tools/nl/nl_metadata"
 EXPORTED_FILENAME_PREFIX = "sv_complete_metadata"
@@ -71,12 +74,13 @@ RETRY_DELAY_SECONDS = 2
 
 load_dotenv(dotenv_path=DOTENV_FILE_PATH)
 DC_API_KEY = os.getenv("DC_API_KEY")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 
 def extract_flag() -> argparse.Namespace:
   """
-  Extracts the --generateAltSentences, -language, --saveToGCS and --useBigQuery flags from the command line arguments.
-  Note that for --generateAltSentences, --saveToGCS, and --useBigQuery, if these flags are present in the command line, 
+  Defines and extracts the script flags from the command line arguments.
+  Note that for boolean flags (--generateAltSentences, --saveToGCS, and --useBigQuery), if these flags are present in the command line, 
   they will be set to True.
   """
   parser = argparse.ArgumentParser(description="./add_metadata.py")
@@ -87,7 +91,12 @@ def extract_flag() -> argparse.Namespace:
       action="store_true",
       default=False)
   parser.add_argument(
-      "-language",
+      "--geminiApiKey",
+      help="The Gemini API key to use for generating alternative sentences.",
+      type=str,
+      default=GEMINI_API_KEY)  # Default to the key in .env
+  parser.add_argument(
+      "--language",
       help=
       "The language to return the metadata results in. Currently supports English, French, and Spanish.",
       choices=["English", "French", "Spanish"
@@ -104,8 +113,61 @@ def extract_flag() -> argparse.Namespace:
       "Whether to pull all 700,000+ statvars from BigQuery. If false/unspecified, only statvars used for NL will be used.",
       action="store_true",
       default=False)
+  parser.add_argument(
+      "--maxStatVars",
+      help=
+      "The maximum number of statvars to process from BigQuery. If specified, will limit the number of statvars processed to this number.",
+      type=int,
+      default=None)
+  parser.add_argument(
+      "--gcsFolder",
+      help=
+      "The folder in the GCS bucket to save the results to. Defaults to 'statvar_metadata'.",
+      type=str,
+      default=GCS_FILE_DIR)
+  parser.add_argument(
+      "--totalPartitions",
+      help=
+      "The total number of partitions to run in parallel, each using a different Gemini API key. Only used if --useBigQuery is specified.",
+      type=int,
+      default=1)
+  parser.add_argument(
+      "--currPartition",
+      help=
+      "The current partition number (0-indexed) to run. Should be within the range [0, totalPartitions). Only used if --useBigQuery is specified.",
+      type=int,
+      default=0)
   args = parser.parse_args()
   return args
+
+
+def verify_args(args: argparse.Namespace) -> None:
+  """
+  Verifies the command line arguments passed to the script.
+  Raises an error if any of the arguments are invalid.
+  """
+  if args.totalPartitions <= 0:
+    raise ValueError("Total number of partitions must be greater than 0.")
+  if args.currPartition < 0 or args.currPartition >= args.totalPartitions:
+    raise ValueError(
+        f"Current partition number must be within the range [0, {args.totalPartitions})."
+    )
+  if args.maxStatVars is not None and args.maxStatVars <= 0:
+    raise ValueError("maxStatVars must be a positive integer.")
+
+
+def get_bq_query(num_partitions: int,
+                 curr_partition: int,
+                 limit: int | None = None) -> str:
+  """
+  Returns the BigQuery query to fetch the SVs. 
+  Uses the FARM_FINGERPRINT function to partition the SVs into num_partitions, and only fetches the SVs in the current partition.
+  If limit is specified, adds a LIMIT clause to the query.
+  """
+  query = BIGQUERY_QUERY_BASE + f" AND MOD(ABS(FARM_FINGERPRINT(id)), {num_partitions}) = {curr_partition}"
+  if limit is not None:
+    query += f" LIMIT {limit}"
+  return query
 
 
 def split_into_batches(
@@ -120,12 +182,15 @@ def split_into_batches(
   return batched_df_list
 
 
-def create_sv_metadata_bigquery() -> Iterator:
+def create_sv_metadata_bigquery(num_partitions: int,
+                                curr_partition: int,
+                                max_stat_vars: int | None = None) -> Iterator:
   """
   Fetches all the SVs from BigQuery, and returns them in batches of PAGE_SIZE (3000).
   """
   client = bigquery.Client()
-  query_job = client.query(BIGQUERY_QUERY)
+  query = get_bq_query(num_partitions, curr_partition, max_stat_vars)
+  query_job = client.query(query)
   results = query_job.result(page_size=PAGE_SIZE)
 
   return results.pages
@@ -321,17 +386,13 @@ async def generate_alt_sentences(
 
 
 async def batch_generate_alt_sentences(
-    sv_metadata_list: list[dict[str, str | list[str]]],
+    sv_metadata_list: list[dict[str, str | list[str]]], gemini_api_key: str,
     gemini_prompt: str) -> list[dict[str, str | list[str]]]:
   """
   Separates sv_metadata_list into batches of 100 entries, and executes multiple parallel calls to generate_alt_sentences
   using Gemini and existing SV metadata. Flattens the list of results, and returns the metadata as a list of dictionaries.
   """
-  gemini_client = genai.Client(
-      vertexai=True,
-      project=GCS_PROJECT_ID,
-      location="global",
-  )
+  gemini_client = genai.Client(api_key=gemini_api_key)
   gemini_config = types.GenerateContentConfig(
       temperature=GEMINI_TEMPERATURE,
       top_p=GEMINI_TOP_P,
@@ -360,7 +421,9 @@ async def batch_generate_alt_sentences(
 
 
 def export_to_json(sv_metadata_list: list[dict[str, str | list[str]]],
-                   exported_filename: str, should_save_to_gcs: bool) -> None:
+                   exported_filename: str,
+                   should_save_to_gcs: bool,
+                   gcs_folder: str = GCS_FILE_DIR) -> None:
   """
   Exports the SV metadata list to a JSON file.
   """
@@ -368,29 +431,33 @@ def export_to_json(sv_metadata_list: list[dict[str, str | list[str]]],
   local_file_path = f"{EXPORTED_FILE_DIR}/{filename}"
   sv_metadata_df = pd.DataFrame(sv_metadata_list)
   sv_metadata_json = sv_metadata_df.to_json(orient="records", lines=True)
-  with open(local_file_path, "w") as f:
-    f.write(sv_metadata_json)
-  print(f"{len(sv_metadata_list)} statvars saved to {local_file_path}")
 
   if should_save_to_gcs:
     gcs_client = storage.Client(project=GCS_PROJECT_ID)
     bucket = gcs_client.bucket(GCS_BUCKET)
-    gcs_file_path = f"{GCS_FILE_DIR}/{filename}"
+    gcs_file_path = f"{gcs_folder}/{filename}"
     blob = bucket.blob(gcs_file_path)
     blob.upload_from_string(sv_metadata_json, content_type="application/json")
 
     print(
         f"{len(sv_metadata_list)} statvars saved to gs://{GCS_BUCKET}/{gcs_file_path}"
     )
+    return
+
+  with open(local_file_path, "w") as f:
+    f.write(sv_metadata_json)
+  print(f"{len(sv_metadata_list)} statvars saved to {local_file_path}")
 
 
 async def main():
   args: argparse.Namespace = extract_flag()
+  verify_args(args)
 
   if args.useBigQuery:
     # Fetch from all 700,000+ SVs from BigQuery
     # SV Metadata is returned as an iterator of pages, where each page contains up to PAGE_SIZE (3000) SVs.
-    sv_metadata_iter: Iterator = create_sv_metadata_bigquery()
+    sv_metadata_iter: Iterator = create_sv_metadata_bigquery(
+        args.totalPartitions, args.currPartition, args.maxStatVars)
   else:
     # Fetch from only the ~3600 SVs currently used for NL
     # SV Metadata is returned from create_sv_metadata_nl as a list of dictionaries, where each dictionary contains up to BATCH_SIZE (100) SVs.
@@ -408,9 +475,12 @@ async def main():
       print(
           f"Starting to generate alt sentences for batch number {page_number}")
       full_metadata = await batch_generate_alt_sentences(
-          full_metadata, gemini_prompt)
+          full_metadata, args.geminiApiKey, gemini_prompt)
     exported_filename = f"{exported_sv_file}_{page_number}"
-    export_to_json(full_metadata, exported_filename, args.saveToGCS)
+    if args.totalPartitions > 1:
+      exported_filename = f"{exported_sv_file}_partition{args.currPartition}_{page_number}"
+    export_to_json(full_metadata, exported_filename, args.saveToGCS,
+                   args.gcsFolder)
     page_number += 1
 
 

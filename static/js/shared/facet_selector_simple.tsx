@@ -59,8 +59,9 @@ export interface FacetSelectorFacetInfo {
 }
 
 interface FacetSelectorSimpleProps {
-  // the variant, with small being used for the old tools, standard elsewhere
-  variant?: "standard" | "small";
+  // the variant with small used for the old tools, inline as an inline
+  // text button and standard elsewhere
+  variant?: "standard" | "small" | "inline";
   // the mode of the facet selector determines the copy used in the instructions
   mode?: "chart" | "download";
   // Map of sv to selected facet id
@@ -101,6 +102,15 @@ export function FacetSelectorSimple({
     }, 0);
   }, [facetList]);
 
+  const hasAlternativeSources = useMemo(() => {
+    if (loading || !facetList) {
+      return false;
+    }
+    return facetList.some(
+      (facetInfo) => Object.keys(facetInfo.metadataMap).length > 1
+    );
+  }, [facetList, loading]);
+
   useEffect(() => {
     // If modal is closed without updating facets, we want to reset the
     // selections in the modal.
@@ -108,6 +118,32 @@ export function FacetSelectorSimple({
       setModalSelections(svFacetId);
     }
   }, [svFacetId, modalOpen]);
+
+  if (!hasAlternativeSources) {
+    if (mode === "download") {
+      return null;
+    }
+    return (
+      <p
+        css={css`
+          ${variant === "small" ? "font-size: 13px;" : theme.typography.text.sm}
+          ${theme.typography.family.text}
+          ${theme.button.size.md}
+          padding-left: ${theme.spacing.sm}px;
+          border: 1px solid transparent;
+          line-height: 1rem;
+          color: ${theme.colors.text.primary.base};
+          flex-shrink: 0;
+          visibility: ${loading ? "hidden" : "visible"};
+          margin: 0;
+        `}
+      >
+        {intl.formatMessage(
+          facetSelectionComponentMessages.NoAlternativeDatasets
+        )}
+      </p>
+    );
+  }
 
   const showSourceOptions = facetList && !error;
 
@@ -126,10 +162,12 @@ export function FacetSelectorSimple({
         `}
       >
         {intl.formatMessage(
-          facetList && facetList.length > 1
-            ? facetSelectionComponentMessages.SelectDatasets
-            : facetSelectionComponentMessages.SelectDataset
-        ) + (totalFacetOptionCount > 0 ? ` [${totalFacetOptionCount}]` : "")}
+          mode === "download"
+            ? facetList && facetList.length > 1
+              ? facetSelectionComponentMessages.SelectDatasets
+              : facetSelectionComponentMessages.SelectDataset
+            : facetSelectionComponentMessages.ExploreOtherDatasets
+        ) + (totalFacetOptionCount > 0 ? ` (${totalFacetOptionCount})` : "")}
       </Button>
       <Dialog
         open={modalOpen}
@@ -159,7 +197,7 @@ export function FacetSelectorSimple({
               {intl.formatMessage(
                 mode === "download"
                   ? facetSelectionComponentMessages.SelectDatasetsForDownloadPromptMessage
-                  : facetSelectionComponentMessages.SelectDatasetsForChartsPromptMessage
+                  : facetSelectionComponentMessages.ExploreOtherDatasetsMultipleStatVarsPromptMessage
               )}
               :
             </p>
@@ -180,7 +218,7 @@ export function FacetSelectorSimple({
                       {intl.formatMessage(
                         mode === "download"
                           ? facetSelectionComponentMessages.SelectDatasetForDownloadPromptMessage
-                          : facetSelectionComponentMessages.SelectDatasetForChartsPromptMessage
+                          : facetSelectionComponentMessages.ExploreOtherDatasetsSingleStatVarPromptMessage
                       )}{" "}
                       <span>
                         &ldquo;
