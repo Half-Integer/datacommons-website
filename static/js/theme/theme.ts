@@ -167,6 +167,10 @@ const theme: Theme = {
         fontFamily: "'Google Sans', Arial, sans-serif",
         fontStyle: "normal",
       },
+      code: {
+        fontFamily: "Courier, Monaco, Lucida Console, Courier New, monospace",
+        fontStyle: "normal",
+      },
     },
     text: {
       xs: {
@@ -372,6 +376,26 @@ const theme: Theme = {
     },
   },
   // Generic Properties
+  infoBox: {
+    backgroundColor: DC_BLUE_LIGHTEST,
+    icon: {
+      fontSize: "1.5rem",
+      lineHeight: "2rem",
+      [`@media (max-width: ${BREAKPOINTS.sm}px)`]: {
+        fontSize: "1.35rem",
+        lineHeight: "1.5rem",
+      },
+    },
+    heading: {
+      fontSize: "1.5rem",
+      lineHeight: "2rem",
+      fontWeight: 500,
+      [`@media (max-width: ${BREAKPOINTS.sm}px)`]: {
+        fontSize: "1.35rem",
+        lineHeight: "1.75rem",
+      },
+    },
+  },
   elevation: {
     none: {
       boxShadow: "none",
