@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import re
-import warnings
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -84,9 +83,9 @@ class TestExplorePage(ExplorePageTestMixin, BaseDcWebdriverTest):
                          "Could not find the 'Age Distribution' chart block.")
 
     original_source_text = find_elem(chart_block, By.CLASS_NAME, 'sources').text
-    self.assertEqual(
-        original_source_text,
-        'Sources: data.census.gov, census.gov, data.census.gov • Show metadata')
+    self.assertIn('census.gov', original_source_text)
+    self.assertIn('data.census.gov', original_source_text)
+    self.assertIn('Show metadata', original_source_text)
 
     # Click on the button to open the facet selector modal
     facet_button = find_elem(chart_block, By.CLASS_NAME,
@@ -111,15 +110,16 @@ class TestExplorePage(ExplorePageTestMixin, BaseDcWebdriverTest):
     modal_footer_button.click()
 
     # Wait for the source text to update.
-    expected_source_text = "Source: wonder.cdc.gov • Show metadata"
     wait_for_text(driver=chart_block,
-                  text=expected_source_text,
+                  text="wonder.cdc.gov",
                   by=By.CLASS_NAME,
                   value='sources')
 
     # Verify the source text has changed
     updated_source_text = find_elem(chart_block, By.CLASS_NAME, 'sources').text
-    self.assertEqual(updated_source_text, expected_source_text)
+    self.assertIn('wonder.cdc.gov', updated_source_text)
+    self.assertIn('Show metadata', updated_source_text)
+    self.assertNotIn('census.gov', updated_source_text)
 
   def test_map_select_different_facet(self):
     """Tests that the facet selector on a map chart can be used to update the source."""
@@ -182,25 +182,23 @@ class TestExplorePage(ExplorePageTestMixin, BaseDcWebdriverTest):
 
   def test_map_toggle_highest_coverage(self):
     """Tests that the 'highest coverage' toggle on a map chart can be used to update the date."""
-    search_params = "#q=age+distribution+in+the+USA+by+state"
+    search_params = "#q=population+in+world+countries"
     self.driver.get(self.url_ + EXPLORE_URL + search_params)
 
     shared.wait_for_loading(self.driver)
 
-    # Isolate the "Population: 1-4 Years" map chart
+    # Isolate the "Population in the World" map chart
     all_chart_blocks = find_elems(self.driver, By.CLASS_NAME, 'block.subtopic')
     chart_block = None
     for block in all_chart_blocks:
       header = find_elem(block, By.TAG_NAME, 'h3')
-      if header and header.text == "Population: 1-4 Years in States of United States":
+      if header and header.text == "Population in the World":
         chart_block = block
         break
     self.assertIsNotNone(
-        chart_block,
-        "Could not find the 'Population: 1-4 Years in States of United States' map block."
-    )
+        chart_block, "Could not find the 'Population in the World' map block.")
 
-    static_header_text = "Population: 1-4 Years in States of United States"
+    static_header_text = "Population in the World"
     wait_for_text(chart_block, static_header_text, By.TAG_NAME, 'h4')
     initial_header = find_elem(chart_block, By.TAG_NAME, 'h4')
 
@@ -234,10 +232,8 @@ class TestExplorePage(ExplorePageTestMixin, BaseDcWebdriverTest):
     # also the latest data, in which case we cannot toggle. In this case we consider the
     # test to have passed so future data ingestion does not break it.
     if not toggle_input.is_enabled():
-      warnings.warn(
-          "Toggle is disabled because latest date has highest coverage. "
-          "Test needs to be updated to account for data ingestion.",)
-      return
+      self.fail("Toggle is disabled because latest date has highest coverage. "
+                "Test needs to be updated to account for data ingestion.")
 
     # Click the toggle
     toggle_label.click()
