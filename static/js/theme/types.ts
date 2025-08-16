@@ -111,6 +111,13 @@ export interface Theme {
         dark?: string;
       };
     };
+    error?: {
+      primary?: {
+        base?: string;
+        light?: string;
+        dark?: string;
+      };
+    };
     background?: {
       primary?: {
         base?: string;

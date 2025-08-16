@@ -150,7 +150,7 @@ export function TileMetadataModalSimple(
                 h4 {
                   ${theme.font.family.text}
                   ${theme.font.text.md}
-                font-weight: 900;
+                  font-weight: 900;
                   margin: 0;
                 }
                 p,

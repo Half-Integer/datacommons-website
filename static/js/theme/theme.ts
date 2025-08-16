@@ -156,6 +156,13 @@ const theme: Theme = {
         dark: COLOR_OBSIDIAN,
       },
     },
+    error: {
+      primary: {
+        base: DC_RED,
+        light: DC_YELLOW,
+        dark: DC_RED_PILL_TEXT,
+      },
+    },
   },
   font: {
     family: {

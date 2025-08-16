@@ -15,30 +15,32 @@
  */
 
 /**
- * Component to edit the facet for a list of stat vars.
+ * Component to edit the facet for a list of stat vars. This is a simplified
+ * version that will be replaced by the rich version when the feature
+ * flag is removed.
  */
 
 /** @jsxImportSource @emotion/react */
 
 import { css, useTheme } from "@emotion/react";
-import _, { startCase } from "lodash";
+import _ from "lodash";
 import React, { ReactElement, useEffect, useMemo, useState } from "react";
 import { FormGroup, Input, Label } from "reactstrap";
 
-import theme from "../../../static/js/theme/theme";
-import { Button } from "../components/elements/button/button";
+import theme from "../../../../static/js/theme/theme";
+import { Button } from "../../components/elements/button/button";
 import {
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-} from "../components/elements/dialog/dialog";
-import { intl } from "../i18n/i18n";
-import { facetSelectionComponentMessages } from "../i18n/i18n_facet_selection_messages";
-import { messages } from "../i18n/i18n_messages";
-import { metadataComponentMessages } from "../i18n/i18n_metadata_messages";
-import { humanizeIsoDuration } from "./periodicity";
-import { StatMetadata } from "./stat_types";
+} from "../../components/elements/dialog/dialog";
+import { intl } from "../../i18n/i18n";
+import { facetSelectionComponentMessages } from "../../i18n/i18n_facet_selection_messages";
+import { messages } from "../../i18n/i18n_messages";
+import { metadataComponentMessages } from "../../i18n/i18n_metadata_messages";
+import { humanizeIsoDuration } from "../periodicity";
+import { StatMetadata } from "../stat_types";
 
 const SELECTOR_PREFIX = "source-selector";
 
@@ -56,7 +58,7 @@ export interface FacetSelectorFacetInfo {
   displayNames?: Record<string, string>;
 }
 
-interface FacetSelectorRichProps {
+interface FacetSelectorSimpleProps {
   // the variant with small used for the old tools, inline as an inline
   // text button and standard elsewhere
   variant?: "standard" | "small" | "inline";
@@ -77,7 +79,7 @@ interface FacetSelectorRichProps {
   ) => void;
 }
 
-export function FacetSelectorRich({
+export function FacetSelectorSimple({
   variant = "standard",
   mode,
   svFacetId,
@@ -85,11 +87,10 @@ export function FacetSelectorRich({
   loading,
   error,
   onSvFacetIdUpdated,
-}: FacetSelectorRichProps): ReactElement {
+}: FacetSelectorSimpleProps): ReactElement {
   const theme = useTheme();
   const [modalOpen, setModalOpen] = useState(false);
   const [modalSelections, setModalSelections] = useState(svFacetId);
-  const facetVariant = variant;
 
   const totalFacetOptionCount = useMemo(() => {
     if (!facetList) return 0;
@@ -128,8 +129,7 @@ export function FacetSelectorRich({
           ${variant === "small" ? "font-size: 13px;" : theme.font.text.sm}
           ${theme.font.family.text}
           ${theme.button.size.md}
-          padding: ${facetVariant === "inline" ? "0px" : "inherit"};
-          padding-left: ${facetVariant === "inline" ? "0" : theme.spacing.sm}px;
+          padding-left: ${theme.spacing.sm}px;
           border: 1px solid transparent;
           line-height: 1rem;
           color: ${theme.colors.text.primary.base};
@@ -151,7 +151,7 @@ export function FacetSelectorRich({
     <>
       <Button
         className={`${SELECTOR_PREFIX}-open-modal-button`}
-        variant={`${facetVariant === "inline" ? "text" : "flat"}`}
+        variant="flat"
         size="sm"
         onClick={(): void => setModalOpen(true)}
         disabled={loading}
@@ -159,12 +159,6 @@ export function FacetSelectorRich({
           ${variant === "small" ? "font-size: 13px;" : ""}
           flex-shrink: 0;
           visibility: ${loading ? "hidden" : "visible"};
-          ${facetVariant === "inline" ? "padding: 0;" : ""}
-          &:hover:not(:disabled):not([aria-disabled]) {
-            ${facetVariant === "inline"
-              ? "text-decoration: underline; border: 1px solid transparent;"
-              : ""}
-          }
         `}
       >
         {intl.formatMessage(
@@ -190,11 +184,7 @@ export function FacetSelectorRich({
           )}
         </DialogTitle>
         <DialogContent>
-          {error && (
-            <div>
-              {intl.formatMessage(facetSelectionComponentMessages.DatasetError)}
-            </div>
-          )}
+          {error && <div>{facetSelectionComponentMessages.DatasetError}</div>}
           {facetList?.length > 1 && (
             <p
               css={css`
@@ -214,18 +204,9 @@ export function FacetSelectorRich({
           )}
           {showSourceOptions &&
             facetList.map((facetInfo) => {
-              const facetIds = Object.keys(facetInfo.metadataMap).filter(
-                (id) => id !== ""
-              );
-              const hasOnlyOneSource = facetIds.length === 1;
-              const sourceFacetId = hasOnlyOneSource ? facetIds[0] : null;
-              const facetOptionId = sourceFacetId
-                ? `${facetInfo.dcid}-${sourceFacetId}-option`
-                : null;
-
               return (
                 <div key={facetInfo.dcid}>
-                  {facetList.length === 1 && (
+                  {facetList.length == 1 && (
                     <p
                       css={css`
                         ${theme.font.family.text}
@@ -259,90 +240,28 @@ export function FacetSelectorRich({
                       {facetInfo.name}
                     </p>
                   )}
-                  {hasOnlyOneSource ? (
-                    <div
-                      className={`${SELECTOR_PREFIX}-facet-options-section`}
-                      css={css`
-                        display: flex;
-                        flex-direction: column;
-                        padding: ${theme.spacing.md}px 0;
-                      `}
-                    >
-                      <FormGroup
-                        radio="true"
-                        key={facetInfo.dcid + sourceFacetId}
-                        css={css`
-                          margin: 0;
-                          padding: 0;
-                        `}
-                      >
-                        <Label
-                          radio="true"
-                          for={facetOptionId}
-                          css={css`
-                            display: flex;
-                            gap: ${theme.spacing.md}px;
-                            align-items: flex-start;
-                            margin: 0;
-                            padding: ${theme.spacing.sm}px ${theme.spacing.xl}px;
-                            position: relative;
-                            cursor: pointer;
-                            &:hover,
-                            &:checked {
-                              background: ${theme.colors.background.primary
-                                .light};
-                            }
-                          `}
-                        >
-                          <Input
-                            type="radio"
-                            name={facetInfo.dcid}
-                            id={facetOptionId}
-                            defaultChecked={true}
-                            onClick={(): void => {
-                              setModalSelections({
-                                ...modalSelections,
-                                [facetInfo.dcid]: "",
-                              });
-                            }}
-                            css={css`
-                              position: relative;
-                              margin: 5px 0 0 0;
-                              padding: 0;
-                            `}
-                          />
-                          <FacetOptionContent
-                            facetInfo={facetInfo}
-                            facetId={sourceFacetId}
-                            mode={mode}
-                          />
-                        </Label>
-                      </FormGroup>
-                    </div>
-                  ) : (
-                    <div
-                      className={`${SELECTOR_PREFIX}-facet-options-section`}
-                      css={css`
-                        display: flex;
-                        flex-direction: column;
-                        padding: ${theme.spacing.md}px 0;
-                      `}
-                    >
-                      {getFacetOptionJsx(
-                        facetInfo,
-                        "",
-                        modalSelections,
-                        setModalSelections,
-                        mode
-                      )}
-                      {getFacetOptionSectionJsx(
-                        facetInfo,
-                        modalSelections,
-                        setModalSelections,
-                        mode
-                      )}
-                    </div>
-                  )}
+                  <div
+                    className={`${SELECTOR_PREFIX}-facet-options-section`}
+                    css={css`
+                      padding: ${theme.spacing.lg}px ${theme.spacing.xl}px;
+                      display: flex;
+                      flex-direction: column;
+                    `}
+                  >
+                    {getFacetOptionJsx(
+                      facetInfo,
+                      "",
+                      modalSelections,
+                      setModalSelections,
+                      mode
+                    )}
+                    {getFacetOptionSectionJsx(
+                      facetInfo,
+                      modalSelections,
+                      setModalSelections,
+                      mode
+                    )}
+                  </div>
                 </div>
               );
             })}
@@ -354,16 +273,14 @@ export function FacetSelectorRich({
               setModalOpen(false);
             }}
           >
-            {intl.formatMessage(error ? messages.close : messages.cancel)}
+            {intl.formatMessage(messages.cancel)}
           </Button>
-          {!error && (
-            <Button
-              onClick={onConfirm}
-              className={`${SELECTOR_PREFIX}-update-source-button`}
-            >
-              {intl.formatMessage(facetSelectionComponentMessages.Update)}
-            </Button>
-          )}
+          <Button
+            onClick={onConfirm}
+            className={`${SELECTOR_PREFIX}-update-source-button`}
+          >
+            {intl.formatMessage(facetSelectionComponentMessages.Update)}
+          </Button>
         </DialogActions>
       </Dialog>
     </>
@@ -383,121 +300,20 @@ export function FacetSelectorRich({
 }
 
 /**
- * Renders the title and details for a given facet option.
+ * Given the metadata for a facet, gets a title for the facet
  */
-function FacetOptionContent({
-  facetInfo,
-  facetId,
-  mode,
-}: {
-  facetInfo: FacetSelectorFacetInfo;
-  facetId: string;
-  mode?: "chart" | "download";
-}): ReactElement {
-  const metadata = facetInfo.metadataMap[facetId] || {};
-  let primaryTitle: string;
-  let firstDetailItem: string | undefined;
-
+function getFacetTitle(
+  metadata: StatMetadata,
+  mode?: "chart" | "download"
+): string {
   if (_.isEmpty(metadata)) {
-    primaryTitle = intl.formatMessage(
+    return intl.formatMessage(
       mode === "download"
         ? facetSelectionComponentMessages.CombinedDatasetForDownloadOption
         : facetSelectionComponentMessages.CombinedDatasetForChartsOption
     );
-  } else {
-    const sourceTitle =
-      (facetInfo.displayNames && facetInfo.displayNames[facetId]) ||
-      metadata.sourceName ||
-      metadata.importName;
-    primaryTitle = metadata.provenanceName || sourceTitle;
-    if (primaryTitle !== sourceTitle) {
-      firstDetailItem = sourceTitle;
-    }
   }
-
-  const dateRange = [metadata.dateRangeStart, metadata.dateRangeEnd]
-    .filter(Boolean)
-    .join(" – ");
-
-  let observationPeriodDisplay: string;
-  if (metadata.observationPeriod) {
-    const humanizedPeriod = humanizeIsoDuration(metadata.observationPeriod);
-    observationPeriodDisplay =
-      humanizedPeriod !== metadata.observationPeriod
-        ? `${humanizedPeriod} (${metadata.observationPeriod})`
-        : humanizedPeriod;
-  }
-
-  return (
-    <div
-      className={`${SELECTOR_PREFIX}-facet-option-title`}
-      css={css`
-        position: relative;
-        margin: 0;
-        padding: 0;
-      `}
-    >
-      <p
-        css={css`
-          ${theme.font.family.text}
-          ${theme.font.text.md}
-          margin: 0;
-          padding: 0;
-          white-space: pre-wrap;
-          word-break: break-word;
-        `}
-      >
-        {primaryTitle}
-      </p>
-      <ul
-        css={css`
-          ${theme.font.family.text}
-          ${theme.font.text.sm}
-          color: ${theme.colors.text.tertiary.dark};
-          margin: 0;
-          padding: 0;
-          li {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            white-space: pre-wrap;
-            word-break: break-word;
-          }
-        `}
-      >
-        {firstDetailItem && <li>{firstDetailItem}</li>}
-        {metadata.measurementMethodDescription && (
-          <li>{metadata.measurementMethodDescription}</li>
-        )}
-        {metadata.unitDisplayName && (
-          <li>
-            {intl.formatMessage(metadataComponentMessages.Unit)} •{" "}
-            {startCase(metadata.unitDisplayName)}
-          </li>
-        )}
-        {metadata.scalingFactor && (
-          <li>Scaling Factor • {metadata.scalingFactor}</li>
-        )}
-        {metadata.isDcAggregate && (
-          <li>
-            {intl.formatMessage(metadataComponentMessages.DataCommonsAggregate)}
-          </li>
-        )}
-        {observationPeriodDisplay && (
-          <li>
-            {intl.formatMessage(metadataComponentMessages.ObservationPeriod)} •{" "}
-            {observationPeriodDisplay}
-          </li>
-        )}
-        {dateRange && (
-          <li>
-            {intl.formatMessage(metadataComponentMessages.MetadataDateRange)} •{" "}
-            {dateRange}
-          </li>
-        )}
-      </ul>
-    </div>
-  );
+  return metadata.importName;
 }
 
 /**
@@ -510,9 +326,12 @@ function getFacetOptionJsx(
   setModalSelections: (selections: Record<string, string>) => void,
   mode?: "chart" | "download"
 ): ReactElement {
+  const metadata = facetInfo.metadataMap[facetId] || {};
+  let facetTitle = getFacetTitle(metadata, mode);
+  if (facetInfo.displayNames && facetId in facetInfo.displayNames) {
+    facetTitle = facetInfo.displayNames[facetId];
+  }
   const selectedFacetId = modalSelections[facetInfo.dcid] || "";
-  const facetOptionId = `${facetInfo.dcid}-${facetId}-option`;
-
   return (
     <FormGroup
       radio="true"
@@ -524,25 +343,18 @@ function getFacetOptionJsx(
     >
       <Label
         radio="true"
-        for={facetOptionId}
         css={css`
           display: flex;
           gap: ${theme.spacing.md}px;
-          align-items: flex-start;
+          align-items: center;
           margin: 0;
-          padding: ${theme.spacing.sm}px ${theme.spacing.xl}px;
+          padding: 0;
           position: relative;
-          cursor: pointer;
-          &:hover,
-          &:checked {
-            background: ${theme.colors.background.primary.light};
-          }
         `}
       >
         <Input
           type="radio"
           name={facetInfo.dcid}
-          id={facetOptionId}
           defaultChecked={selectedFacetId === facetId}
           onClick={(): void => {
             setModalSelections({
@@ -552,15 +364,72 @@ function getFacetOptionJsx(
           }}
           css={css`
             position: relative;
-            margin: 5px 0 0 0;
+            margin: 0;
             padding: 0;
           `}
         />
-        <FacetOptionContent
-          facetInfo={facetInfo}
-          facetId={facetId}
-          mode={mode}
-        />
+        <div
+          className={`${SELECTOR_PREFIX}-facet-option-title`}
+          css={css`
+            position: relative;
+            margin: 0;
+            padding: 0;
+          `}
+        >
+          <p
+            css={css`
+              ${theme.font.family.text}
+              ${theme.font.text.md}
+                margin: 0;
+              padding: 0;
+              white-space: pre-wrap;
+              word-break: break-word;
+            `}
+          >
+            {facetTitle}
+          </p>
+          <ul
+            css={css`
+              ${theme.font.family.text}
+              ${theme.font.text.sm}
+                color: ${theme.colors.text.tertiary.base};
+              margin: 0;
+              padding: 0;
+              li {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                white-space: pre-wrap;
+                word-break: break-word;
+              }
+            `}
+          >
+            {metadata.measurementMethod && (
+              <li>
+                {intl.formatMessage(metadataComponentMessages.MeasuringMethod)}{" "}
+                • {metadata.measurementMethod}
+              </li>
+            )}
+            {metadata.scalingFactor && (
+              <li>Scaling Factor • {metadata.scalingFactor}</li>
+            )}
+            {metadata.unit && (
+              <li>
+                {intl.formatMessage(metadataComponentMessages.Unit)} •{" "}
+                {metadata.unit}
+              </li>
+            )}
+            {metadata.observationPeriod && (
+              <li>
+                {intl.formatMessage(
+                  metadataComponentMessages.ObservationPeriod
+                )}{" "}
+                • {humanizeIsoDuration(metadata.observationPeriod)} (
+                {metadata.observationPeriod})
+              </li>
+            )}
+          </ul>
+        </div>
       </Label>
     </FormGroup>
   );
