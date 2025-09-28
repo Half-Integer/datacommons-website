@@ -281,10 +281,6 @@ export const TabSet = ({
           justify-content: ${alignmentMap[alignment]};
           gap: 0;
 
-          @media (max-width: ${theme.breakpoints.xl}px) {
-            justify-content: flex-start;
-          }
-
           -ms-overflow-style: none;
           scrollbar-width: none;
           &::-webkit-scrollbar {
