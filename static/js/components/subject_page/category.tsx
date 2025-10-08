@@ -17,6 +17,9 @@
 /**
  * Component for rendering a category (a container for blocks).
  */
+/** @jsxImportSource @emotion/react */
+
+import { css, useTheme } from "@emotion/react";
 import React, { memo, ReactElement } from "react";
 import ReactMarkdown from "react-markdown";
 
@@ -60,6 +63,7 @@ export interface CategoryPropType {
 export const Category = memo(function Category(
   props: CategoryPropType
 ): ReactElement {
+  const theme = useTheme();
   const svProvider = new StatVarProvider(props.config.statVarSpec || {});
   const rs: ReplacementStrings = {
     placeName: props.place.name,
@@ -70,32 +74,80 @@ export const Category = memo(function Category(
     ? formatString(props.config.description, rs)
     : "";
   return (
-    <article className="category col-12" id={props.id}>
-      {title && (
-        <h2 className="block-title">
-          {!props.config.url ? (
-            <span className="block-title-text">{title}</span>
-          ) : props.config.linkText ? (
-            <>
-              <span className="block-title-text">{title}</span>
-              <a className="block-title-link" href={props.config.url}>
-                {props.config.linkText}
+    <div id={`${props.id}_wrapper`}>
+      <header
+        css={css`
+          width: 100%;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          flex-direction: column;
+          gap: ${theme.spacing.md}px;
+          padding-bottom: ${theme.spacing.xl}px;
+        `}
+      >
+        {title && (
+          <h2
+            css={css`
+              && {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                margin: 0;
+                padding-bottom: ${theme.spacing.sm}px;
+                ${theme.typography.family.heading}
+                ${theme.typography.heading.sm}
+                border-bottom: 1px solid ${theme.colors.border.secondary.base};
+              }
+            `}
+          >
+            {!props.config.url ? (
+              <>{title}</>
+            ) : props.config.linkText ? (
+              <>
+                <span>{title}</span>
+                <a
+                  href={props.config.url}
+                  title={`View ${props.config.linkText} for ${title}`}
+                  css={css`
+                    && {
+                      ${theme.typography.text.md}
+                      margin: 0;
+                      padding: 0;
+                    }
+                  `}
+                >
+                  {props.config.linkText}
+                </a>
+              </>
+            ) : (
+              <a href={props.config.url} title={title}>
+                {title}
               </a>
-            </>
-          ) : (
-            <a href={props.config.url}>{title}</a>
-          )}
-        </h2>
-      )}
-      {globalThis.viaGoogle && (
-        <p>
-          This data was imported by the Google DataCommons team. For more info,
-          see <a href="https://datacommons.org">Datacommons.org</a>.
-        </p>
-      )}
-      {description && <ReactMarkdown>{description}</ReactMarkdown>}
-      {renderBlocks(props, svProvider)}
-    </article>
+            )}
+          </h2>
+        )}
+        {globalThis.viaGoogle && (
+          <p>
+            This data was imported by the Google DataCommons team. For more
+            info, see <a href="https://datacommons.org">Datacommons.org</a>.
+          </p>
+        )}
+        {description && <ReactMarkdown>{description}</ReactMarkdown>}
+      </header>
+      <div
+        id={`${props.id}_blocks`}
+        css={css`
+          display: flex;
+          flex-direction: column;
+          gap: ${theme.spacing.xl}px;
+          padding-bottom: ${theme.spacing.xl}px;
+        `}
+      >
+        {renderBlocks(props, svProvider)}
+      </div>
+    </div>
   );
 });
 
@@ -110,6 +162,7 @@ function renderBlocks(
   const blocksJsx = props.config.blocks.map((block, i) => {
     const id = getId(props.id, BLOCK_ID_PREFIX, i);
     const commonSVSpec: StatVarSpec[] = [];
+    const theme = useTheme();
     for (const column of block.columns) {
       for (const tile of column.tiles) {
         if (!tile.statVarKey) {
@@ -184,6 +237,16 @@ function renderBlocks(
                 highlightFacet={props.highlightFacet}
               />
             </BlockContainer>
+            {i < props.config.blocks.length - 1 && (
+              <hr
+                css={css`
+                  margin: 0;
+                  padding: 0;
+                  border: 0;
+                  border-bottom: 1px solid ${theme.colors.border.secondary.base};
+                `}
+              />
+            )}
           </ErrorBoundary>
         );
     }

@@ -156,13 +156,14 @@ export function SuccessResult(props: SuccessResultPropType): ReactElement {
   const emptyPlaceOverview = shouldSkipPlaceOverview(props.pageMetadata);
   const relatedTopics = getTopics(props.pageMetadata, "");
   return (
-    <div
-      className={`row explore-charts${
+    <article
+      className={`explore-charts${
         placeOverviewOnly ? " place-overview-only" : ""
       }`}
+      id={`${PAGE_ID}_content`}
     >
       {props.hideHeaderSearchBar && (
-        <div className="search-section-container" ref={searchSectionRef}>
+        <aside className="search-section-container" ref={searchSectionRef}>
           <div className="search-section-content container">
             <DebugInfo
               debugData={props.debugData}
@@ -174,9 +175,9 @@ export function SuccessResult(props: SuccessResultPropType): ReactElement {
               exploreContext={props.exploreContext}
             />
           </div>
-        </div>
+        </aside>
       )}
-      <div className="col-12" ref={chartSectionRef}>
+      <div ref={chartSectionRef}>
         <UserMessage
           userMessage={props.userMessage}
           pageMetadata={props.pageMetadata}
@@ -185,21 +186,23 @@ export function SuccessResult(props: SuccessResultPropType): ReactElement {
         />
         {props.pageMetadata && !_.isEmpty(props.pageMetadata.pageConfig) && (
           <>
-            {!placeOverviewOnly &&
-              (showNewExploreResultHeader ? (
-                <ResultHeaderSection
-                  pageMetadata={props.pageMetadata}
-                  placeUrlVal={placeUrlVal}
-                  hideRelatedTopics={showFollowUpQuestions}
-                  query={props.query}
-                />
-              ) : (
-                <ResultHeaderSectionLegacy
-                  pageMetadata={props.pageMetadata}
-                  placeUrlVal={placeUrlVal}
-                  hideRelatedTopics={showFollowUpQuestions}
-                />
-              ))}
+            <header>
+              {!placeOverviewOnly &&
+                (showNewExploreResultHeader ? (
+                  <ResultHeaderSection
+                    pageMetadata={props.pageMetadata}
+                    placeUrlVal={placeUrlVal}
+                    hideRelatedTopics={showFollowUpQuestions}
+                    query={props.query}
+                  />
+                ) : (
+                  <ResultHeaderSectionLegacy
+                    pageMetadata={props.pageMetadata}
+                    placeUrlVal={placeUrlVal}
+                    hideRelatedTopics={showFollowUpQuestions}
+                  />
+                ))}
+            </header>
             {showPageOverview && (
               <PageOverview
                 query={props.query}
@@ -283,6 +286,6 @@ export function SuccessResult(props: SuccessResultPropType): ReactElement {
           </>
         )}
       </div>
-    </div>
+    </article>
   );
 }

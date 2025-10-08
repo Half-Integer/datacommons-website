@@ -117,6 +117,11 @@ export interface Theme {
         light?: string;
         dark?: string;
       };
+      secondary?: {
+        base?: string;
+        light?: string;
+        dark?: string;
+      };
     };
     tabs?: {
       selected?: string;

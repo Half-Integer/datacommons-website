@@ -81,41 +81,39 @@ const PlaceHeader = (props: {
   const placeHref = createPlacePageCategoryHref("Overview", place);
 
   return (
-    <div className="title-section">
-      <div className="place-info">
-        <h1>
-          <span data-testid="place-name">
-            {selectedCategory.name === "Overview" ? (
-              place.name
-            ) : (
-              <a className="place-info-link" href={placeHref}>
-                {place.name}
-              </a>
-            )}
-            {selectedCategory.name != "Overview"
-              ? ` • ${selectedCategory.translatedName}`
-              : ""}{" "}
-          </span>
-          <div className="dcid-and-knowledge-graph">
-            {intl.formatMessage(pageMessages.KnowledgeGraph)} •{" "}
-            <LocalizedLink href={`/browser/${place.dcid}`} text={place.dcid} />
-          </div>
-        </h1>
-        {isLoading && (
-          <div>
-            <Loading />
-          </div>
-        )}
-        {place.types?.length > 0 && parentPlacesLinks.length > 0 && (
-          <p className="subheader">
-            {intl.formatMessage(pageMessages.placeTypeInPlaces, {
-              placeType: displayNameForPlaceType(place.types[0]),
-              parentPlaces: parentPlacesLinks,
-            })}
-          </p>
-        )}
-      </div>
-    </div>
+    <header>
+      <h1>
+        <span data-testid="place-name">
+          {selectedCategory.name === "Overview" ? (
+            place.name
+          ) : (
+            <a href={placeHref}>
+              {place.name}
+            </a>
+          )}
+          {selectedCategory.name != "Overview"
+            ? ` • ${selectedCategory.translatedName}`
+            : ""}{" "}
+        </span>
+        <div>
+          {intl.formatMessage(pageMessages.KnowledgeGraph)} •{" "}
+          <LocalizedLink href={`/browser/${place.dcid}`} text={place.dcid} />
+        </div>
+      </h1>
+      {isLoading && (
+        <div>
+          <Loading />
+        </div>
+      )}
+      {place.types?.length > 0 && parentPlacesLinks.length > 0 && (
+        <p>
+          {intl.formatMessage(pageMessages.placeTypeInPlaces, {
+            placeType: displayNameForPlaceType(place.types[0]),
+            parentPlaces: parentPlacesLinks,
+          })}
+        </p>
+      )}
+    </header>
   );
 };
 
@@ -136,7 +134,7 @@ const CategoryItem = (props: {
   const { category, selectedCategoryName, place } = props;
 
   return (
-    <div className="item-list-item" data-testid={category.name}>
+    <div data-testid={category.name}>
       <LocalizedLink
         href={createPlacePageCategoryHref(category.name, place)}
         className={`item-list-text ${
@@ -266,7 +264,7 @@ const PlaceCharts = (props: {
 }): React.JSX.Element => {
   const { childPlaceType, place, pageConfig } = props;
   return (
-    <div className="charts-container">
+    <>
       <SubjectPageMainPane
         defaultEnclosedPlaceType={childPlaceType}
         id="place-subject-page"
@@ -274,7 +272,7 @@ const PlaceCharts = (props: {
         place={place}
         showExploreMore={true}
       />
-    </div>
+    </>
   );
 };
 

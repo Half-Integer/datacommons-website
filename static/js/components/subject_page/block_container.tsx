@@ -18,6 +18,9 @@
  * A container for blocks of all types.
  */
 
+/** @jsxImportSource @emotion/react */
+
+import { css, useTheme } from "@emotion/react";
 import React, { ReactElement, useContext } from "react";
 import ReactMarkdown from "react-markdown";
 
@@ -64,6 +67,7 @@ export interface BlockContainerPropType {
 
 export function BlockContainer(props: BlockContainerPropType): ReactElement {
   const exploreData = useContext(ExploreContext);
+  const theme = useTheme();
 
   let footnote: string;
   if (props.footnote) {
@@ -123,20 +127,59 @@ export function BlockContainer(props: BlockContainerPropType): ReactElement {
 
   return (
     <section
-      className={`block subtopic ${title ? "" : "notitle"}`}
+      // className={`block subtopic ${title ? "" : "notitle"}`}
       id={props.id}
+      css={css`
+        display: flex;
+        flex-direction: column;
+        gap: ${theme.spacing.sm}px;
+      `}
     >
       {props.infoMessage && (
         <div className="block-msg">
           <mark className="block-msg-txt">{props.infoMessage}</mark>
         </div>
       )}
-      {title && <h3>{title}</h3>}
-      {description && <p className="block-desc">{description}</p>}
-      <MetadataSummary
-        metadataSummary={props.metadataSummary}
-        metadataLoadingState={props.metadataLoadingState}
-      />
+      <header
+        css={css`
+          display: flex;
+          flex-direction: column;
+          gap: ${theme.spacing.xs}px;
+        `}
+      >
+        {title && (
+          <h3
+            css={css`
+              && {
+                ${theme.typography.family.heading}
+                ${theme.typography.heading.xs}
+                margin: 0;
+                padding: 0;
+              }
+            `}
+          >
+            {title}
+          </h3>
+        )}
+        {description && (
+          <p
+            css={css`
+              && {
+                ${theme.typography.family.text}
+                ${theme.typography.text.md}
+                margin: 0;
+                padding: 0;
+              }
+            `}
+          >
+            {description}
+          </p>
+        )}
+        <MetadataSummary
+          metadataSummary={props.metadataSummary}
+          metadataLoadingState={props.metadataLoadingState}
+        />
+      </header>
       {props.children}
       {footnote && (
         <footer className="block-footer">
@@ -144,20 +187,58 @@ export function BlockContainer(props: BlockContainerPropType): ReactElement {
         </footer>
       )}
       {!props.disableExploreMore && exploreSVSpec.length > 0 && (
-        <div id="explore-more-section">
+        <div
+          css={css`
+            ${theme.typography.family.text}
+            ${theme.typography.text.sm}
+            ${theme.radius.quaternary}
+            font-weight: 500;
+            margin-top: ${theme.spacing.md}px;
+            padding: ${theme.spacing.lg}px;
+            border: 1px solid ${theme.colors.border.secondary.base};
+            display: flex;
+            gap: ${theme.spacing.sm}px;
+            align-items: center;
+
+            // Next part should be refactored inside the Itemlist component
+            & > .item-list-container {
+              & > .item-list-inner,
+              & > .item-list-item {
+                display: flex;
+                gap: ${theme.spacing.xs}px;
+                align-items: center;
+              }
+              & > .item-list-text {
+                ${theme.typography.family.text}
+                ${theme.typography.text.sm}
+                  font-weight: 500;
+                margin: 0;
+                padding: 0;
+                text-indent: 0;
+              }
+            }
+          `}
+        >
           {exploreSVSpec.slice(0, 1).map((spec) => {
             // Only show 1 explore section now.
             return (
-              <div key={spec.statVar} className="explore-more-box">
-                <span className="explore-more-prompt">
-                  Explore {spec.name.toLowerCase()} by: &nbsp;
-                </span>
+              <>
+                <p
+                  css={css`
+                    && {
+                      margin: 0;
+                      padding: 0;
+                    }
+                  `}
+                >
+                  Explore {spec.name.toLowerCase()} by:
+                </p>
                 <ItemList
                   items={buildExploreItems(
                     exploreData.exploreMore[spec.statVar]
                   )}
                 ></ItemList>
-              </div>
+              </>
             );
           })}
         </div>

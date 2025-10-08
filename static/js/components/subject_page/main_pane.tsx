@@ -86,7 +86,7 @@ export const SubjectPageMainPane = memo(function SubjectPageMainPane(
   }
 
   return (
-    <div id="subject-page-main-pane">
+    <>
       <DataFetchContextProvider id={props.id}>
         {data &&
           data.map((category: CategoryConfig, idx: number) => {
@@ -117,6 +117,6 @@ export const SubjectPageMainPane = memo(function SubjectPageMainPane(
             );
           })}
       </DataFetchContextProvider>
-    </div>
+    </>
   );
 });

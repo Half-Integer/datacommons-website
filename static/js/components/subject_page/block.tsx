@@ -23,8 +23,10 @@
 // Import web components
 import "../../../library";
 
+import { css, useTheme } from "@emotion/react";
+import styled from "@emotion/styled";
 import axios from "axios";
-import _ from "lodash";
+import _, { divide } from "lodash";
 import React, {
   ReactElement,
   useCallback,
@@ -69,7 +71,6 @@ import {
   addPerCapitaToVersusTitle,
   convertToSortType,
   getColumnTileClassName,
-  getColumnWidth,
   getId,
   getMinTileIdxToHide,
 } from "../../utils/subject_page_utils";
@@ -78,6 +79,7 @@ import {
   getHighlightTileDescription,
 } from "../../utils/tile_utils";
 import { Help } from "../elements/icons/help";
+import { Loading } from "../elements/loading";
 import { Tooltip } from "../elements/tooltip/tooltip";
 import { AnswerMessageTile } from "../tiles/answer_message_tile";
 import { AnswerTableTile } from "../tiles/answer_table_tile";
@@ -282,8 +284,9 @@ function getBlockStatVarSpecs(
 }
 
 export function Block(props: BlockPropType): ReactElement {
+  const theme = useTheme();
   const minIdxToHide = getMinTileIdxToHide();
-  const columnWidth = getColumnWidth(props.columns);
+  const columnsCount = props.columns.length;
   const [overridePlaceTypes, setOverridePlaceTypes] =
     useState<Record<string, NamedTypedPlace>>();
   const [useDenom, setUseDenom] = useState(props.startWithDenom);
@@ -496,11 +499,73 @@ export function Block(props: BlockPropType): ReactElement {
     }
   }, [props.highlightFacet, props.denom]);
 
+  const BlockToggle = styled.div`
+    align-items: center;
+    display: flex;
+    width: auto;
+    ${theme.typography.family.text}
+    ${theme.typography.text.sm}
+
+    button, label, span {
+      ${theme.typography.family.text}
+      ${theme.typography.text.sm}
+      margin: 0;
+      padding: 0;
+      align-items: center;
+      display: flex;
+      gap: ${theme.spacing.sm}px;
+    }
+
+    label {
+      .label-disabled {
+        color: ${theme.colors.text.tertiary.base};
+      }
+    }
+
+    .form-check-input {
+      position: relative;
+      margin: 0;
+      height: 18px;
+      width: 18px;
+    }
+  `;
+
   return (
-    <>
-      <div className={`block-controls ${!facetsLoading ? "show" : ""}`}>
+    <div
+      css={css`
+        display: flex;
+        gap: ${theme.spacing.md}px;
+        flex-direction: column;
+        position: relative;
+      `}
+    >
+      {facetsLoading && (
+        <div
+          css={css`
+            ${theme.typography.family.text}
+            ${theme.typography.text.sm}
+            color: ${theme.colors.text.tertiary.base};
+            position: absolute;
+          `}
+        >
+          <Loading />
+        </div>
+      )}
+      <div
+        data-testid="block-controls"
+        css={css`
+          display: flex;
+          gap: ${theme.spacing.lg}px;
+          transition: opacity 0.3s ease-in-out;
+          opacity: ${!facetsLoading ? "1" : "0"};
+          @media (max-width: ${theme.breakpoints.md}px) {
+            flex-direction: column;
+            gap: ${theme.spacing.md}px;
+          }
+        `}
+      >
         {showFacetSelector && (
-          <div className="block-modal-trigger">
+          <BlockToggle>
             <FacetSelector
               svFacetId={facetOverrides}
               facetList={facetList}
@@ -510,10 +575,10 @@ export function Block(props: BlockPropType): ReactElement {
               variant="inline"
               allowSelectionGrouping={shouldGroupFacetSelections}
             />
-          </div>
+          </BlockToggle>
         )}
         {denom && (
-          <div className="block-toggle">
+          <BlockToggle>
             <label>
               <Input
                 type="checkbox"
@@ -524,10 +589,10 @@ export function Block(props: BlockPropType): ReactElement {
                 {intl.formatMessage(messages.seePerCapita)}
               </span>
             </label>
-          </div>
+          </BlockToggle>
         )}
         {showSnapToHighestCoverageCheckbox && (
-          <div className="block-toggle">
+          <BlockToggle>
             <label>
               <Input
                 checked={snapToHighestCoverage}
@@ -542,20 +607,44 @@ export function Block(props: BlockPropType): ReactElement {
                   chartComponentMessages.SnapToDateHighestCoverageLabel
                 )}
               </span>
+              <Tooltip
+                title={intl.formatMessage(
+                  enableSnapToLatestData
+                    ? chartComponentMessages.SnapToDateHighestCoverageTooltip
+                    : chartComponentMessages.SnapToDateHighestCoverageOverlapTooltip
+                )}
+              >
+                <Help
+                  css={css`
+                    width: 18px;
+                    height: 18px;
+                    color: ${theme.colors.text.tertiary.base};
+                  `}
+                />
+              </Tooltip>
             </label>
-            <Tooltip
-              title={intl.formatMessage(
-                enableSnapToLatestData
-                  ? chartComponentMessages.SnapToDateHighestCoverageTooltip
-                  : chartComponentMessages.SnapToDateHighestCoverageOverlapTooltip
-              )}
-            >
-              <Help className="material-icons" />
-            </Tooltip>
-          </div>
+          </BlockToggle>
         )}
       </div>
-      <div className="block-body row" ref={columnSectionRef}>
+      <div
+        ref={columnSectionRef}
+        css={css`
+          display: grid;
+          grid-template-columns: repeat(${columnsCount}, 1fr);
+          gap: ${theme.spacing.xl}px;
+          & > .block-column {
+            padding: 0;
+            margin: 0;
+            & > .chart-container {
+              margin: 0;
+            }
+          }
+          @media (max-width: ${theme.breakpoints.md}px) {
+            grid-template-columns: 1fr;
+            gap: ${theme.spacing.md}px;
+          }
+        `}
+      >
         {props.columns &&
           props.columns.map((column, idx) => {
             const id = getId(props.id, COLUMN_ID_PREFIX, idx);
@@ -567,7 +656,7 @@ export function Block(props: BlockPropType): ReactElement {
                 key={id}
                 id={id}
                 config={column}
-                width={columnWidth}
+                width="100%"
                 tiles={
                   props.showWebComponents
                     ? renderWebComponents(
@@ -614,7 +703,7 @@ export function Block(props: BlockPropType): ReactElement {
           <span className="expando-text">Show more</span>
         </div>
       )}
-    </>
+    </div>
   );
 
   // Removes HIDE_COLUMN_CLASS from all columns in this block and hides the
@@ -934,17 +1023,17 @@ function renderTiles(
         console.log("Tile type not supported:" + tile.type);
     }
   });
-  if (tilesJsx.length > 1) {
-    return (
-      <div className="row">
-        {tilesJsx.map((tileJsx, tileJsxIndex) => (
-          <div key={tileJsxIndex} className="col-md-6">
-            {tileJsx}
-          </div>
-        ))}
-      </div>
-    );
-  }
+  // if (tilesJsx.length > 1) {
+  //   return (
+  //     <>
+  //       {tilesJsx.map((tileJsx, tileJsxIndex) => (
+  //         <div key={tileJsxIndex}>
+  //           {tileJsx}
+  //         </div>
+  //       ))}
+  //     </>
+  //   );
+  // }
   return <>{tilesJsx}</>;
 }
 

@@ -153,6 +153,9 @@ const theme: Theme = {
         dark: DC_BLUE_DARK,
         light: DC_BLACK_80,
       },
+      secondary: {
+        base: DC_BLACK_90,
+      },
     },
     tabs: {
       selected: DC_BLUE,

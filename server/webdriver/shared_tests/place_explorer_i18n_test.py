@@ -191,7 +191,7 @@ class PlaceI18nExplorerTestMixin():
     self.assertEqual(
         find_elem(self.driver,
                   by=By.CSS_SELECTOR,
-                  value=".block-controls [data-testid='see-per-capita']").text,
+                  value="[data-testid='see-per-capita']").text,
         "1 人あたりのデータを表示")
 
     # Test that related places callout is translated
