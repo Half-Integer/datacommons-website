@@ -127,7 +127,6 @@ export function BlockContainer(props: BlockContainerPropType): ReactElement {
 
   return (
     <section
-      // className={`block subtopic ${title ? "" : "notitle"}`}
       id={props.id}
       css={css`
         display: flex;

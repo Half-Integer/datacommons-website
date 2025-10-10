@@ -28,6 +28,7 @@ import styled from "@emotion/styled";
 import axios from "axios";
 import _, { divide } from "lodash";
 import React, {
+  Fragment,
   ReactElement,
   useCallback,
   useEffect,
@@ -286,7 +287,6 @@ function getBlockStatVarSpecs(
 export function Block(props: BlockPropType): ReactElement {
   const theme = useTheme();
   const minIdxToHide = getMinTileIdxToHide();
-  const columnsCount = props.columns.length;
   const [overridePlaceTypes, setOverridePlaceTypes] =
     useState<Record<string, NamedTypedPlace>>();
   const [useDenom, setUseDenom] = useState(props.startWithDenom);
@@ -630,9 +630,14 @@ export function Block(props: BlockPropType): ReactElement {
         ref={columnSectionRef}
         css={css`
           display: grid;
-          grid-template-columns: repeat(${columnsCount}, 1fr);
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr;
           gap: ${theme.spacing.xl}px;
           & > .block-column {
+            display: grid;
+            grid-auto-flow: column;
+            grid-auto-columns: 1fr;
+            gap: ${theme.spacing.xl}px;
             padding: 0;
             margin: 0;
             & > .chart-container {
@@ -1023,17 +1028,15 @@ function renderTiles(
         console.log("Tile type not supported:" + tile.type);
     }
   });
-  // if (tilesJsx.length > 1) {
-  //   return (
-  //     <>
-  //       {tilesJsx.map((tileJsx, tileJsxIndex) => (
-  //         <div key={tileJsxIndex}>
-  //           {tileJsx}
-  //         </div>
-  //       ))}
-  //     </>
-  //   );
-  // }
+  if (tilesJsx.length > 1) {
+    return (
+      <>
+        {tilesJsx.map((tileJsx, tileJsxIndex) => (
+          <Fragment key={tileJsxIndex}>{tileJsx}</Fragment>
+        ))}
+      </>
+    );
+  }
   return <>{tilesJsx}</>;
 }
 
@@ -1079,6 +1082,7 @@ function renderWebComponents(
           : description;
         return (
           <datacommons-highlight
+            type={"div"}
             key={id}
             id={id}
             description={description}

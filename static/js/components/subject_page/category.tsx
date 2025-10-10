@@ -74,68 +74,77 @@ export const Category = memo(function Category(
     ? formatString(props.config.description, rs)
     : "";
   return (
-    <div id={`${props.id}_wrapper`}>
-      <header
-        css={css`
-          width: 100%;
-          margin: 0;
-          padding: 0;
-          display: flex;
-          flex-direction: column;
-          gap: ${theme.spacing.md}px;
-          padding-bottom: ${theme.spacing.xl}px;
-        `}
-      >
-        {title && (
-          <h2
-            css={css`
-              && {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                width: 100%;
-                margin: 0;
-                padding-bottom: ${theme.spacing.sm}px;
-                ${theme.typography.family.heading}
-                ${theme.typography.heading.sm}
-                border-bottom: 1px solid ${theme.colors.border.secondary.base};
-              }
-            `}
-          >
-            {!props.config.url ? (
-              <>{title}</>
-            ) : props.config.linkText ? (
-              <>
-                <span>{title}</span>
-                <a
-                  href={props.config.url}
-                  title={`View ${props.config.linkText} for ${title}`}
-                  css={css`
-                    && {
-                      ${theme.typography.text.md}
-                      margin: 0;
-                      padding: 0;
-                    }
-                  `}
-                >
-                  {props.config.linkText}
+    <div
+      id={`${props.id}_wrapper`}
+      css={css`
+        margin: 0;
+        padding: 0;
+      `}
+    >
+      {(title || globalThis.viaGoogle || description) && (
+        <header
+          css={css`
+            width: 100%;
+            height: auto;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: ${theme.spacing.md}px;
+          `}
+        >
+          {title && (
+            <h2
+              css={css`
+                && {
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  width: 100%;
+                  margin: 0;
+                  padding-bottom: ${theme.spacing.sm}px;
+                  ${theme.typography.family.heading}
+                  ${theme.typography.heading.sm}
+                  border-bottom: 1px solid ${theme.colors.border.secondary
+                    .base};
+                }
+              `}
+            >
+              {!props.config.url ? (
+                <>{title}</>
+              ) : props.config.linkText ? (
+                <>
+                  <span>{title}</span>
+                  <a
+                    href={props.config.url}
+                    title={`View ${props.config.linkText} for ${title}`}
+                    css={css`
+                      && {
+                        ${theme.typography.text.md}
+                        margin: 0;
+                        padding: 0;
+                      }
+                    `}
+                  >
+                    {props.config.linkText}
+                  </a>
+                </>
+              ) : (
+                <a href={props.config.url} title={title}>
+                  {title}
                 </a>
-              </>
-            ) : (
-              <a href={props.config.url} title={title}>
-                {title}
-              </a>
-            )}
-          </h2>
-        )}
-        {globalThis.viaGoogle && (
-          <p>
-            This data was imported by the Google DataCommons team. For more
-            info, see <a href="https://datacommons.org">Datacommons.org</a>.
-          </p>
-        )}
-        {description && <ReactMarkdown>{description}</ReactMarkdown>}
-      </header>
+              )}
+            </h2>
+          )}
+          {globalThis.viaGoogle && (
+            <p>
+              This data was imported by the Google DataCommons team. For more
+              info, see <a href="https://datacommons.org">Datacommons.org</a>.
+            </p>
+          )}
+          {description && <ReactMarkdown>{description}</ReactMarkdown>}
+        </header>
+      )}
       <div
         id={`${props.id}_blocks`}
         css={css`
