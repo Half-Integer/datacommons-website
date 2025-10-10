@@ -20,12 +20,14 @@ import {
   PlaceChartsApiResponse,
   PlaceOverviewTableApiResponse,
 } from "@datacommonsorg/client/dist/data_commons_web_client_types";
-import { ThemeProvider } from "@emotion/react";
+import { css, ThemeProvider, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 import _ from "lodash";
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { RawIntlProvider } from "react-intl";
 
+import { KeyboardArrowDown } from "../components/elements/icons/keyboard_arrow_down";
+import { KeyboardArrowUp } from "../components/elements/icons/keyboard_arrow_up";
 import { Loading } from "../components/elements/loading";
 import { ScrollToTopButton } from "../components/elements/scroll_to_top_button";
 import { SubjectPageMainPane } from "../components/subject_page/main_pane";
@@ -65,9 +67,18 @@ const PlaceHeader = (props: {
   isLoading: boolean;
 }): React.JSX.Element => {
   const { selectedCategory, place, parentPlaces, isLoading } = props;
+  const theme = useTheme();
   const parentPlacesLinks = parentPlaces.map((parent, index) => {
     return (
-      <span key={parent.dcid}>
+      <span
+        key={parent.dcid}
+        css={css`
+          && {
+            margin: 0;
+            padding: 0;
+          }
+        `}
+      >
         <LocalizedLink
           className="place-info-link"
           href={`/place/${parent.dcid}`}
@@ -81,32 +92,83 @@ const PlaceHeader = (props: {
   const placeHref = createPlacePageCategoryHref("Overview", place);
 
   return (
-    <header>
-      <h1>
-        <span data-testid="place-name">
+    <header
+      css={css`
+        display: flex;
+        flex-direction: column;
+        gap: ${theme.spacing.md}px;
+      `}
+    >
+      <h1
+        css={css`
+          && {
+            ${theme.typography.family.heading}
+            ${theme.typography.heading.md}
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: ${theme.spacing.md}px;
+          }
+        `}
+      >
+        <span
+          data-testid="place-name"
+          css={css`
+            display: flex;
+            gap: ${theme.spacing.xs}px;
+            align-items: center;
+          `}
+        >
           {selectedCategory.name === "Overview" ? (
             place.name
           ) : (
-            <a href={placeHref}>
-              {place.name}
-            </a>
+            <a href={placeHref}>{place.name}</a>
           )}
           {selectedCategory.name != "Overview"
             ? ` • ${selectedCategory.translatedName}`
             : ""}{" "}
         </span>
-        <div>
-          {intl.formatMessage(pageMessages.KnowledgeGraph)} •{" "}
+        <span
+          css={css`
+            display: flex;
+            gap: ${theme.spacing.xs}px;
+            ${theme.typography.family.text};
+            ${theme.typography.text.sm};
+            color: ${theme.colors.text.secondary.base};
+          `}
+        >
+          {intl.formatMessage(pageMessages.KnowledgeGraph)}
+          <span>
+            {""} • {""}
+          </span>
           <LocalizedLink href={`/browser/${place.dcid}`} text={place.dcid} />
-        </div>
+        </span>
       </h1>
       {isLoading && (
-        <div>
+        <div
+          css={css`
+            ${theme.typography.family.text}
+            ${theme.typography.text.md}
+            color: ${theme.colors.text.tertiary.base};
+          `}
+        >
           <Loading />
         </div>
       )}
       {place.types?.length > 0 && parentPlacesLinks.length > 0 && (
-        <p>
+        <p
+          css={css`
+            && {
+              ${theme.typography.family.text}
+              ${theme.typography.text.sm}
+              margin: 0;
+              padding: 0;
+            }
+          `}
+        >
           {intl.formatMessage(pageMessages.placeTypeInPlaces, {
             placeType: displayNameForPlaceType(place.types[0]),
             parentPlaces: parentPlacesLinks,
@@ -134,15 +196,35 @@ const CategoryItem = (props: {
   const { category, selectedCategoryName, place } = props;
 
   return (
-    <div data-testid={category.name}>
+    <li
+      data-testid={category.name}
+      css={css`
+        && {
+          display: block;
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          gap: ${theme.spacing.md}px;
+          ${theme.typography.family.text}
+          ${theme.typography.text.sm}
+          &:after {
+            content: "•";
+          }
+          &:last-of-type:after {
+            content: "";
+          }
+        }
+      `}
+    >
       <LocalizedLink
         href={createPlacePageCategoryHref(category.name, place)}
-        className={`item-list-text ${
+        className={`${
           selectedCategoryName === category.name ? " selected" : ""
         }`}
         text={category.translatedName}
       />
-    </div>
+    </li>
   );
 };
 
@@ -169,22 +251,51 @@ const PlaceCategoryTabs = ({
   }
 
   return (
-    <div className="explore-topics-box">
-      <div className="item-list-container">
-        <div className="item-list-inner">
-          <span className="explore-relevant-topics">
-            {intl.formatMessage(pageMessages.RelevantTopics)}
-          </span>
-          {categories.map((category) => (
-            <CategoryItem
-              key={category.name}
-              category={category}
-              selectedCategoryName={selectedCategory.name}
-              place={place}
-            />
-          ))}
-        </div>
-      </div>
+    <div
+      css={css`
+        display: flex;
+        gap: ${theme.spacing.lg}px;
+        flex-wrap: wrap;
+        color: ${theme.colors.text.tertiary.dark};
+        @media (max-width: ${theme.breakpoints.md}px) {
+          gap: ${theme.spacing.sm}px;
+        }
+      `}
+    >
+      <p
+        css={css`
+          ${theme.typography.family.text}
+          ${theme.typography.text.sm}
+          font-weight: 500;
+          margin: 0;
+          padding: 0;
+        `}
+      >
+        {intl.formatMessage(pageMessages.RelevantTopics)}
+      </p>
+      <ul
+        css={css`
+          && {
+            display: flex;
+            gap: ${theme.spacing.md}px;
+            flex-wrap: wrap;
+            margin: 0;
+            padding: 0;
+            @media (max-width: ${theme.breakpoints.md}px) {
+              gap: ${theme.spacing.sm}px;
+            }
+          }
+        `}
+      >
+        {categories.map((category) => (
+          <CategoryItem
+            key={category.name}
+            category={category}
+            selectedCategoryName={selectedCategory.name}
+            place={place}
+          />
+        ))}
+      </ul>
     </div>
   );
 };
@@ -216,34 +327,91 @@ const RelatedPlaces = (props: {
   };
 
   return (
-    <div className="related-places">
-      <div className="related-places-callout">
+    <div
+      css={css`
+        display: flex;
+        gap: ${theme.spacing.md}px;
+        flex-direction: column;
+        flex-wrap: wrap;
+        ${theme.radius.quaternary}
+        border: 1px solid ${theme.colors.border.secondary.base};
+        padding: ${theme.spacing.lg}px;
+      `}
+    >
+      <h4
+        css={css`
+          ${theme.typography.family.heading}
+          ${theme.typography.heading.xs}
+          margin: 0;
+          padding: 0;
+        `}
+      >
         {intl.formatMessage(pageMessages.placesInPlace, {
           placeName: place.name,
         })}
-      </div>
-      <div className="item-list-container">
-        <div className="item-list-inner">
-          {(isCollapsed ? truncatedPlaces : childPlaces).map((place) => (
-            <div key={place.dcid} className="item-list-item">
-              <LocalizedLink
-                className="item-list-text"
-                href={`/place/${place.dcid}`}
-                text={place.name}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
+      </h4>
+      <ul
+        css={css`
+          && {
+            display: flex;
+            gap: ${theme.spacing.sm}px;
+            flex-wrap: wrap;
+            margin: 0;
+            padding: 0;
+          }
+        `}
+      >
+        {(isCollapsed ? truncatedPlaces : childPlaces).map((place) => (
+          <li
+            key={place.dcid}
+            css={css`
+              && {
+                display: block;
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                gap: ${theme.spacing.sm}px;
+                ${theme.typography.family.text}
+                ${theme.typography.text.sm}
+                font-weight: 500;
+                &:after {
+                  content: "•";
+                }
+                &:last-of-type:after {
+                  content: "";
+                }
+              }
+            `}
+          >
+            <LocalizedLink
+              className="item-list-text"
+              href={`/place/${place.dcid}`}
+              text={place.name}
+            />
+          </li>
+        ))}
+      </ul>
       {showToggle && (
-        <div className="show-more-toggle" onClick={toggleShowMore}>
-          <span className="show-more-toggle-text">
-            {isCollapsed ? `Show ${numPlacesCollapsed} more` : "Show less"}
-          </span>
-          <span className="material-icons-outlined">
-            {isCollapsed ? "expand_more" : "expand_less"}
-          </span>
-        </div>
+        <p
+          onClick={toggleShowMore}
+          css={css`
+            && {
+              display: flex;
+              gap: ${theme.spacing.sm}px;
+              align-items: center;
+              margin: 0;
+              padding: 0;
+              ${theme.typography.family.text}
+              ${theme.typography.text.sm}
+              font-weight: 600;
+              color: ${theme.colors.link.primary.base};
+            }
+          `}
+        >
+          {isCollapsed ? `Show ${numPlacesCollapsed} more` : "Show less"}{" "}
+          {isCollapsed ? <KeyboardArrowDown /> : <KeyboardArrowUp />}
+        </p>
       )}
     </div>
   );
@@ -450,46 +618,83 @@ export const DevPlaceMain = (): React.JSX.Element => {
   return (
     <ThemeProvider theme={theme}>
       <RawIntlProvider value={intl}>
-        <PlaceHeader
-          selectedCategory={selectedCategory}
-          place={place}
-          parentPlaces={parentPlaces}
-          isLoading={isLoading}
-        />
-        <PlaceCategoryTabs
-          categories={categories}
-          selectedCategory={selectedCategory}
-          place={place}
-        />
-        {isOverview &&
-          placeOverviewTableApiResponse &&
-          placeOverviewTableApiResponse.data.length > 0 && (
-            <PlaceOverview
+        <div
+          css={css`
+            display: flex;
+            flex-direction: column;
+            gap: ${theme.spacing.xxl}px;
+          `}
+        >
+          <div
+            css={css`
+              display: flex;
+              flex-direction: column;
+              gap: ${theme.spacing.md}px;
+            `}
+          >
+            <PlaceHeader
+              selectedCategory={selectedCategory}
               place={place}
-              placeSummary={placeSummary}
               parentPlaces={parentPlaces}
-              placeOverviewTableApiResponse={placeOverviewTableApiResponse}
+              isLoading={isLoading}
             />
-          )}
-        {hasPlaceCharts && (
-          <PlaceCharts
-            place={place}
-            childPlaceType={childPlaceType}
-            pageConfig={pageConfig}
-          />
-        )}
-        {hasNoCharts && (
-          <PlaceWarning>
-            {intl.formatMessage(pageMessages.noCharts, {
-              category: selectedCategory.translatedName,
-              place: place.name,
-            })}
-          </PlaceWarning>
-        )}
-        {isOverview && childPlaces.length > 0 && (
-          <RelatedPlaces place={place} childPlaces={childPlaces} />
-        )}
-        <ScrollToTopButton />
+            <hr
+              css={css`
+                margin: 0;
+                padding: 0;
+                border: 0;
+                border-bottom: 1px solid ${theme.colors.border.secondary.base};
+                opacity: ${isLoading ? "0" : "1"};
+              `}
+            />
+            <PlaceCategoryTabs
+              categories={categories}
+              selectedCategory={selectedCategory}
+              place={place}
+            />
+          </div>
+
+          {isOverview &&
+            placeOverviewTableApiResponse &&
+            placeOverviewTableApiResponse.data.length > 0 && (
+              <PlaceOverview
+                place={place}
+                placeSummary={placeSummary}
+                parentPlaces={parentPlaces}
+                placeOverviewTableApiResponse={placeOverviewTableApiResponse}
+              />
+            )}
+
+          <div
+            css={css`
+              display: flex;
+              flex-direction: column;
+              gap: ${theme.spacing.lg}px;
+            `}
+          >
+            {hasPlaceCharts && (
+              <PlaceCharts
+                place={place}
+                childPlaceType={childPlaceType}
+                pageConfig={pageConfig}
+              />
+            )}
+            {hasNoCharts && (
+              <PlaceWarning>
+                {intl.formatMessage(pageMessages.noCharts, {
+                  category: selectedCategory.translatedName,
+                  place: place.name,
+                })}
+              </PlaceWarning>
+            )}
+
+            {isOverview && childPlaces.length > 0 && (
+              <RelatedPlaces place={place} childPlaces={childPlaces} />
+            )}
+          </div>
+
+          <ScrollToTopButton />
+        </div>
       </RawIntlProvider>
     </ThemeProvider>
   );

@@ -169,7 +169,6 @@ export const PlaceOverview = (props: {
         border: 1px solid var(--GM3-ref-neutral-neutral90, #e3e3e3);
         background: rgba(211, 227, 253, 0.1);
         padding: 24px;
-        margin-bottom: ${theme.spacing.md}px;
       `}
     >
       <div

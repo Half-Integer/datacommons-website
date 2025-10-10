@@ -77,6 +77,9 @@ export const Category = memo(function Category(
     <div
       id={`${props.id}_wrapper`}
       css={css`
+        display: flex;
+        flex-direction: column;
+        gap: ${theme.spacing.xl}px;
         margin: 0;
         padding: 0;
       `}

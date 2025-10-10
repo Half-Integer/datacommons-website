@@ -643,9 +643,13 @@ export function Block(props: BlockPropType): ReactElement {
             & > .chart-container {
               margin: 0;
             }
+            @media (max-width: ${theme.breakpoints.md}px) {
+              grid-auto-flow: row;
+              gap: ${theme.spacing.md}px;
+            }
           }
           @media (max-width: ${theme.breakpoints.md}px) {
-            grid-template-columns: 1fr;
+            grid-auto-flow: row;
             gap: ${theme.spacing.md}px;
           }
         `}

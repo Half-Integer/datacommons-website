@@ -131,7 +131,7 @@ export function BlockContainer(props: BlockContainerPropType): ReactElement {
       css={css`
         display: flex;
         flex-direction: column;
-        gap: ${theme.spacing.sm}px;
+        gap: ${theme.spacing.md}px;
       `}
     >
       {props.infoMessage && (
@@ -210,7 +210,7 @@ export function BlockContainer(props: BlockContainerPropType): ReactElement {
               & > .item-list-text {
                 ${theme.typography.family.text}
                 ${theme.typography.text.sm}
-                  font-weight: 500;
+                font-weight: 500;
                 margin: 0;
                 padding: 0;
                 text-indent: 0;
