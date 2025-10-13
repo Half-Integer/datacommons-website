@@ -310,6 +310,7 @@ export function Block(props: BlockPropType): ReactElement {
   const [showFacetSelector, setShowFacetSelector] = useState(false);
   const [blockSVs, setBlockSVs] = useState<StatVarSpec[]>([]);
   const columnSectionRef = useRef(null);
+  const columnsCount = props.columns.length;
   const expandoRef = useRef(null);
 
   const { getStatVarSpec, getSingleStatVarSpec } = useStatVarSpec(
@@ -630,26 +631,10 @@ export function Block(props: BlockPropType): ReactElement {
         ref={columnSectionRef}
         css={css`
           display: grid;
-          grid-auto-flow: column;
-          grid-auto-columns: 1fr;
+          grid-template-columns: repeat(${columnsCount}, 1fr);
           gap: ${theme.spacing.xl}px;
-          & > .block-column {
-            display: grid;
-            grid-auto-flow: column;
-            grid-auto-columns: 1fr;
-            gap: ${theme.spacing.xl}px;
-            padding: 0;
-            margin: 0;
-            & > .chart-container {
-              margin: 0;
-            }
-            @media (max-width: ${theme.breakpoints.md}px) {
-              grid-auto-flow: row;
-              gap: ${theme.spacing.md}px;
-            }
-          }
           @media (max-width: ${theme.breakpoints.md}px) {
-            grid-auto-flow: row;
+            grid-template-columns: 1fr;
             gap: ${theme.spacing.md}px;
           }
         `}
@@ -665,6 +650,7 @@ export function Block(props: BlockPropType): ReactElement {
                 key={id}
                 id={id}
                 config={column}
+                tilesCount={column.tiles.length}
                 width="100%"
                 tiles={
                   props.showWebComponents

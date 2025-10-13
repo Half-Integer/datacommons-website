@@ -393,6 +393,17 @@ const theme: Theme = {
           border: "none",
         },
       },
+      naked: {
+        color: DC_BLUE,
+        backgroundColor: "transparent",
+        border: "none",
+        borderRadius: "none",
+        ["&:hover:not(:disabled):not([aria-disabled])"]: {
+          backgroundColor: "transparent",
+          color: DC_BLUE,
+          border: "none",
+        },
+      },
     },
     size: {
       sm: {

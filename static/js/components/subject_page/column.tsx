@@ -17,7 +17,9 @@
 /**
  * Component for rendering a column in a disaster type block.
  */
+/** @jsxImportSource @emotion/react */
 
+import { css, useTheme } from "@emotion/react";
 import React, { useRef } from "react";
 
 import { NL_NUM_TILES_SHOWN } from "../../constants/app/explore_constants";
@@ -27,10 +29,13 @@ import {
 } from "../../constants/subject_page_constants";
 import { ColumnConfig } from "../../types/subject_page_proto_types";
 import { isNlInterface } from "../../utils/explore_utils";
+import { Button } from "../elements/button/button";
+import { KeyboardArrowDown } from "../elements/icons/keyboard_arrow_down";
 
 export interface ColumnPropType {
   // id for the column
   id: string;
+  tilesCount: number;
   // config for the column
   config: ColumnConfig;
   // width of the column
@@ -43,30 +48,72 @@ export interface ColumnPropType {
 export function Column(props: ColumnPropType): JSX.Element {
   const expandoRef = useRef(null);
   const tileSectionRef = useRef(null);
+  const theme = useTheme();
 
   return (
     <div
       key={props.id}
-      id={props.id}
-      className={`${
-        props.shouldHideColumn ? HIDE_COLUMN_CLASS : ""
-      } block-column`}
-      style={{ width: props.width }}
+      className={`${props.shouldHideColumn ? HIDE_COLUMN_CLASS : ""}`}
       ref={tileSectionRef}
+      css={css`
+        && {
+          width: 100%;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          flex-direction: column;
+          flex-wrap: wrap;
+          gap: ${theme.spacing.md}px;
+          align-items: flex-start;
+        }
+      `}
     >
-      {props.tiles}
+      <div
+        css={css`
+          width: 100%;
+          display: grid;
+          grid-template-columns: repeat(${props.tilesCount}, 1fr);
+          gap: ${theme.spacing.xl}px;
+          & .chart-container {
+            margin: 0;
+          }
+          & .svg-container > * div,
+          & .svg-container > * svg {
+            width: 100%;
+          }
+          @media (max-width: ${theme.breakpoints.md}px) {
+            grid-template-columns: 1fr;
+            gap: ${theme.spacing.md}px;
+          }
+        `}
+      >
+        {props.tiles}
+      </div>
+
       {isNlInterface() && props.config.tiles.length > NL_NUM_TILES_SHOWN && (
-        <a
-          className="show-more-expando"
-          onClick={(e): void => {
+        <Button
+          ref={expandoRef}
+          variant="naked"
+          size="sm"
+          endIcon={<KeyboardArrowDown />}
+          onClick={(e: { preventDefault: () => void }): void => {
             onShowMore();
             e.preventDefault();
           }}
-          ref={expandoRef}
+          css={css`
+            && {
+              ${theme.typography.family.text}
+              ${theme.typography.text.sm}
+              gap: ${theme.spacing.xs}px;
+              & .button-end-icon > svg {
+                width: ${theme.spacing.md}px;
+                height: ${theme.spacing.md}px;
+              }
+            }
+          `}
         >
-          <span className="material-icons-outlined">expand_circle_down</span>
-          <span className="expando-text">Show more</span>
-        </a>
+          Show More
+        </Button>
       )}
     </div>
   );

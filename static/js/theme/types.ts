@@ -294,6 +294,7 @@ export interface Theme {
       text?: ButtonVariant;
       flat?: ButtonVariant;
       light?: ButtonVariant;
+      naked?: ButtonVariant;
     };
     size: {
       sm?: {
