@@ -624,6 +624,9 @@ body.no-header-search-bar {
   @media (max-width: 620px) {
     padding-top: 0;
   }
+  @media (min-width: 620px) {
+    max-width: 70%;
+  }
 
   .search-bar {
     align-items: center;
@@ -715,6 +718,8 @@ body.no-header-search-bar {
     }
 
     .autocomplete-search-input-results-list {
+      max-height: 300px;
+      overflow-y: auto;
       padding-bottom: 24px;
       border-bottom-left-radius: 28px;
       border-bottom-right-radius: 28px;

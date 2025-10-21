@@ -110,6 +110,11 @@ export interface Theme {
         light?: string;
         dark?: string;
       };
+      code?: {
+        base?: string;
+        light?: string;
+        dark?: string;
+      };
     };
     error?: {
       primary?: {
@@ -240,6 +245,7 @@ export interface Theme {
       inverted?: ButtonVariant;
       text?: ButtonVariant;
       flat?: ButtonVariant;
+      light?: ButtonVariant;
     };
     size: {
       sm?: {
@@ -280,6 +286,43 @@ export interface Theme {
             lineHeight?: string;
           };
     };
+  };
+  codeHighlight: {
+    background?: string;
+    border?: string;
+    text?: string;
+    highlight?: string;
+    selection?: string;
+    comment?: string;
+    prolog?: string;
+    doctype?: string;
+    cData?: string;
+    punctuation?: string;
+    property?: string;
+    tag?: string;
+    boolean?: string;
+    number?: string;
+    constant?: string;
+    symbol?: string;
+    deleted?: string;
+    selector?: string;
+    attrName?: string;
+    string?: string;
+    char?: string;
+    builtin?: string;
+    inserted?: string;
+    operator?: string;
+    entity?: string;
+    url?: string;
+    langCSS?: string;
+    atrule?: string;
+    attrValue?: string;
+    keyword?: string;
+    function?: string;
+    className?: string;
+    regex?: string;
+    important?: string;
+    variable?: string;
   };
   elevation: {
     none: {

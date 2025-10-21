@@ -47,6 +47,7 @@ import {
   applyHashStatVar,
   ifShowChart,
   MAP_URL_PATH,
+  shouldShowStatVarInstructions,
   updateHashDisplay,
   updateHashPlaceInfo,
   updateHashStatVar,
@@ -61,7 +62,10 @@ function App(): ReactElement {
   const theme = useTheme();
   const { placeInfo, statVar } = useContext(Context);
   const showChart = ifShowChart(statVar.value, placeInfo.value);
-  const showInstructions = !showChart;
+  const showStatVarInstructions = shouldShowStatVarInstructions(
+    statVar.value,
+    placeInfo.value
+  );
 
   return (
     <React.StrictMode>
@@ -76,7 +80,6 @@ function App(): ReactElement {
               <ToolHeader
                 title={intl.formatMessage(toolMessages.mapToolTitle)}
                 subtitle={intl.formatMessage(toolMessages.mapToolSubtitle)}
-                switchToolsUrl="/tools/visualization#visType%3Dmap"
               />
             ) : (
               <Title />
@@ -85,18 +88,23 @@ function App(): ReactElement {
           <Row>
             <PlaceOptions toggleSvHierarchyModal={toggleSvModalCallback} />
           </Row>
-          {showInstructions && (
+          {!showChart && (
             <Row>
               {useStandardizedUi ? (
                 <>
-                  <VisToolInstructionsBox toolType="map" />
-                  <div
-                    css={css`
-                      margin-top: ${theme.spacing.xl}px;
-                    `}
-                  >
-                    <ChartLinkChips toolType="map" />
-                  </div>
+                  <VisToolInstructionsBox
+                    toolType="map"
+                    showStatVarInstructionsOnly={showStatVarInstructions}
+                  />
+                  {!showStatVarInstructions && (
+                    <div
+                      css={css`
+                        margin-top: ${theme.spacing.xl}px;
+                      `}
+                    >
+                      <ChartLinkChips toolType="map" />
+                    </div>
+                  )}
                 </>
               ) : (
                 <Info />
@@ -148,17 +156,23 @@ function updateHash(context: ContextType): void {
   let hash = updateHashStatVar("", context.statVar.value);
   hash = updateHashPlaceInfo(hash, context.placeInfo.value);
   hash = updateHashDisplay(hash, context.display.value);
+  const args = new URLSearchParams(location.search);
   // leaflet flag is part of the search arguments instead of hash, so need to
   // update that separately
-  // TODO: forward along all args and then append hash in the url.
-  let args = "";
   if (context.display.value.allowLeaflet) {
-    args += `?${ALLOW_LEAFLET_URL_ARG}=1`;
+    args.set(ALLOW_LEAFLET_URL_ARG, "1");
+  } else {
+    // Do not propagate this argument. Let context settings control this instead.
+    args.delete(ALLOW_LEAFLET_URL_ARG);
   }
-  const newHash = encodeURIComponent(hash);
+  const newHash = hash ? `#${encodeURIComponent(hash)}` : "";
+  const newArgs = args.toString() ? `?${args.toString()}` : "";
   const currentHash = location.hash.replace("#", "");
   const currentArgs = location.search;
-  if (newHash && (newHash !== currentHash || args !== currentArgs)) {
-    history.pushState({}, "", `${MAP_URL_PATH}${args}#${newHash}`);
+  if (
+    (newHash || newArgs) &&
+    (newHash !== currentHash || newArgs !== currentArgs)
+  ) {
+    history.pushState({}, "", `${MAP_URL_PATH}${newArgs}${newHash}`);
   }
 }

@@ -16,6 +16,8 @@
 
 /** @jsxImportSource @emotion/react */
 
+//TODO (nick-next): Add the chart embed dialog to the screenshot test suite.
+
 import { css, ThemeContext } from "@emotion/react";
 import * as d3 from "d3";
 import React, { ReactElement, RefObject } from "react";
@@ -166,7 +168,8 @@ class ChartEmbed extends React.Component<
     chartHtml: string,
     chartTitle: string,
     chartDate: string,
-    sources: string[]
+    sources: string[],
+    surface: string
   ): void {
     if (this.state.modal) {
       return;
@@ -188,7 +191,7 @@ class ChartEmbed extends React.Component<
         sources,
         svgXml,
       },
-      () => this.loadModalData(getDataCsv)
+      () => this.loadModalData(getDataCsv, surface)
     );
   }
 
@@ -279,7 +282,8 @@ class ChartEmbed extends React.Component<
           <div
             css={css`
               display: grid;
-              grid-template-columns: 1fr 1fr;
+              grid-template-columns: 0.3fr 0.7fr;
+              grid-template-rows: minmax(220px, 260px);
               width: 100%;
               gap: ${theme.spacing.lg}px;
               @media (max-width: ${theme.breakpoints.md}px) {
@@ -292,15 +296,20 @@ class ChartEmbed extends React.Component<
               ref={this.svgContainerElement}
               className={`${ASYNC_ELEMENT_HOLDER_CLASS}`}
               css={css`
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 overflow: hidden;
+                border: 1px solid ${theme.colors.border.primary.light};
+                ${theme.radius.tertiary};
+                padding: ${theme.spacing.md}px;
                 & > svg,
                 & > img {
+                  display: block;
                   width: 100%;
                   height: auto;
                   max-height: 220px;
-                  border: 1px solid ${theme.colors.border.primary.light};
-                  ${theme.radius.tertiary};
-                  padding: ${theme.spacing.md}px;
+                  object-fit: contain;
                 }
               `}
             ></div>
@@ -393,7 +402,8 @@ class ChartEmbed extends React.Component<
    * Fetches CSV data and citation metadata when the dialog is opened.
    */
   private async loadModalData(
-    getDataCsv: () => Promise<string>
+    getDataCsv: () => Promise<string>,
+    surface: string
   ): Promise<void> {
     let dataCsv: string;
     let dataFetchError = false;
@@ -428,7 +438,7 @@ class ChartEmbed extends React.Component<
         if (statVarSet.size === 0) {
           return [];
         }
-        const dataCommonsClient = getDataCommonsClient(apiRoot);
+        const dataCommonsClient = getDataCommonsClient(apiRoot, surface);
         const metadataResp = await fetchMetadata(
           statVarSet,
           facets,

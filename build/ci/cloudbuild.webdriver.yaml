@@ -18,6 +18,9 @@ steps:
     name: gcr.io/datcom-ci/node:2024-11-19
     entrypoint: /bin/bash
     waitFor: ["-"]
+    env:
+      - IS_CLOUD_BUILD=true
+      - WIREIT_LOGGER=quiet-ci
     args:
       - -c
       - |
@@ -32,7 +35,7 @@ steps:
         ./run_test.sh -b
 
   - id: setup_python
-    name: python:3.11.4
+    name: gcr.io/datcom-ci/full-env:${_FULL_ENV_VERSION}
     entrypoint: /bin/bash
     waitFor: ["-"]
     args:
@@ -41,7 +44,7 @@ steps:
         ./run_test.sh --setup_python
 
   - id: setup_website
-    name: python:3.11.4
+    name: gcr.io/datcom-ci/full-env:${_FULL_ENV_VERSION}
     entrypoint: /bin/bash
     waitFor: ["-"]
     args:
@@ -50,7 +53,7 @@ steps:
         ./run_test.sh --setup_website
 
   - id: setup_nl
-    name: python:3.11.4
+    name: gcr.io/datcom-ci/full-env:${_FULL_ENV_VERSION}
     entrypoint: /bin/bash
     waitFor: ["-"]
     args:
@@ -60,7 +63,7 @@ steps:
 
   # Run the webdriver tests
   - id: flask_webdriver_test
-    name: gcr.io/datcom-ci/webdriver-chrome:2025-01-15
+    name: gcr.io/datcom-ci/full-env:${_FULL_ENV_VERSION}
     entrypoint: /bin/sh
     waitFor: ["package_js", "setup_python"]
     args:
@@ -70,7 +73,7 @@ steps:
 
   # Run the Custom DC webdriver tests
   - id: flask_cdc_webdriver_test
-    name: gcr.io/datcom-ci/full-env:2025-07-31
+    name: gcr.io/datcom-ci/full-env:${_FULL_ENV_VERSION}
     entrypoint: /bin/sh
     waitFor: ["package_js", "setup_python", "setup_website", "setup_nl"]
     args:
@@ -79,6 +82,9 @@ steps:
         git submodule update --init --recursive
         export STARTUP_WAIT_SEC=60
         ./run_test.sh --cdc
+
+substitutions:
+  _FULL_ENV_VERSION: "2025-10-02"
 
 timeout: 1800s # 30 minutes
 

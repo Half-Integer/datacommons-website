@@ -65,7 +65,6 @@ const ICONS = {
 
 // COLORS;
 // basic;
-const COLOR_BLACK = "#000000";
 const COLOR_WHITE = "#ffffff";
 // Greys
 const COLOR_BONE = "#f6faff";
@@ -86,7 +85,7 @@ const COLOR_SKY = "#85a9e6";
 const COLOR_GLACIER = "#cce6ff";
 const COLOR_ICEBERG = "#f2f8ff";
 const COLOR_POLAR = "#dce6fb";
-const COLOR_NAVY = "#091842";
+const COLOR_NAVY = "#041e49";
 const COLOR_BREEZE = "#e7f3fe";
 const COLOR_ARTIC = "#b3dcfa";
 // Greens
@@ -99,7 +98,10 @@ const COLOR_EMBER = "#4d0f0e";
 const COLOR_BLUSH = "#fbe6e5";
 // Yellows
 const COLOR_OCHRE = "#c27c00";
+const COLOR_YELLOW = "#b78300";
 const COLOR_SUNSHINE = "#fff4dc";
+// Orange
+const COLOR_ORANGE = "#b74f00";
 
 const theme: Theme = {
   breakpoints: BREAKPOINTS,
@@ -123,6 +125,11 @@ const theme: Theme = {
         base: COLOR_STEEL,
         dark: COLOR_CHARCOAL,
         light: COLOR_STEEL,
+      },
+      code: {
+        base: COLOR_LEAF,
+        light: COLOR_MINT,
+        dark: COLOR_MINT,
       },
     },
     background: {
@@ -158,9 +165,9 @@ const theme: Theme = {
     },
     error: {
       primary: {
-        base: DC_RED,
-        light: DC_YELLOW,
-        dark: DC_RED_PILL_TEXT,
+        base: COLOR_CRIMSON,
+        light: COLOR_OCHRE,
+        dark: COLOR_EMBER,
       },
     },
   },
@@ -355,6 +362,17 @@ const theme: Theme = {
           border: `1px solid ${COLOR_OCEAN}`,
         },
       },
+      light: {
+        color: COLOR_STEEL,
+        backgroundColor: "transparent",
+        border: "none",
+        borderRadius: "none",
+        ["&:hover:not(:disabled):not([aria-disabled])"]: {
+          backgroundColor: "transparent",
+          color: COLOR_OCEAN,
+          border: "none",
+        },
+      },
     },
     size: {
       sm: {
@@ -384,7 +402,7 @@ const theme: Theme = {
   },
   // Generic Properties
   infoBox: {
-    backgroundColor: DC_BLUE_LIGHTEST,
+    backgroundColor: COLOR_GLACIER, // Check opacity
     icon: {
       fontSize: "1.5rem",
       lineHeight: "2rem",
@@ -402,6 +420,43 @@ const theme: Theme = {
         lineHeight: "1.75rem",
       },
     },
+  },
+  codeHighlight: {
+    background: COLOR_WHITE,
+    border: COLOR_CLOUD,
+    text: COLOR_SLATE,
+    highlight: COLOR_SUNSHINE,
+    selection: COLOR_SKY,
+    comment: COLOR_STEEL,
+    prolog: COLOR_STEEL,
+    doctype: COLOR_STEEL,
+    cData: COLOR_STEEL,
+    punctuation: COLOR_NAVY,
+    property: COLOR_OCEAN,
+    tag: COLOR_OCEAN,
+    boolean: COLOR_OCEAN,
+    number: COLOR_OCEAN,
+    constant: COLOR_OCEAN,
+    symbol: COLOR_OCEAN,
+    deleted: COLOR_OCEAN,
+    selector: COLOR_LEAF,
+    attrName: COLOR_LEAF,
+    string: COLOR_LEAF,
+    char: COLOR_LEAF,
+    builtin: COLOR_LEAF,
+    inserted: COLOR_LEAF,
+    operator: COLOR_ORANGE,
+    entity: COLOR_ORANGE,
+    url: COLOR_ORANGE,
+    langCSS: COLOR_ORANGE,
+    atrule: COLOR_OCEAN,
+    attrValue: COLOR_OCEAN,
+    keyword: COLOR_OCEAN,
+    function: COLOR_OCEAN,
+    className: COLOR_OCEAN,
+    regex: COLOR_YELLOW,
+    important: COLOR_YELLOW,
+    variable: COLOR_YELLOW,
   },
   elevation: {
     none: {

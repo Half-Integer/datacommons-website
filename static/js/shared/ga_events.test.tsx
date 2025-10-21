@@ -104,6 +104,7 @@ import { ScatterChartType } from "../tools/scatter/util";
 import { Chart as TimelineToolChart } from "../tools/timeline/chart";
 import * as dataFetcher from "../tools/timeline/data_fetcher";
 import { axiosMock } from "../tools/timeline/mock_functions";
+import { TEST_SURFACE } from "./constants";
 import { FacetSelectorFacetInfo } from "./facet_selector/facet_selector";
 import {
   GA_EVENT_COMPONENT_IMPRESSION,
@@ -259,6 +260,7 @@ const TIMELINE_PROPS = {
   removeStatVar: (): null => null,
   statVarInfos: { [STAT_VAR_1]: { title: "" } } as Record<string, StatVarInfo>,
   svFacetId: { [STAT_VAR_1]: "" },
+  surface: TEST_SURFACE,
 };
 
 // Props and context for scatter plot tool chart.
@@ -370,6 +372,7 @@ const RESULT_HEADER_SECTION_PROPS = {
   placeUrlVal: "",
   pageMetadata: PAGE_METADATA_PROPS,
   hideRelatedTopics: false,
+  query: QUERY,
 };
 
 const MAP_CONTEXT = {
@@ -1158,11 +1161,11 @@ describe("test ga event for the FacetSelector component", () => {
     );
 
     await waitFor(() => {
-      const button = getByText(/Explore other datasets/i);
+      const button = getByText(/Explore other facets/i);
       expect((button as HTMLButtonElement).disabled).toBe(false);
     });
 
-    fireEvent.click(getByText(/Explore other datasets/i));
+    fireEvent.click(getByText(/Explore other facets/i));
 
     await waitFor(() => {
       expect(getByText("Update")).toBeTruthy();
@@ -1196,7 +1199,9 @@ describe("test ga event for Related Topics experiment", () => {
 
     // Render follow up component
     const followUp = render(
-      <FollowUpQuestions {...FOLLOW_UP_QUESTIONS_PROPS} />
+      <ThemeProvider theme={theme}>
+        <FollowUpQuestions {...FOLLOW_UP_QUESTIONS_PROPS} />
+      </ThemeProvider>
     );
     act(() => {
       mockAllIsIntersecting(false);
@@ -1248,7 +1253,11 @@ describe("test ga event for Related Topics experiment", () => {
     window.gtag = mockgtag;
 
     // Render follow up component
-    render(<FollowUpQuestions {...FOLLOW_UP_QUESTIONS_PROPS} />);
+    render(
+      <ThemeProvider theme={theme}>
+        <FollowUpQuestions {...FOLLOW_UP_QUESTIONS_PROPS} />
+      </ThemeProvider>
+    );
     act(() => {
       mockAllIsIntersecting(true);
     });
@@ -1296,7 +1305,11 @@ describe("test ga event for Related Topics experiment", () => {
       );
 
     // Render follow up component
-    render(<FollowUpQuestions {...FOLLOW_UP_QUESTIONS_PROPS} />);
+    render(
+      <ThemeProvider theme={theme}>
+        <FollowUpQuestions {...FOLLOW_UP_QUESTIONS_PROPS} />
+      </ThemeProvider>
+    );
 
     await waitFor(() => {
       expect(mockgtag).toHaveBeenCalledWith(
@@ -1318,7 +1331,11 @@ describe("test ga event for Page Overview experiment", () => {
     window.gtag = mockgtag;
 
     // Render page overview component
-    render(<PageOverview {...PAGE_OVERVIEW_PROPS} />);
+    render(
+      <ThemeProvider theme={theme}>
+        <PageOverview {...PAGE_OVERVIEW_PROPS} />
+      </ThemeProvider>
+    );
     act(() => {
       mockAllIsIntersecting(true);
     });
@@ -1349,7 +1366,11 @@ describe("test ga event for Page Overview experiment", () => {
     );
 
     // Render page overview component
-    const pageOverview = render(<PageOverview {...PAGE_OVERVIEW_PROPS} />);
+    const pageOverview = render(
+      <ThemeProvider theme={theme}>
+        <PageOverview {...PAGE_OVERVIEW_PROPS} />
+      </ThemeProvider>
+    );
 
     // Wait for overview to render
     await waitForElementToBeRemoved(pageOverview.getByText("Loading..."));
@@ -1381,7 +1402,11 @@ describe("test ga event for Page Overview experiment", () => {
     );
 
     // Render page overview component
-    const pageOverview = render(<PageOverview {...PAGE_OVERVIEW_PROPS} />);
+    const pageOverview = render(
+      <ThemeProvider theme={theme}>
+        <PageOverview {...PAGE_OVERVIEW_PROPS} />
+      </ThemeProvider>
+    );
 
     // Wait for overview to render
     await waitForElementToBeRemoved(pageOverview.getByText("Loading..."));
@@ -1437,7 +1462,11 @@ describe("test ga event for Page Overview experiment", () => {
     );
 
     // Render page overview component
-    const pageOverview = render(<PageOverview {...PAGE_OVERVIEW_PROPS} />);
+    const pageOverview = render(
+      <ThemeProvider theme={theme}>
+        <PageOverview {...PAGE_OVERVIEW_PROPS} />
+      </ThemeProvider>
+    );
 
     // Wait for overview to render
     await waitForElementToBeRemoved(pageOverview.getByText("Loading..."));
@@ -1469,7 +1498,7 @@ describe("test ga event for Page Overview experiment", () => {
     const mockgtag = jest.fn();
     window.gtag = mockgtag;
 
-    globalThis.FEATURE_FLAGS = { ["page_overview_links"]: true };
+    globalThis.FEATURE_FLAGS = { ["page_overview_links"]: { enabled: true } };
 
     // Mock Flask route
     axios.post = jest.fn().mockImplementation(() =>
@@ -1482,7 +1511,11 @@ describe("test ga event for Page Overview experiment", () => {
     );
 
     // Render page overview component
-    const pageOverview = render(<PageOverview {...PAGE_OVERVIEW_PROPS} />);
+    const pageOverview = render(
+      <ThemeProvider theme={theme}>
+        <PageOverview {...PAGE_OVERVIEW_PROPS} />
+      </ThemeProvider>
+    );
 
     // Wait for overview to render
     await waitForElementToBeRemoved(pageOverview.getByText("Loading..."));
@@ -1507,7 +1540,7 @@ describe("test ga event for Page Overview experiment", () => {
     const mockgtag = jest.fn();
     window.gtag = mockgtag;
 
-    globalThis.FEATURE_FLAGS = { ["page_overview_links"]: true };
+    globalThis.FEATURE_FLAGS = { ["page_overview_links"]: { enabled: true } };
 
     // Mock Flask route
     axios.post = jest.fn().mockImplementation(() =>
@@ -1520,7 +1553,11 @@ describe("test ga event for Page Overview experiment", () => {
     );
 
     // Render page overview component
-    const pageOverview = render(<PageOverview {...PAGE_OVERVIEW_PROPS} />);
+    const pageOverview = render(
+      <ThemeProvider theme={theme}>
+        <PageOverview {...PAGE_OVERVIEW_PROPS} />
+      </ThemeProvider>
+    );
 
     // Wait for overview to render
     await waitForElementToBeRemoved(pageOverview.getByText("Loading..."));
@@ -1561,7 +1598,7 @@ describe("test ga event for Page Overview experiment", () => {
     const mockgtag = jest.fn();
     window.gtag = mockgtag;
 
-    globalThis.FEATURE_FLAGS = { ["page_overview_links"]: true };
+    globalThis.FEATURE_FLAGS = { ["page_overview_links"]: { enabled: true } };
 
     // Mock Flask route
     axios.post = jest.fn().mockImplementation(() =>
@@ -1574,7 +1611,11 @@ describe("test ga event for Page Overview experiment", () => {
     );
 
     // Render page overview component
-    const pageOverview = render(<PageOverview {...PAGE_OVERVIEW_PROPS} />);
+    const pageOverview = render(
+      <ThemeProvider theme={theme}>
+        <PageOverview {...PAGE_OVERVIEW_PROPS} />
+      </ThemeProvider>
+    );
 
     // Wait for overview to render
     await waitForElementToBeRemoved(pageOverview.getByText("Loading..."));
