@@ -17,7 +17,6 @@
 
 import {
   Category,
-  PlaceChartsApiResponse,
   PlaceOverviewTableApiResponse,
 } from "@datacommonsorg/client/dist/data_commons_web_client_types";
 import { ThemeProvider } from "@emotion/react";
@@ -46,7 +45,7 @@ import {
 
 const PlaceWarning = styled.div`
   padding: 24px;
-  font-size: ${(p) => p.theme.font.text.md};
+  font-size: ${(p): string => p.theme.font.text.md};
 `;
 
 /**
@@ -291,8 +290,6 @@ export const DevPlaceMain = (): React.JSX.Element => {
 
   // API response data
   const [receivedApiResponse, setReceivedApiResponse] = useState(false);
-  const [placeChartsApiResponse, setPlaceChartsApiResponse] =
-    useState<PlaceChartsApiResponse>();
   const [placeOverviewTableApiResponse, setPlaceOverviewTableApiResponse] =
     useState<PlaceOverviewTableApiResponse>();
 
@@ -394,7 +391,6 @@ export const DevPlaceMain = (): React.JSX.Element => {
         ]);
         setReceivedApiResponse(true);
         setPlaceSummary(placeSummaryApiResponse.summary);
-        setPlaceChartsApiResponse(placeChartsApiResponse);
         setPlaceOverviewTableApiResponse(placeOverviewTableApiResponse);
 
         setChildPlaceType(relatedPlacesApiResponse.childPlaceType);

@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import re
+import time
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -86,16 +87,20 @@ class TestExplorePage(ExplorePageTestMixin, BaseDcWebdriverTest):
 
     shared.wait_for_loading(self.driver)
 
-    # Isolate the "Categories of Jobs" bar chart
-    all_chart_blocks = find_elems(self.driver, By.CLASS_NAME, 'block.subtopic')
-    chart_block = None
-    for block in all_chart_blocks:
-      header = find_elem(block, By.TAG_NAME, 'h3')
-      if header and header.text == "Categories of Jobs":
-        chart_block = block
-        break
-    self.assertIsNotNone(
-        chart_block, "Could not find the 'Categories of Jobs' chart block.")
+    def categories_of_jobs_block_present(driver):
+      """Look for the Categories of Jobs block"""
+      all_chart_blocks = find_elems(driver, By.CLASS_NAME, 'block.subtopic')
+      chart_block = None
+      for block in all_chart_blocks:
+        header = find_elem(block, By.TAG_NAME, 'h3')
+        if header and header.text == "Categories of Jobs":
+          chart_block = block
+          break
+      return chart_block or False
+
+    # Wait for 'Categories of Jobs' block to be present
+    chart_block = WebDriverWait(
+        self.driver, self.TIMEOUT_SEC).until(categories_of_jobs_block_present)
 
     # Check metadata before choosing a facet
     sources_div_before = find_elem(chart_block,
@@ -382,3 +387,31 @@ class TestExplorePage(ExplorePageTestMixin, BaseDcWebdriverTest):
     # Verify that key parts of the API call are present
     self.assertIn('"variable": {"dcids": ["Count_Person"]},', curl_actual_text)
     self.assertIn('"entity": {"dcids": ["country/USA"]}', curl_actual_text)
+
+  def test_highlight_chart_facet_selector(self):
+    """Test the highlight chart for Population ranking with map of US States."""
+    highlight_params = "?sv=Count_BlizzardEvent&p=country/USA&imp=StormNOAA_Agg&chartType=RANKING_WITH_MAP&obsPer=P1Y"
+    self.driver.get(self.url_ + EXPLORE_URL + highlight_params)
+
+    shared.wait_for_loading(self.driver)
+
+    highlight_div = find_elem(self.driver, By.CLASS_NAME,
+                              'highlight-result-title')
+    block_controls = find_elem(highlight_div, By.CLASS_NAME, 'block-controls')
+    time.sleep(5)  # Wait for the controls to be fully interactive.
+    facet_button = find_elem(block_controls, By.CLASS_NAME,
+                             'source-selector-open-modal-button')
+    self.assertIsNotNone(facet_button, "Facet selector button not found")
+    facet_button.click()
+
+    facet_options = find_elem(self.driver, By.CLASS_NAME,
+                              'source-selector-facet-options-section')
+
+    # Verify that the expected option is selected, in this case it has P1Y ObsPeriod.
+    for option in find_elems(facet_options, By.TAG_NAME, 'label'):
+      is_option_selected = find_elem(option, By.TAG_NAME, 'input').is_selected()
+      if is_option_selected:
+        list_items = find_elems(option, By.TAG_NAME, 'ul')
+        self.assertIn('Observation period • Yearly (P1Y)',
+                      str([item.text for item in list_items]))
+        break
