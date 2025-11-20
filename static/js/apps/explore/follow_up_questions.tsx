@@ -109,7 +109,7 @@ export function FollowUpQuestions(
               marginBottom: theme.spacing.md,
             }}
           >
-            <h3 css={[theme.typography.heading.xs, { marginBottom: 0 }]}>
+            <h3 css={[theme.font.heading.xs, { marginBottom: 0 }]}>
               Keep exploring
             </h3>
             <Tooltip

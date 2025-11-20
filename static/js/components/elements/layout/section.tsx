@@ -50,12 +50,12 @@ export const Section = ({
 
   const padding =
     variant === "large"
-      ? theme.sections.large
+      ? theme.sections.lg
       : variant === "small"
-      ? theme.sections.small
+      ? theme.sections.sm
       : variant === "compact"
-      ? theme.sections.compact
-      : theme.sections.standard;
+      ? theme.sections.xs
+      : theme.sections.md;
 
   return (
     <section

@@ -287,6 +287,10 @@ export interface Theme {
           };
     };
   };
+  placeTypeSelect: {
+    borderColor: string;
+    boxShadow: string;
+  };
   codeHighlight: {
     background?: string;
     border?: string;

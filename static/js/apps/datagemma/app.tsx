@@ -189,7 +189,7 @@ export function App(): ReactElement {
         <div
           className="warning-banner"
           css={css`
-            color: ${theme.colors.box.red.text};
+            color: ${theme.colors.error.primary.base};
           `}
         >
           Google Internal Only

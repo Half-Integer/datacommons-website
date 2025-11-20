@@ -66,7 +66,7 @@ export const BuildHero = (): ReactElement => {
               ${theme.font.family.text};
               ${theme.font.text.md};
               color: ${theme.colors.text.primary.light};
-              margin-bottom: ${theme.spacing.xxl}px;
+              margin-bottom: ${theme.spacing.x2l}px;
               @media (max-width: ${theme.breakpoints.sm}px) {
                 margin-bottom: ${theme.spacing.lg}px;
               }

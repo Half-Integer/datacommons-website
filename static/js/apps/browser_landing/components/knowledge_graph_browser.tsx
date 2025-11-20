@@ -40,8 +40,8 @@ export const KnowledgeGraphBrowser = ({
         <article
           key={category.title}
           css={css`
-            padding-bottom: ${theme.spacing.xxl}px;
-            margin-bottom: ${theme.spacing.xxl}px;
+            padding-bottom: ${theme.spacing.x2l}px;
+            margin-bottom: ${theme.spacing.x2l}px;
             border-bottom: 1px solid rgba(220, 220, 220, 0.3);
             &:last-of-type {
               border-bottom: none;

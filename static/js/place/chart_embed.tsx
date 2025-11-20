@@ -278,7 +278,7 @@ class ChartEmbed extends React.Component<
                 justify-content: center;
                 overflow: hidden;
                 border: 1px solid ${theme.colors.border.primary.light};
-                ${theme.radius.tertiary};
+                ${theme.radius.md};
                 padding: ${theme.spacing.md}px;
                 & > svg,
                 & > img {
@@ -312,14 +312,14 @@ class ChartEmbed extends React.Component<
                 width: 100%;
                 && {
                   h3 {
-                    ${theme.typography.family.heading}
-                    ${theme.typography.heading.xs}
+                    ${theme.font.family.heading}
+                    ${theme.font.heading.xs}
                     margin: 0 0 ${theme.spacing.sm}px 0;
                     padding: 0 0 0 0;
                   }
                   p {
-                    ${theme.typography.family.text}
-                    ${theme.typography.text.md}
+                    ${theme.font.family.text}
+                    ${theme.font.text.md}
                     white-space: pre-wrap;
                     word-break: break-word;
                     a {

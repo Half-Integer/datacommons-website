@@ -307,8 +307,8 @@ function NoFacetChoicesMessage({
   return (
     <p
       css={css`
-        ${variant === "small" ? "font-size: 13px;" : theme.typography.text.sm}
-        ${theme.typography.family.text}
+        ${variant === "small" ? "font-size: 13px;" : theme.font.text.sm}
+        ${theme.font.family.text}
         ${theme.button.size.md}
         padding: ${variant === "inline" ? "0px" : "inherit"};
         padding-left: ${variant === "inline" ? "0" : theme.spacing.sm}px;

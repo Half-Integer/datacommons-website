@@ -53,7 +53,7 @@ export const MediaText = ({
       css={css`
         display: grid;
         grid-template-columns: 6fr 4fr;
-        gap: ${theme.spacing.md}px ${theme.spacing.xxl}px;
+        gap: ${theme.spacing.md}px ${theme.spacing.x2l}px;
         @media (max-width: ${theme.breakpoints.md}px) {
           gap: ${theme.spacing.md}px ${theme.spacing.xl}px;
         }

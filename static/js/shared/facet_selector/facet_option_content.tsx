@@ -128,8 +128,8 @@ export function FacetOptionContent({
     >
       <p
         css={css`
-          ${theme.typography.family.text}
-          ${theme.typography.text.md}
+          ${theme.font.family.text}
+          ${theme.font.text.md}
           margin: 0;
           padding: 0;
           white-space: pre-wrap;
@@ -140,8 +140,8 @@ export function FacetOptionContent({
       </p>
       <ul
         css={css`
-          ${theme.typography.family.text}
-          ${theme.typography.text.sm}
+          ${theme.font.family.text}
+          ${theme.font.text.sm}
           color: ${theme.colors.text.tertiary.dark};
           margin: 0;
           padding: 0;
@@ -177,7 +177,7 @@ export function FacetOptionContent({
                 >
                   <InfoFilled
                     css={css`
-                      color: ${theme.colors.button.primary.light};
+                      color: ${theme.colors.link.primary.light};
                     `}
                   />
                 </Tooltip>

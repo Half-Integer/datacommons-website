@@ -42,7 +42,7 @@ export function FormBox(props: FormBoxProps): JSX.Element {
         flex-wrap: wrap;
         gap: ${theme.spacing.md}px;
         padding: ${theme.spacing.lg}px;
-        ${theme.radius.secondary}
+        ${theme.radius.lg}
         width: 100%;
       `}
     >

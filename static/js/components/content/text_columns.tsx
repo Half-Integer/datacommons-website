@@ -78,7 +78,7 @@ export const TextColumns = ({
             ${theme.font.family.text};
             ${theme.font.text.md};
             padding: ${theme.spacing.md}px ${theme.spacing.xl}px;
-            background-color: ${theme.colors.button.primary.base};
+            background-color: ${theme.colors.link.primary.base};
             &:hover {
               ${theme.elevation.high}
             }

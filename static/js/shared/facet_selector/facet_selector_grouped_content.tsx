@@ -146,8 +146,8 @@ export function FacetSelectorGroupedContent({
     >
       <p
         css={css`
-          ${theme.typography.family.text}
-          ${theme.typography.text.md}
+          ${theme.font.family.text}
+          ${theme.font.text.md}
           margin: 0;
           padding: 0;
         `}

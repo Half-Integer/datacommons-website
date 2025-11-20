@@ -515,8 +515,8 @@ export function Block(props: BlockPropType): ReactElement {
             label,
             button,
             input {
-              ${theme.typography.family.text}
-              ${theme.typography.text.sm}
+              ${theme.font.family.text}
+              ${theme.font.text.sm}
               margin: 0;
               padding: 0;
             }

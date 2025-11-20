@@ -62,7 +62,9 @@ export const LinkChip = ({
   const theme = useTheme();
 
   const baseBoxStyle =
-    linkChip.variant === "elevated" ? theme.linkBox.standard : theme.linkBox.inverted;
+    linkChip.variant === "elevated"
+      ? theme.linkBox.standard
+      : theme.linkBox.inverted;
 
   const baseElevation =
     linkChip.variant === "elevated" ? theme.elevation.high : "";
@@ -75,13 +77,13 @@ export const LinkChip = ({
   const colors =
     linkChip.colorVariant === "grey"
       ? css`
-          background-color: ${theme.colors.box.grey.pill};
-          color: ${theme.colors.box.grey.text};
+          background-color: ${theme.cards.variant.grey.pill};
+          color: ${theme.cards.variant.grey.text};
           svg {
-            fill: ${theme.colors.box.grey.text};
+            fill: ${theme.cards.variant.grey.text};
           }
           &:hover {
-            background-color: ${theme.colors.box.grey.pill};
+            background-color: ${theme.cards.variant.grey.pill};
             text-decoration: none;
           }
         `
@@ -102,10 +104,10 @@ export const LinkChip = ({
   const textSize =
     linkChip.textSize === "sm"
       ? css`
-          ${theme.typography.text.sm}
+          ${theme.font.text.sm}
         `
       : css`
-          ${theme.typography.text.md}
+          ${theme.font.text.md}
         `;
 
   const chipStyles = css`

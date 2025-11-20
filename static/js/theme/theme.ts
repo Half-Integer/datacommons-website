@@ -421,6 +421,10 @@ const theme: Theme = {
       },
     },
   },
+  placeTypeSelect: {
+    borderColor: COLOR_OCEAN,
+    boxShadow: `0 0 0 0.2rem ${COLOR_SKY}`,
+  },
   codeHighlight: {
     background: COLOR_WHITE,
     border: COLOR_CLOUD,
@@ -457,10 +461,10 @@ const theme: Theme = {
     regex: COLOR_YELLOW,
     important: COLOR_YELLOW,
     variable: COLOR_YELLOW,
-    csvHeader: DC_GREEN,
-    csvSeparator: DC_ORANGE,
-    csvStringValue: DC_GRAY_LIGHT,
-    csvValue: DC_BLUE,
+    csvHeader: COLOR_LEAF,
+    csvSeparator: COLOR_ORANGE,
+    csvStringValue: COLOR_STEEL,
+    csvValue: COLOR_OCEAN,
   },
   elevation: {
     none: {

@@ -212,7 +212,7 @@ interface TooltipProps {
   // Delay before closing the tooltip when the mouse leaves in ms. Defaults to 150ms.
   closeDelay?: number;
   // The maximum width of the tooltip. Defaults to 300px.
-  maxWidth?: number | string;
+  maxWidth?: string | number;
   // Lateral buffer distance in pixels around the trigger to prevent early closure
   // Defaults to 10px.
   triggerBuffer?: number;
@@ -228,7 +228,7 @@ interface TooltipProps {
 }
 
 const TOOLTIP_Z_INDEX = theme.zIndex.tooltip;
-const TOOLTIP_DEFAULT_MAX_WIDTH = theme.tooltip.width;
+const TOOLTIP_DEFAULT_MAX_WIDTH = 300;
 const TOOLTIP_DEFAULT_DISTANCE = 15;
 const TOOLTIP_DEFAULT_FOLLOW_CURSOR_DISTANCE = 25;
 const TOOLTIP_DEFAULT_SKIDDING = 0;
@@ -259,8 +259,8 @@ const TooltipBox = styled.div<{
   ${theme.font.text.sm}
   ${theme.elevation.high};
   max-width: ${({ $maxWidth }): string => $maxWidth};
-  background-color: ${theme.colors.box.tooltip.pill};
-  color: ${theme.colors.box.tooltip.text};
+  background-color: ${theme.cards.variant.grey.pill};
+  color: ${theme.tooltip.variant.standard.text};
   padding: ${theme.spacing.md}px;
   display: flex;
   flex-direction: column;
@@ -377,7 +377,7 @@ const CloseButton = styled.button`
   background: transparent;
   border: none;
   cursor: pointer;
-  color: ${theme.colors.box.tooltip.text};
+  color: ${theme.tooltip.variant.standard.text};
   &:hover {
     color: ${theme.colors.link.primary.base};
   }
@@ -392,7 +392,7 @@ const SimpleStringTrigger = styled.span<{
   display: inline-block;
   padding: 0;
   margin: 0;
-  text-decoration: underline ${theme.colors.box.tooltip.text} dashed;
+  text-decoration: underline ${theme.tooltip.variant.standard.text} dashed;
   cursor: ${({ $cursor }): string => ($cursor ? $cursor : "inherit")};
 `;
 
@@ -1312,7 +1312,7 @@ export const Tooltip = ({
   }, [tooltipId, mounted, open, openAsPopover, handleClose]);
 
   const defaultArrowProps = {
-    fill: theme.colors.box.tooltip.pill,
+    fill: theme.tooltip.variant.standard.pill,
     stroke: "hsla(0, 0%, 0%, 0.2)",
     strokeWidth: shouldShowArrowBorder ? 1 : 0,
   };

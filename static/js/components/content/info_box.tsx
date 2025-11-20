@@ -45,7 +45,7 @@ export function InfoBox(props: InfoBoxProps): JSX.Element {
       <div
         css={css`
           background-color: ${theme.infoBox.backgroundColor};
-          border-radius: ${theme.radius.secondary.borderRadius};
+          border-radius: ${theme.radius.lg};
           display: flex;
           flex-direction: row;
           gap: ${theme.spacing.md}px;
@@ -77,7 +77,7 @@ export function InfoBox(props: InfoBoxProps): JSX.Element {
           <div
             css={css`
               color: ${theme.colors.text.primary.base};
-              ${theme.typography.text.lg};
+              ${theme.font.text.lg};
               ol,
               ul {
                 display: flex;
