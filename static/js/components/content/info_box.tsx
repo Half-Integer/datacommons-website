@@ -44,12 +44,12 @@ export function InfoBox(props: InfoBoxProps): JSX.Element {
     >
       <div
         css={css`
-          background-color: ${theme.infoBox.backgroundColor};
-          border-radius: ${theme.radius.lg};
           display: flex;
           flex-direction: row;
           gap: ${theme.spacing.md}px;
-          padding: ${theme.spacing.lg}px;
+          padding: ${theme.spacing.xl}px ${theme.spacing.lg}px;
+          background-color: ${theme.infoBox.backgroundColor};
+          ${theme.radius.lg};
           ${theme.infoBox.icon}
 
           & > svg {
