@@ -259,7 +259,7 @@ const TooltipBox = styled.div<{
   ${theme.font.text.sm}
   ${theme.elevation.high};
   max-width: ${({ $maxWidth }): string => $maxWidth};
-  background-color: ${theme.cards.variant.grey.pill};
+  background-color: ${theme.tooltip.variant.standard.pill};
   color: ${theme.tooltip.variant.standard.text};
   padding: ${theme.spacing.md}px;
   display: flex;
