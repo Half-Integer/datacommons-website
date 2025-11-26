@@ -23,6 +23,9 @@ import queryString from "query-string";
 import { URL_HASH_PARAMS } from "../constants/app/explore_constants";
 import { FacetMetadata } from "../types/facet_metadata";
 
+// Hash params that should be persisted across pages.
+const PARAMS_TO_PERSIST = new Set(["hl", "enable_feature", "aq"]);
+
 /**
  * Returns token for URL param.
  * @param param URL param
@@ -52,19 +55,32 @@ export function getUrlTokenOrDefault(param: string, def: string): string {
  * @param params Map of param to new value.
  */
 export function getUpdatedHash(
-  params: Record<string, string | string[]>
+  params: Record<string, string | string[]>,
+  paramsToPersist?: Set<string>
 ): string {
   const urlParams = new URLSearchParams(window.location.hash.split("#")[1]);
+  // Remove all existing params not present in the new params
+  Array.from(urlParams.keys()).forEach((key) => {
+    const isPermanentParamToPersist = PARAMS_TO_PERSIST.has(key);
+    const isCurrentParamToPersist = paramsToPersist && paramsToPersist.has(key);
+    if (key in params || isPermanentParamToPersist || isCurrentParamToPersist) {
+      // Keep param
+    } else {
+      urlParams.delete(key);
+    }
+  });
+
   for (const param in params) {
-    if (!params[param]) {
+    const value = params[param];
+    if (!value || (Array.isArray(value) && value.length === 0)) {
+      // If the value is empty, remove the param
       urlParams.delete(param);
       continue;
     }
-    if (Array.isArray(params[param])) {
-      urlParams.delete(param);
-      (<string[]>params[param]).forEach((v) => urlParams.append(param, v));
+    if (Array.isArray(value)) {
+      value.forEach((v) => urlParams.append(param, v));
     } else {
-      urlParams.set(param, <string>params[param]);
+      urlParams.set(param, value as string);
     }
   }
   return urlParams.toString();
@@ -74,8 +90,11 @@ export function getUpdatedHash(
  * Updates URL hash param with given value.
  * @param params Map of param to new value.
  */
-export function updateHash(params: Record<string, string | string[]>): void {
-  window.location.hash = getUpdatedHash(params);
+export function updateHash(
+  params: Record<string, string | string[]>,
+  paramsToPersist?: Set<string>
+): void {
+  window.location.hash = getUpdatedHash(params, paramsToPersist);
 }
 
 /**
@@ -123,7 +142,9 @@ export interface UrlHashParams {
   maxTopicSvs: string;
   maxCharts: string;
   chartType: string;
+  origin: string;
   facetMetadata?: FacetMetadata;
+  date?: string;
 }
 
 export function extractFacetMetadataUrlHashParams(
@@ -188,7 +209,9 @@ export function extractUrlHashParams(
   const maxTopicSvs = getSingleParam(hashParams[URL_HASH_PARAMS.MAX_TOPIC_SVS]);
   const maxCharts = getSingleParam(hashParams[URL_HASH_PARAMS.MAX_CHARTS]);
   const chartType = getSingleParam(hashParams[URL_HASH_PARAMS.CHART_TYPE]);
+  const origin = getSingleParam(hashParams[URL_HASH_PARAMS.ORIGIN]);
   const facetMetadata = extractFacetMetadataUrlHashParams(hashParams);
+  const date = getSingleParam(hashParams[URL_HASH_PARAMS.DATE]);
 
   return {
     query,
@@ -209,6 +232,28 @@ export function extractUrlHashParams(
     maxTopicSvs,
     maxCharts,
     chartType,
+    origin,
     facetMetadata,
+    date,
   };
+}
+
+/**
+ * Get the value of a query parameter from the current URL
+ * @param parameter name of the query parameter to fetch the value of
+ * @returns the value of the query parameter if set, otherwise null
+ */
+export function getQueryParamFromUrl(parameter: string): string | null {
+  const params = new URLSearchParams(window.location.search);
+  return params.get(parameter);
+}
+
+/**
+ * Fetch locale from the URL
+ *
+ * Used to get the current locale set by a ?hl= url parameter.
+ * If the parameter is not present, defaults to the "en" locale.
+ */
+export function getLocaleFromUrl(): string {
+  return getQueryParamFromUrl("hl") || "en";
 }

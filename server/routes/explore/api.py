@@ -34,6 +34,7 @@ import server.lib.nl.common.utterance as nl_utterance
 import server.lib.nl.config_builder.base as config_builder
 import server.lib.nl.detection.detector as nl_detector
 from server.lib.nl.detection.utils import create_utterance
+from server.lib.nl.explore import overview
 from server.lib.nl.explore import related
 import server.lib.nl.explore.fulfiller_bridge as nl_fulfillment
 from server.lib.nl.explore.params import Clients
@@ -84,8 +85,10 @@ def detect():
 #
 # POST request should contain:
 #  - entities: An ordered list of places or other entity DCIDs.
-#  - variables: A ordered list of SV or topic (dc/topic/..) DCIDs.
+#  - variables: An ordered list of SV or topic (dc/topic/..) DCIDs.
 #  - childEntityType: A type of child entity (optional)
+#  - An "x-surface" header indicating which DC surface (website,
+#   MCP server, etc) the request is coming from.
 #
 @bp.route('/fulfill', methods=['POST'])
 def fulfill():
@@ -168,6 +171,47 @@ def follow_up_questions():
   ]
 
   return Response(json.dumps({'follow_up_questions': safe_generated_questions}),
+                  200,
+                  mimetype="application/json")
+
+
+# The page overview endpoint that generates an introductory paragraph
+# based off of the initial query and relevant statistical variables.
+#
+@bp.route('/page-overview', methods=['POST'])
+@cache.cached(timeout=TIMEOUT, make_cache_key=post_body_cache_key)
+def page_overview():
+
+  initial_query = request.get_json().get('q', '')
+  stat_vars = request.get_json().get('statVars', [])
+
+  if not initial_query:
+    return Response(json.dumps({'error': 'Missing query in request.'}),
+                    400,
+                    mimetype="application/json")
+  if not stat_vars:
+    return Response(json.dumps(
+        {'error': 'Missing statistical variables in request.'}),
+                    400,
+                    mimetype="application/json")
+
+  generated_overview, stat_var_links = overview.generate_page_overview(
+      query=initial_query, stat_var_titles=stat_vars)
+
+  if not generated_overview or not stat_var_links:
+    return Response(json.dumps(
+        {'error': "Page overview could not be generated at this time."}),
+                    503,
+                    mimetype="application/json")
+
+  return Response(json.dumps({
+      'pageOverview':
+          generated_overview,
+      'statVarChartLinks': [
+          stat_var_link.model_dump(by_alias=True)
+          for stat_var_link in stat_var_links
+      ]
+  }),
                   200,
                   mimetype="application/json")
 
