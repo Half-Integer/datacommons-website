@@ -54,6 +54,7 @@ import {
   getNoDataErrorMsg,
   getStatFormat,
   ReplacementStrings,
+  StatVarDateRangeMap,
 } from "../../utils/tile_utils";
 
 // units that should be formatted as part of the number
@@ -85,6 +86,8 @@ export interface HighlightData extends Observation {
   facets: Record<string, StatMetadata>;
   // A mapping of which stat var used which facets
   statVarToFacets: StatVarFacetMap;
+  // A map of stat var dcids to their specific min and max date range from the chart
+  statVarDateRanges: StatVarDateRangeMap;
   numFractionDigits?: number;
   errorMsg: string;
 }
@@ -195,6 +198,7 @@ export function HighlightTile(props: HighlightTilePropType): ReactElement {
           facets={highlightData.facets}
           statVarToFacets={highlightData.statVarToFacets}
           statVarSpecs={[props.statVarSpec]}
+          statVarDateRanges={highlightData.statVarDateRanges}
           getObservationSpecs={getObservationSpecs}
           surface={props.surface}
         />
@@ -227,11 +231,12 @@ export const fetchData = async (
   apiRoot?: string,
   surface?: string
 ): Promise<HighlightData> => {
-  const facetId = facetSelector
-    ? undefined
-    : statVarSpec.facetId
-    ? [statVarSpec.facetId]
-    : undefined;
+  const facetId =
+    facetSelector && facetSelector.facetMetadata
+      ? undefined
+      : statVarSpec.facetId
+      ? [statVarSpec.facetId]
+      : undefined;
   // Now assume highlight only talks about one stat var.
   const statResp = await getPoint(
     apiRoot,
@@ -250,6 +255,7 @@ export const fetchData = async (
 
   const facets: Record<string, StatMetadata> = {};
   const statVarToFacets: StatVarFacetMap = {};
+  const statVarDateRanges: StatVarDateRangeMap = {};
 
   const facet = statResp.facets[mainStatData.facet];
 
@@ -259,6 +265,13 @@ export const fetchData = async (
       statVarToFacets[statVarSpec.statVar] = new Set();
     }
     statVarToFacets[statVarSpec.statVar].add(mainStatData.facet);
+  }
+  // Update date range for the main stat var
+  if (mainStatData.date) {
+    statVarDateRanges[statVarSpec.statVar] = {
+      minDate: mainStatData.date,
+      maxDate: mainStatData.date,
+    };
   }
 
   const sources = new Set<string>();
@@ -299,6 +312,13 @@ export const fetchData = async (
         }
         statVarToFacets[statVarSpec.denom].add(denomInfo.facetId);
       }
+      // Update date range for the denominator stat var
+      if (denomInfo.date) {
+        statVarDateRanges[statVarSpec.denom] = {
+          minDate: denomInfo.date,
+          maxDate: denomInfo.date,
+        };
+      }
     } else {
       value = null;
     }
@@ -327,6 +347,7 @@ export const fetchData = async (
     sources,
     facets,
     statVarToFacets,
+    statVarDateRanges,
     errorMsg,
   };
 };
