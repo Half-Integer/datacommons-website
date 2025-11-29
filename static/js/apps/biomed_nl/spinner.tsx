@@ -70,7 +70,7 @@ export function SpinnerWithText(): ReactElement {
         <div
           className="spinner"
           css={css`
-            border-left-color: ${theme.cards.variant.blue.text};
+            border-left-color: ${theme.spinner.variant.standard.color};
           `}
         ></div>
         <div>This may take up to 5 minutes...</div>

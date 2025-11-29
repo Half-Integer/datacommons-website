@@ -273,6 +273,13 @@ export interface Theme {
       };
     };
   };
+  spinner: {
+    variant: {
+      standard: {
+        color: string;
+      };
+    };
+  };
   infoBox: {
     backgroundColor: string;
     heading: TextVariant;
@@ -367,5 +374,8 @@ export interface Theme {
     tooltip: number;
     dialog: number;
     header: number;
+    drawer: number;
+    overlay: number;
+    widget: number;
   };
 }

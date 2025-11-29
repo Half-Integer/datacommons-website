@@ -400,9 +400,16 @@ const theme: Theme = {
       },
     },
   },
+  spinner: {
+    variant: {
+      standard: {
+        color: COLOR_OCEAN,
+      },
+    },
+  },
   // Generic Properties
   infoBox: {
-    backgroundColor: COLOR_GLACIER, // Check opacity
+    backgroundColor: COLOR_GLACIER,
     icon: {
       fontSize: "1.5rem",
       lineHeight: "2rem",
@@ -499,9 +506,12 @@ const theme: Theme = {
     },
   },
   zIndex: {
-    tooltip: 1001,
-    dialog: 1000,
-    header: 9999,
+    tooltip: 15000,
+    dialog: 10000,
+    header: 9000,
+    drawer: 8000,
+    overlay: 11000,
+    widget: 7000,
   },
 };
 
