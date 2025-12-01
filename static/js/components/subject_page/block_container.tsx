@@ -139,8 +139,8 @@ export function BlockContainer(props: BlockContainerPropType): ReactElement {
         <h3
           css={css`
             && {
-              ${theme.font.family.heading}
-              ${theme.font.heading.xs}
+              ${theme.typography.family.heading}
+              ${theme.typography.heading.xs}
               margin: 0;
               padding: 0;
             }

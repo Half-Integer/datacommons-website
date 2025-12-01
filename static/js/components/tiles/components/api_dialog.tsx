@@ -266,8 +266,8 @@ const ApiLanguageContent = ({
                 display: block;
                 width: 100%;
                 && > h3 {
-                  ${theme.font.family.text}
-                  ${theme.font.text.lg}
+                  ${theme.typography.family.text}
+                  ${theme.typography.text.lg}
                   display: block;
                   margin: 0 0 ${theme.spacing.md}px 0;
                 }
@@ -401,8 +401,8 @@ export function ApiDialog({
         <p
           css={css`
             && {
-              ${theme.font.family.text}
-              ${theme.font.text.md}
+              ${theme.typography.family.text}
+              ${theme.typography.text.md}
               white-space: pre-wrap;
               word-break: break-word;
               margin-bottom: 0;
@@ -430,7 +430,7 @@ export function ApiDialog({
                     css={css`
                       && {
                         padding: 1px ${theme.spacing.xs}px;
-                        ${theme.font.family.code}
+                        ${theme.typography.family.code}
                         font-size: 100%;
                         color: ${theme.colors.text.code.base};
                       }
@@ -456,8 +456,8 @@ export function ApiDialog({
           <label
             css={css`
               && {
-                ${theme.font.family.text}
-                ${theme.font.text.sm}
+                ${theme.typography.family.text}
+                ${theme.typography.text.sm}
                 position: relative;
                 font-weight: 600;
                 display: flex;
@@ -482,8 +482,8 @@ export function ApiDialog({
           >
             <span
               css={css`
-                ${theme.font.family.text}
-                ${theme.font.text.sm}
+                ${theme.typography.family.text}
+                ${theme.typography.text.sm}
                 font-weight: 600;
                 margin: 0;
               `}
@@ -500,8 +500,8 @@ export function ApiDialog({
                   appearance: none;
                   z-index: 1;
                   cursor: pointer;
-                  ${theme.font.family.text}
-                  ${theme.font.text.sm}
+                  ${theme.typography.family.text}
+                  ${theme.typography.text.sm}
                   ${theme.radius.sm}
                   border: 1px solid ${theme.colors.border.primary.light};
                   padding: ${theme.spacing.xs}px ${theme.spacing.lg}px

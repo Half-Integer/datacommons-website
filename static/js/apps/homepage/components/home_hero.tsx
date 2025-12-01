@@ -52,7 +52,7 @@ export const HomeHero = ({
       <HeroColumns.Left>
         <h1
           css={css`
-            ${theme.font.heading.lg}
+            ${theme.typography.heading.lg}
           `}
         >
           Data Commons brings together the world&apos;s public data, making it

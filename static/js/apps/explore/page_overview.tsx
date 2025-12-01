@@ -205,7 +205,7 @@ export function PageOverview(props: PageOverviewPropType): ReactElement {
           ref={inViewRef}
           data-testid="page-overview-inner"
           css={[
-            theme.font.text.lg,
+            theme.typography.text.lg,
             css`
               margin-bottom: ${theme.spacing.xl}px;
             `,

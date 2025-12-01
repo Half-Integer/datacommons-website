@@ -42,8 +42,8 @@ export const BigText = ({ children }: BigTextProps): ReactElement => {
     >
       <h3
         css={css`
-          ${theme.font.family.heading};
-          ${theme.font.heading.sm};
+          ${theme.typography.family.heading};
+          ${theme.typography.heading.sm};
           color: ${theme.colors.text.primary.light};
         `}
       >

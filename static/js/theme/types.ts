@@ -165,7 +165,7 @@ export interface Theme {
       };
     };
   };
-  font: {
+  typography: {
     family: {
       text: {
         fontFamily: string;

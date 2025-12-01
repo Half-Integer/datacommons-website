@@ -312,14 +312,14 @@ class ChartEmbed extends React.Component<
                 width: 100%;
                 && {
                   h3 {
-                    ${theme.font.family.heading}
-                    ${theme.font.heading.xs}
+                    ${theme.typography.family.heading}
+                    ${theme.typography.heading.xs}
                     margin: 0 0 ${theme.spacing.sm}px 0;
                     padding: 0 0 0 0;
                   }
                   p {
-                    ${theme.font.family.text}
-                    ${theme.font.text.md}
+                    ${theme.typography.family.text}
+                    ${theme.typography.text.md}
                     white-space: pre-wrap;
                     word-break: break-word;
                     a {

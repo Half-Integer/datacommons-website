@@ -103,8 +103,8 @@ export function FacetSelectorStandardContent({
       {facetList.length > 1 && (
         <p
           css={css`
-            ${theme.font.family.text}
-            ${theme.font.text.md}
+            ${theme.typography.family.text}
+            ${theme.typography.text.md}
             margin: 0;
             padding: 0;
           `}
@@ -138,8 +138,8 @@ export function FacetSelectorStandardContent({
             {facetList.length > 1 ? (
               <p
                 css={css`
-                  ${theme.font.family.text}
-                  ${theme.font.text.md}
+                  ${theme.typography.family.text}
+                  ${theme.typography.text.md}
                   font-weight: 900;
                   margin: 0;
                   padding: 0;
@@ -150,8 +150,8 @@ export function FacetSelectorStandardContent({
             ) : (
               <p
                 css={css`
-                  ${theme.font.family.text}
-                  ${theme.font.text.md}
+                  ${theme.typography.family.text}
+                  ${theme.typography.text.md}
                   margin: 0;
                   padding: 0;
                 `}

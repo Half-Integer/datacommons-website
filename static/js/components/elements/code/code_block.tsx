@@ -261,7 +261,7 @@ export function CodeBlock({
       overflow: "auto",
       MozTabSize: 2,
       tabSize: 2,
-      ...theme.font.family.code,
+      ...theme.typography.family.code,
       fontSize: "0.9rem",
       textShadow: `0 1px ${theme.codeHighlight.background}`,
       textAlign: "left",
@@ -276,7 +276,7 @@ export function CodeBlock({
       hyphens: "none",
 
       "> code": {
-        ...theme.font.family.code,
+        ...theme.typography.family.code,
         color: theme.codeHighlight.text,
       },
 

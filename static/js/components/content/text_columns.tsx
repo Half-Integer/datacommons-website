@@ -61,13 +61,13 @@ export const TextColumns = ({
         & > div {
           h3,
           h4 {
-            ${theme.font.family.heading};
-            ${theme.font.heading.lg};
+            ${theme.typography.family.heading};
+            ${theme.typography.heading.lg};
             margin-bottom: ${theme.spacing.lg}px;
           }
           p {
-            ${theme.font.family.text};
-            ${theme.font.text.md};
+            ${theme.typography.family.text};
+            ${theme.typography.text.md};
           }
           ul {
             margin: 0;
@@ -75,8 +75,8 @@ export const TextColumns = ({
           }
           a.btn-primary {
             ${theme.radius.full};
-            ${theme.font.family.text};
-            ${theme.font.text.md};
+            ${theme.typography.family.text};
+            ${theme.typography.text.md};
             padding: ${theme.spacing.md}px ${theme.spacing.xl}px;
             background-color: ${theme.colors.link.primary.base};
             &:hover {
@@ -98,8 +98,8 @@ export const TextColumns = ({
         >
           <h3
             css={css`
-              ${theme.font.family.heading};
-              ${theme.font.heading.lg};
+              ${theme.typography.family.heading};
+              ${theme.typography.heading.lg};
             `}
           >
             {header}

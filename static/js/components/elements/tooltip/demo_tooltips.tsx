@@ -51,20 +51,20 @@ export const DemoTooltips = (): ReactElement => {
           padding: ${theme.spacing.lg}px;
         }
         p {
-          ${theme.font.family.text};
-          ${theme.font.text.md};
+          ${theme.typography.family.text};
+          ${theme.typography.text.md};
         }
         ul {
           margin: 0 0 20px 20px;
           padding: 0;
         }
         li {
-          ${theme.font.family.text};
-          ${theme.font.text.md};
+          ${theme.typography.family.text};
+          ${theme.typography.text.md};
         }
         h4 {
-          ${theme.font.family.heading};
-          ${theme.font.text.md};
+          ${theme.typography.family.heading};
+          ${theme.typography.text.md};
           font-weight: 900;
         }
       `}
@@ -72,8 +72,8 @@ export const DemoTooltips = (): ReactElement => {
       <div
         className="box"
         css={css`
-          ${theme.font.family.text}
-          ${theme.font.text.sm}
+          ${theme.typography.family.text}
+          ${theme.typography.text.sm}
         `}
       >
         A simple{" "}
@@ -120,8 +120,8 @@ export const DemoTooltips = (): ReactElement => {
               border: 0;
               ${theme.linkBox.standard}
               ${theme.elevation.high}
-              ${theme.font.family.text};
-              ${theme.font.text.md};
+              ${theme.typography.family.text};
+              ${theme.typography.text.md};
               ${theme.radius.xl};
               ${theme.colors.link.primary.base}
               line-height: 1rem;
@@ -651,8 +651,8 @@ export const DemoTooltips = (): ReactElement => {
       <div
         className="box"
         css={css`
-          ${theme.font.family.text}
-          ${theme.font.text.sm}
+          ${theme.typography.family.text}
+          ${theme.typography.text.sm}
         `}
       >
         You can apply arbitrary{" "}

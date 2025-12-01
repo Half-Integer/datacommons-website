@@ -70,7 +70,7 @@ export const OneDataCommons = (): ReactElement => {
       >
         <h3
           css={css`
-            ${theme.font.heading.md}
+            ${theme.typography.heading.md}
           `}
         >
           ONE Data Commons

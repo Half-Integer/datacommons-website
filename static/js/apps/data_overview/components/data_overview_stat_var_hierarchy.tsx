@@ -48,8 +48,8 @@ export const DataOverviewStatVarHierarchy = ({
       <header>
         <h3
           css={css`
-            ${theme.font.family.heading}
-            ${theme.font.heading.xs}
+            ${theme.typography.family.heading}
+            ${theme.typography.heading.xs}
               margin: 0;
           `}
         >

@@ -49,7 +49,7 @@ export function MetadataSummary({
     <div
       className="metadata-summary"
       css={css`
-        ${theme.font.text.sm};
+        ${theme.typography.text.sm};
       `}
     >
       {metadataLoadingState === true && <Loading />}

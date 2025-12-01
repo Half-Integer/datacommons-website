@@ -72,13 +72,13 @@ export const MediaText = ({
               grid-column: 1;
             }
             & > h3 {
-              ${theme.font.heading.md}
+              ${theme.typography.heading.md}
             }
             & > h4 {
-              ${theme.font.heading.sm}
+              ${theme.typography.heading.sm}
             }
             & > p {
-              ${theme.font.text.md}
+              ${theme.typography.text.md}
             }
           `}
         >
@@ -155,13 +155,13 @@ export const MediaText = ({
       <div
         css={css`
           & > h3 {
-            ${theme.font.heading.sm}
+            ${theme.typography.heading.sm}
           }
           & > h4 {
-            ${theme.font.heading.xs}
+            ${theme.typography.heading.xs}
           }
           & > p {
-            ${theme.font.text.md}
+            ${theme.typography.text.md}
           }
         `}
       >

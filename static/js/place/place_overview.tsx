@@ -62,7 +62,7 @@ const PlaceOverviewTable = (props: {
           margin-bottom: 1rem;
           color: #212529;
           th {
-            ${theme.font.text.md}
+            ${theme.typography.text.md}
             font-weight: 500;
             border-bottom: 1px solid var(--gm-3-ref-neutral-neutral-70, #ababab);
             border-top: none;
@@ -70,7 +70,7 @@ const PlaceOverviewTable = (props: {
             padding: 0 0 ${theme.spacing.md}px 0;
           }
           td {
-            ${theme.font.text.sm}
+            ${theme.typography.text.sm}
             padding: 12px 0;
             vertical-align: top;
             border-bottom: 1px solid #e1e3e1;
@@ -120,7 +120,7 @@ const PlaceOverviewTable = (props: {
       </table>
       <div
         css={css`
-          ${theme.font.text.xs}
+          ${theme.typography.text.xs}
           a {
             color: ${theme.colors.text.primary.base};
           }
@@ -171,7 +171,7 @@ export const PlaceOverview = (props: {
     >
       <div
         css={css`
-          ${theme.font.text.md}
+          ${theme.typography.text.md}
           align-items: center;
           display: flex;
           font-weight: 500;
@@ -199,7 +199,7 @@ export const PlaceOverview = (props: {
         <div
           className="place-summary"
           css={css`
-            ${theme.font.text.sm}
+            ${theme.typography.text.sm}
             margin-bottom: ${theme.spacing.md}px;
           `}
         >

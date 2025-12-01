@@ -255,8 +255,8 @@ const TooltipBox = styled.div<{
   $openAsPopover: boolean;
   $showArrow: boolean;
 }>`
-  ${theme.font.family.text}
-  ${theme.font.text.sm}
+  ${theme.typography.family.text}
+  ${theme.typography.text.sm}
   ${theme.elevation.high};
   max-width: ${({ $maxWidth }): string => $maxWidth};
   background-color: ${theme.tooltip.variant.standard.pill};
@@ -303,8 +303,8 @@ const TooltipBox = styled.div<{
     return theme.radius.md;
   }}
 
-  ${theme.font.family.text}
-  ${theme.font.text.sm}
+  ${theme.typography.family.text}
+  ${theme.typography.text.sm}
   white-space: pre-wrap;
   word-break: break-word;
   h1,
@@ -315,8 +315,8 @@ const TooltipBox = styled.div<{
   big {
     padding: 0;
     margin: 0;
-    ${theme.font.family.heading}
-    ${theme.font.text.sm}
+    ${theme.typography.family.heading}
+    ${theme.typography.text.sm}
     font-weight: 600;
     white-space: pre-wrap;
     word-break: break-word;

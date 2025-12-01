@@ -102,7 +102,7 @@ export function ChartHeader(props: ChartHeaderProps): ReactElement {
                 padding: ${theme.spacing.sm}px ${theme.spacing.md}px;
                 gap: ${theme.spacing.sm}px;
                 background: ${theme.cards.variant.grey.pill};
-                ${theme.font.family.text};
+                ${theme.typography.family.text};
                 font-size: 13px;
               `}
             >

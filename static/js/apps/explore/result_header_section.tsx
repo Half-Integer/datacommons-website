@@ -300,8 +300,8 @@ const PlaceHeader = ({
         width: 100%;
         height: auto;
         min-height: 20px;
-        ${theme.font.family.text};
-        ${theme.font.text.sm};
+        ${theme.typography.family.text};
+        ${theme.typography.text.sm};
         transition: height 0.3s ease-in-out;
         padding-bottom: ${theme.spacing.xs}px;
         @media (max-width: ${theme.breakpoints.lg}px) {
@@ -450,8 +450,8 @@ export function ResultHeaderSection(
       />
       <p
         css={css`
-          ${theme.font.family.text}
-          ${theme.font.text.sm}
+          ${theme.typography.family.text}
+          ${theme.typography.text.sm}
           color: ${theme.colors.text.tertiary.base};
           padding-top: ${theme.spacing.sm}px;
           margin-bottom: ${theme.spacing.xs}px;
@@ -461,8 +461,8 @@ export function ResultHeaderSection(
       </p>
       <h3
         css={css`
-          ${theme.font.family.heading}
-          ${theme.font.heading.lg}
+          ${theme.typography.family.heading}
+          ${theme.typography.heading.lg}
           margin-bottom: ${theme.spacing.md + 2}px;
         `}
       >

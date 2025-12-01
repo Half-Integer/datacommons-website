@@ -53,8 +53,8 @@ export const DataSource = ({
       <div>
         <h4
           css={css`
-            ${theme.font.family.text}
-            ${theme.font.text.md}
+            ${theme.typography.family.text}
+            ${theme.typography.text.md}
               margin-bottom: ${theme.spacing.sm}px;
           `}
         >
@@ -62,8 +62,8 @@ export const DataSource = ({
         </h4>
         <p
           css={css`
-            ${theme.font.family.text}
-            ${theme.font.text.md}
+            ${theme.typography.family.text}
+            ${theme.typography.text.md}
               margin: 0;
           `}
         >
@@ -71,8 +71,8 @@ export const DataSource = ({
         </p>
         <p
           css={css`
-            ${theme.font.family.text}
-            ${theme.font.text.sm}
+            ${theme.typography.family.text}
+            ${theme.typography.text.sm}
               margin: 0;
             display: flex;
             gap: ${theme.spacing.xs}px;
@@ -88,8 +88,8 @@ export const DataSource = ({
         </p>
         <p
           css={css`
-            ${theme.font.family.text}
-            ${theme.font.text.sm}
+            ${theme.typography.family.text}
+            ${theme.typography.text.sm}
             margin: 0;
             display: flex;
             gap: ${theme.spacing.xs}px;
@@ -104,8 +104,8 @@ export const DataSource = ({
       <div>
         <h5
           css={css`
-            ${theme.font.family.text}
-            ${theme.font.text.xs}
+            ${theme.typography.family.text}
+            ${theme.typography.text.xs}
             text-transform: uppercase;
             margin-bottom: ${theme.spacing.sm}px;
             padding: 7px 0; // Add visual alignment with the first column title
@@ -115,8 +115,8 @@ export const DataSource = ({
         </h5>
         <ul
           css={css`
-            ${theme.font.family.text}
-            ${theme.font.text.md}
+            ${theme.typography.family.text}
+            ${theme.typography.text.md}
             margin: 0;
             padding-left: ${theme.spacing.md}px;
             color: ${theme.colors.link.primary.base};

@@ -50,8 +50,8 @@ export const DataOverviewHeader = ({
       >
         <h3
           css={css`
-            ${theme.font.family.heading};
-            ${theme.font.heading.sm};
+            ${theme.typography.family.heading};
+            ${theme.typography.heading.sm};
             margin-left: ${theme.spacing.sm}px;
           `}
         >

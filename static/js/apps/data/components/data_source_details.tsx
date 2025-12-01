@@ -41,8 +41,8 @@ export const DataSourceDetails = ({
     <div>
       <h3
         css={css`
-          ${theme.font.family.heading};
-          ${theme.font.heading.sm};
+          ${theme.typography.family.heading};
+          ${theme.typography.heading.sm};
           margin-bottom: ${theme.spacing.xl}px;
           margin-left: ${theme.spacing.md}px;
         `}
@@ -72,10 +72,10 @@ export const DataSourceDetails = ({
           <div>
             <h3
               css={css`
-                ${theme.font.family.text};
-                ${theme.font.text.md};
+                ${theme.typography.family.text};
+                ${theme.typography.text.md};
                 @media (max-width: ${theme.breakpoints.md}px) {
-                  ${theme.font.text.lg};
+                  ${theme.typography.text.lg};
                   font-weight: 900;
                 }
               `}
@@ -93,8 +93,8 @@ export const DataSourceDetails = ({
               <div
                 key={dataSourceGroup.label}
                 css={css`
-                  ${theme.font.family.text};
-                  ${theme.font.text.md};
+                  ${theme.typography.family.text};
+                  ${theme.typography.text.md};
                   margin-bottom: ${theme.spacing.md}px;
                   &:first-of-type,
                   &:last-of-type {
@@ -125,8 +125,8 @@ export const DataSourceDetails = ({
               >
                 <h4
                   css={css`
-                    ${theme.font.family.text};
-                    ${theme.font.text.md};
+                    ${theme.typography.family.text};
+                    ${theme.typography.text.md};
                     margin-bottom: ${theme.spacing.xs}px;
                   `}
                 >

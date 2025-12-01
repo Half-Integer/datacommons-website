@@ -77,7 +77,7 @@ export function InfoBox(props: InfoBoxProps): JSX.Element {
           <div
             css={css`
               color: ${theme.colors.text.primary.base};
-              ${theme.font.text.lg};
+              ${theme.typography.text.lg};
               ol,
               ul {
                 display: flex;

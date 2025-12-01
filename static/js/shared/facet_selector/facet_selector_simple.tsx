@@ -128,8 +128,8 @@ export function FacetSelectorSimple({
     return (
       <p
         css={css`
-          ${variant === "small" ? "font-size: 13px;" : theme.font.text.sm}
-          ${theme.font.family.text}
+          ${variant === "small" ? "font-size: 13px;" : theme.typography.text.sm}
+          ${theme.typography.family.text}
           ${theme.button.size.md}
           padding-left: ${theme.spacing.sm}px;
           border: 1px solid transparent;
@@ -190,8 +190,8 @@ export function FacetSelectorSimple({
           {facetList?.length > 1 && (
             <p
               css={css`
-                ${theme.font.family.text}
-                ${theme.font.text.md}
+                ${theme.typography.family.text}
+                ${theme.typography.text.md}
                 margin: 0 0 ${theme.spacing.md}px;
                 padding: 0;
               `}
@@ -211,8 +211,8 @@ export function FacetSelectorSimple({
                   {facetList.length == 1 && (
                     <p
                       css={css`
-                        ${theme.font.family.text}
-                        ${theme.font.text.md}
+                        ${theme.typography.family.text}
+                        ${theme.typography.text.md}
                         margin: 0;
                         padding: 0;
                       `}
@@ -232,8 +232,8 @@ export function FacetSelectorSimple({
                   {facetList.length > 1 && (
                     <p
                       css={css`
-                        ${theme.font.family.text}
-                        ${theme.font.text.md}
+                        ${theme.typography.family.text}
+                        ${theme.typography.text.md}
                         font-weight: 900;
                         margin: 0;
                         padding: 0;
@@ -380,8 +380,8 @@ function getFacetOptionJsx(
         >
           <p
             css={css`
-              ${theme.font.family.text}
-              ${theme.font.text.md}
+              ${theme.typography.family.text}
+              ${theme.typography.text.md}
                 margin: 0;
               padding: 0;
               white-space: pre-wrap;
@@ -392,8 +392,8 @@ function getFacetOptionJsx(
           </p>
           <ul
             css={css`
-              ${theme.font.family.text}
-              ${theme.font.text.sm}
+              ${theme.typography.family.text}
+              ${theme.typography.text.sm}
                 color: ${theme.colors.text.tertiary.base};
               margin: 0;
               padding: 0;

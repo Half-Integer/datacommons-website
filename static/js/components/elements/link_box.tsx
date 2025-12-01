@@ -84,13 +84,13 @@ export const LinkBox = ({
 
     p {
       color: ${theme.cards.variant[color].text};
-      ${theme.font.text.xl};
+      ${theme.typography.text.xl};
     }
 
     small {
       color: ${theme.cards.variant[color].tag};
       background-color: ${theme.cards.variant[color].pill};
-      ${theme.font.text.xs};
+      ${theme.typography.text.xs};
       ${theme.radius.lg};
       display: inline-block;
       padding: ${theme.spacing.xs}px ${theme.spacing.sm}px;

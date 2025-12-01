@@ -128,8 +128,8 @@ export function FacetOptionContent({
     >
       <p
         css={css`
-          ${theme.font.family.text}
-          ${theme.font.text.md}
+          ${theme.typography.family.text}
+          ${theme.typography.text.md}
           margin: 0;
           padding: 0;
           white-space: pre-wrap;
@@ -140,8 +140,8 @@ export function FacetOptionContent({
       </p>
       <ul
         css={css`
-          ${theme.font.family.text}
-          ${theme.font.text.sm}
+          ${theme.typography.family.text}
+          ${theme.typography.text.sm}
           color: ${theme.colors.text.tertiary.dark};
           margin: 0;
           padding: 0;

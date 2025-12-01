@@ -145,7 +145,7 @@ function getSectionTrigger(title: string, opened: boolean): JSX.Element {
   return (
     <div
       css={css`
-        ${theme.font.heading.xs};
+        ${theme.typography.heading.xs};
         margin-bottom: ${theme.spacing.sm}px;
         cursor: pointer;
         &:hover {
@@ -350,7 +350,7 @@ function generateRelatedEntityChips(entities: GraphEntity[]): JSX.Element {
               <p
                 css={css`
                   margin: 0;
-                  ${theme.font.text.md};
+                  ${theme.typography.text.md};
                 `}
               >
                 <span
@@ -365,7 +365,7 @@ function generateRelatedEntityChips(entities: GraphEntity[]): JSX.Element {
               <p
                 css={css`
                   margin: 0;
-                  ${theme.font.text.sm};
+                  ${theme.typography.text.sm};
                 `}
               >
                 {entity.dcid}
@@ -515,7 +515,7 @@ export function App(): ReactElement {
           <div className="header">
             <p
               css={css`
-                ${theme.font.text.sm}
+                ${theme.typography.text.sm}
               `}
             >
               Experiments by Data Commons
@@ -598,7 +598,7 @@ export function App(): ReactElement {
               >
                 <div
                   css={css`
-                    ${theme.font.heading.md};
+                    ${theme.typography.heading.md};
                   `}
                 >
                   {queryFinal}

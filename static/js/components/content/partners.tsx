@@ -48,7 +48,7 @@ const Partners = ({ partners, gaEvent }: PartnersProps): ReactElement => {
       >
         <h3
           css={css`
-            ${theme.font.heading.md}
+            ${theme.typography.heading.md}
           `}
         >
           Organizations who have built their own Data Commons

@@ -171,7 +171,7 @@ const theme: Theme = {
       },
     },
   },
-  font: {
+  typography: {
     family: {
       text: {
         fontFamily: "'Google Sans Text', Arial, sans-serif",

@@ -47,10 +47,10 @@ const Quote = ({
     >
       <blockquote
         css={css`
-          ${theme.font.family.heading};
-          ${theme.font.heading.lg};
+          ${theme.typography.family.heading};
+          ${theme.typography.heading.lg};
           @media (max-width: ${theme.breakpoints.sm}px) {
-            ${theme.font.heading.sm};
+            ${theme.typography.heading.sm};
           }
         `}
       >
@@ -58,8 +58,8 @@ const Quote = ({
       </blockquote>
       <p
         css={css`
-          ${theme.font.family.text};
-          ${theme.font.text.lg};
+          ${theme.typography.family.text};
+          ${theme.typography.text.lg};
         `}
       >
         - {byline}

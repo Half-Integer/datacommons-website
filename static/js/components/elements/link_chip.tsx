@@ -104,18 +104,18 @@ export const LinkChip = ({
   const textSize =
     linkChip.textSize === "sm"
       ? css`
-          ${theme.font.text.sm}
+          ${theme.typography.text.sm}
         `
       : css`
-          ${theme.font.text.md}
+          ${theme.typography.text.md}
         `;
 
   const chipStyles = css`
     ${baseBoxStyle};
     ${colors}
     ${baseElevation};
-    ${theme.font.family.text};
-    ${theme.font.text.md};
+    ${theme.typography.family.text};
+    ${theme.typography.text.md};
     ${theme.radius.xl};
     line-height: 1rem;
     display: inline-flex;

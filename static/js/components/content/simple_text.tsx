@@ -33,13 +33,13 @@ const SimpleText = ({ children }: SimpleTextProps): ReactElement => {
     <article
       css={css`
         h3 {
-          ${theme.font.family.heading};
-          ${theme.font.heading.sm};
+          ${theme.typography.family.heading};
+          ${theme.typography.heading.sm};
           margin-bottom: ${theme.spacing.lg}px;
         }
         p {
-          ${theme.font.family.text};
-          ${theme.font.text.md};
+          ${theme.typography.family.text};
+          ${theme.typography.text.md};
         }
       `}
     >

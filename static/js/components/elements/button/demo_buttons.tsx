@@ -57,8 +57,8 @@ export const DemoButtons = (): ReactElement => {
         }
 
         h3 {
-          ${theme.font.family.heading};
-          ${theme.font.heading.xs};
+          ${theme.typography.family.heading};
+          ${theme.typography.heading.xs};
           margin-bottom: ${theme.spacing.md}px;
         }
       `}
