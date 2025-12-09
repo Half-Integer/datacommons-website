@@ -118,7 +118,7 @@ export const DemoTooltips = (): ReactElement => {
             onClick={(): void => console.log("click")}
             css={css`
               border: 0;
-              ${theme.linkBox.standard}
+              ${theme.components.linkBox.standard}
               ${theme.elevation.high}
               ${theme.typography.family.text};
               ${theme.typography.text.md};

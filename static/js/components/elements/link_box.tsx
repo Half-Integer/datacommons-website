@@ -69,7 +69,7 @@ export const LinkBox = ({
   `;
 
   const linkStyles = css`
-    ${theme.linkBox.standard};
+    ${theme.components.linkBox.standard};
     ${theme.elevation.high};
     ${theme.radius.xl};
     display: flex;
@@ -83,13 +83,13 @@ export const LinkBox = ({
     }
 
     p {
-      color: ${theme.cards.variant[color].text};
+      color: ${theme.components.cards.variant[color].text};
       ${theme.typography.text.xl};
     }
 
     small {
-      color: ${theme.cards.variant[color].tag};
-      background-color: ${theme.cards.variant[color].pill};
+      color: ${theme.components.cards.variant[color].tag};
+      background-color: ${theme.components.cards.variant[color].pill};
       ${theme.typography.text.xs};
       ${theme.radius.lg};
       display: inline-block;

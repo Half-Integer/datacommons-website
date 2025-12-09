@@ -201,144 +201,6 @@ export interface Theme {
       xl: TextVariant;
     };
   };
-  linkBox: {
-    standard?: LinkBoxVariant;
-    inverted?: LinkBoxVariant;
-  };
-  tabs: {
-    selected?: string;
-    unselected?: string;
-    lining?: string;
-  };
-  cards: {
-    variant?: {
-      blue: {
-        text: string;
-        tag: string;
-        pill: string;
-      };
-      green: {
-        text: string;
-        tag: string;
-        pill: string;
-      };
-      red: {
-        text: string;
-        tag: string;
-        pill: string;
-      };
-      yellow: {
-        text: string;
-        tag: string;
-        pill: string;
-      };
-      grey: {
-        text: string;
-        tag: string;
-        pill: string;
-      };
-    };
-  };
-  button: {
-    variant: {
-      standard?: ButtonVariant;
-      inverted?: ButtonVariant;
-      text?: ButtonVariant;
-      flat?: ButtonVariant;
-      light?: ButtonVariant;
-    };
-    size: {
-      sm?: {
-        padding: string;
-      };
-      md?: {
-        padding: string;
-      };
-      lg?: {
-        padding: string;
-      };
-    };
-  };
-  tooltip: {
-    variant: {
-      standard: {
-        text?: string;
-        tag?: string;
-        pill?: string;
-      };
-    };
-    size: {
-      md: {
-        width?: string;
-      };
-    };
-  };
-  spinner: {
-    variant: {
-      standard: {
-        color: string;
-      };
-    };
-  };
-  infoBox: {
-    backgroundColor: string;
-    heading: TextVariant;
-    icon: {
-      fontSize: string;
-      lineHeight: string;
-      [key: string]:
-        | string
-        | {
-            fontSize?: string;
-            lineHeight?: string;
-          };
-    };
-  };
-  placeTypeSelect: {
-    borderColor: string;
-    boxShadow: string;
-  };
-  codeHighlight: {
-    background?: string;
-    border?: string;
-    text?: string;
-    highlight?: string;
-    selection?: string;
-    comment?: string;
-    prolog?: string;
-    doctype?: string;
-    cData?: string;
-    punctuation?: string;
-    property?: string;
-    tag?: string;
-    boolean?: string;
-    number?: string;
-    constant?: string;
-    symbol?: string;
-    deleted?: string;
-    selector?: string;
-    attrName?: string;
-    string?: string;
-    char?: string;
-    builtin?: string;
-    inserted?: string;
-    operator?: string;
-    entity?: string;
-    url?: string;
-    langCSS?: string;
-    atrule?: string;
-    attrValue?: string;
-    keyword?: string;
-    function?: string;
-    className?: string;
-    regex?: string;
-    important?: string;
-    variable?: string;
-    csvHeader?: string;
-    csvSeparator?: string;
-    csvValue?: string;
-    csvStringValue?: string;
-  };
   elevation: {
     none: {
       boxShadow: string;
@@ -377,5 +239,145 @@ export interface Theme {
     drawer: number;
     overlay: number;
     widget: number;
+  };
+  components: {
+    linkBox: {
+      standard?: LinkBoxVariant;
+      inverted?: LinkBoxVariant;
+    };
+    tabs: {
+      selected?: string;
+      unselected?: string;
+      lining?: string;
+    };
+    cards: {
+      variant?: {
+        blue: {
+          text: string;
+          tag: string;
+          pill: string;
+        };
+        green: {
+          text: string;
+          tag: string;
+          pill: string;
+        };
+        red: {
+          text: string;
+          tag: string;
+          pill: string;
+        };
+        yellow: {
+          text: string;
+          tag: string;
+          pill: string;
+        };
+        grey: {
+          text: string;
+          tag: string;
+          pill: string;
+        };
+      };
+    };
+    button: {
+      variant: {
+        standard?: ButtonVariant;
+        inverted?: ButtonVariant;
+        text?: ButtonVariant;
+        flat?: ButtonVariant;
+        light?: ButtonVariant;
+      };
+      size: {
+        sm?: {
+          padding: string;
+        };
+        md?: {
+          padding: string;
+        };
+        lg?: {
+          padding: string;
+        };
+      };
+    };
+    tooltip: {
+      variant: {
+        standard: {
+          text?: string;
+          tag?: string;
+          pill?: string;
+        };
+      };
+      size: {
+        md: {
+          width?: string;
+        };
+      };
+    };
+    spinner: {
+      variant: {
+        standard: {
+          color: string;
+        };
+      };
+    };
+    infoBox: {
+      backgroundColor: string;
+      heading: TextVariant;
+      icon: {
+        fontSize: string;
+        lineHeight: string;
+        [key: string]:
+          | string
+          | {
+              fontSize?: string;
+              lineHeight?: string;
+            };
+      };
+    };
+    placeTypeSelect: {
+      borderColor: string;
+      boxShadow: string;
+    };
+    codeHighlight: {
+      background?: string;
+      border?: string;
+      text?: string;
+      highlight?: string;
+      selection?: string;
+      comment?: string;
+      prolog?: string;
+      doctype?: string;
+      cData?: string;
+      punctuation?: string;
+      property?: string;
+      tag?: string;
+      boolean?: string;
+      number?: string;
+      constant?: string;
+      symbol?: string;
+      deleted?: string;
+      selector?: string;
+      attrName?: string;
+      string?: string;
+      char?: string;
+      builtin?: string;
+      inserted?: string;
+      operator?: string;
+      entity?: string;
+      url?: string;
+      langCSS?: string;
+      atrule?: string;
+      attrValue?: string;
+      keyword?: string;
+      function?: string;
+      className?: string;
+      regex?: string;
+      important?: string;
+      variable?: string;
+      csvHeader?: string;
+      csvSeparator?: string;
+      csvValue?: string;
+      csvStringValue?: string;
+    };
   };
 }

@@ -48,9 +48,9 @@ export function InfoBox(props: InfoBoxProps): JSX.Element {
           flex-direction: row;
           gap: ${theme.spacing.md}px;
           padding: ${theme.spacing.xl}px ${theme.spacing.lg}px;
-          background-color: ${theme.infoBox.backgroundColor};
+          background-color: ${theme.components.infoBox.backgroundColor};
           ${theme.radius.lg};
-          ${theme.infoBox.icon}
+          ${theme.components.infoBox.icon}
 
           & > svg {
             flex-shrink: 0;
@@ -68,7 +68,7 @@ export function InfoBox(props: InfoBoxProps): JSX.Element {
           {props.heading && (
             <div
               css={css`
-                ${theme.infoBox.heading}
+                ${theme.components.infoBox.heading}
               `}
             >
               {props.heading}

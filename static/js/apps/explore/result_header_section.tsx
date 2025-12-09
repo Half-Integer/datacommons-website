@@ -76,7 +76,7 @@ const AdditionalPlaceTooltipContent = ({
       margin: 0;
       && li {
         display: block;
-        border-bottom: 1px solid ${theme.tabs.lining};
+        border-bottom: 1px solid ${theme.components.tabs.lining};
         padding-bottom: ${theme.spacing.sm}px;
         &:last-of-type {
           padding-bottom: 0;

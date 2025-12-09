@@ -324,7 +324,7 @@ function generateRelatedEntityChips(entities: GraphEntity[]): JSX.Element {
             <a
               href={`/browser/${entity.dcid}`}
               css={css`
-                ${theme.linkBox.standard};
+                ${theme.components.linkBox.standard};
                 ${theme.elevation.high};
                 ${theme.radius.lg};
                 color: ${theme.colors.link.primary.base};

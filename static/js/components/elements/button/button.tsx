@@ -205,36 +205,36 @@ export const Button = forwardRef<
 
   const sizeStyles = {
     sm: css`
-      ${theme.button.size.sm}
+      ${theme.components.button.size.sm}
       ${theme.typography.text.sm}
       line-height: 1rem;
     `,
     md: css`
-      ${theme.button.size.md}
+      ${theme.components.button.size.md}
       ${theme.typography.text.md}
       line-height: 1rem
     `,
     lg: css`
-      ${theme.button.size.lg}
+      ${theme.components.button.size.lg}
       ${theme.typography.text.lg}
     `,
   };
 
   const variantStyles = {
     standard: css`
-      ${theme.button.variant.standard}
+      ${theme.components.button.variant.standard}
     `,
     inverted: css`
-      ${theme.button.variant.inverted}
+      ${theme.components.button.variant.inverted}
     `,
     text: css`
-      ${theme.button.variant.text}
+      ${theme.components.button.variant.text}
     `,
     flat: css`
-      ${theme.button.variant.flat}
+      ${theme.components.button.variant.flat}
     `,
     light: css`
-      ${theme.button.variant.light}
+      ${theme.components.button.variant.light}
     `,
   };
 

@@ -70,7 +70,7 @@ export const LinkIconBox = ({
         }
 
         & a {
-          ${theme.linkBox.standard}
+          ${theme.components.linkBox.standard}
           ${theme.elevation.high}
                 ${theme.typography.heading.xs};
           ${theme.radius.xl}

@@ -259,8 +259,8 @@ const TooltipBox = styled.div<{
   ${theme.typography.text.sm}
   ${theme.elevation.high};
   max-width: ${({ $maxWidth }): string => $maxWidth};
-  background-color: ${theme.tooltip.variant.standard.pill};
-  color: ${theme.tooltip.variant.standard.text};
+  background-color: ${theme.components.tooltip.variant.standard.pill};
+  color: ${theme.components.tooltip.variant.standard.text};
   padding: ${theme.spacing.md}px;
   display: flex;
   flex-direction: column;
@@ -377,7 +377,7 @@ const CloseButton = styled.button`
   background: transparent;
   border: none;
   cursor: pointer;
-  color: ${theme.tooltip.variant.standard.text};
+  color: ${theme.components.tooltip.variant.standard.text};
   &:hover {
     color: ${theme.colors.link.primary.base};
   }
@@ -392,7 +392,7 @@ const SimpleStringTrigger = styled.span<{
   display: inline-block;
   padding: 0;
   margin: 0;
-  text-decoration: underline ${theme.tooltip.variant.standard.text} dashed;
+  text-decoration: underline ${theme.components.tooltip.variant.standard.text} dashed;
   cursor: ${({ $cursor }): string => ($cursor ? $cursor : "inherit")};
 `;
 
@@ -1312,7 +1312,7 @@ export const Tooltip = ({
   }, [tooltipId, mounted, open, openAsPopover, handleClose]);
 
   const defaultArrowProps = {
-    fill: theme.tooltip.variant.standard.pill,
+    fill: theme.components.tooltip.variant.standard.pill,
     stroke: "hsla(0, 0%, 0%, 0.2)",
     strokeWidth: shouldShowArrowBorder ? 1 : 0,
   };

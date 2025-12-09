@@ -177,7 +177,7 @@ const PlaceTypeSelect = styled.select<{ isHighlighted: boolean }>`
   ${(props): SerializedStyles | false =>
     props.isHighlighted &&
     css`
-      ${props.theme.placeTypeSelect};
+      ${props.theme.components.placeTypeSelect};
       outline: 0;
     `}
 `;

@@ -64,7 +64,7 @@ export function ChartHeader(props: ChartHeaderProps): ReactElement {
         padding: ${theme.spacing.md}px;
         gap: ${theme.spacing.md}px;
         align-items: center;
-        border-bottom: 1px solid ${theme.cards.variant.grey.pill};
+        border-bottom: 1px solid ${theme.components.cards.variant.grey.pill};
         @media (max-width: ${theme.breakpoints.lg}px) {
           flex-wrap: wrap;
         }
@@ -101,7 +101,7 @@ export function ChartHeader(props: ChartHeaderProps): ReactElement {
                 align-items: center;
                 padding: ${theme.spacing.sm}px ${theme.spacing.md}px;
                 gap: ${theme.spacing.sm}px;
-                background: ${theme.cards.variant.grey.pill};
+                background: ${theme.components.cards.variant.grey.pill};
                 ${theme.typography.family.text};
                 font-size: 13px;
               `}

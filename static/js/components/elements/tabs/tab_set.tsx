@@ -239,7 +239,7 @@ export const TabSet = ({
     <div
       css={css`
         position: relative;
-        border-bottom: 1px solid ${theme.tabs.lining};
+        border-bottom: 1px solid ${theme.components.tabs.lining};
       `}
       onKeyDown={handleKeyDown}
     >
@@ -311,7 +311,7 @@ export const TabSet = ({
             position: absolute;
             bottom: 0;
             height: 3px;
-            background-color: ${theme.tabs.selected};
+            background-color: ${theme.components.tabs.selected};
             transition: left 0.2s ease, width 0.2s ease;
             pointer-events: none;
           `}

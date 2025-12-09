@@ -130,7 +130,7 @@ export function FacetSelectorSimple({
         css={css`
           ${variant === "small" ? "font-size: 13px;" : theme.typography.text.sm}
           ${theme.typography.family.text}
-          ${theme.button.size.md}
+          ${theme.components.button.size.md}
           padding-left: ${theme.spacing.sm}px;
           border: 1px solid transparent;
           line-height: 1rem;

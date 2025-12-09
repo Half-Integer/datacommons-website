@@ -252,9 +252,9 @@ export function CodeBlock({
     position: "relative",
 
     "> pre[class*='language-']": {
-      background: theme.codeHighlight.background,
-      color: theme.codeHighlight.text,
-      border: `1px solid ${theme.codeHighlight.border}`,
+      background: theme.components.codeHighlight.background,
+      color: theme.components.codeHighlight.text,
+      border: `1px solid ${theme.components.codeHighlight.border}`,
       borderRadius: "8px",
       padding: "12px 14px",
       margin: 0,
@@ -263,7 +263,7 @@ export function CodeBlock({
       tabSize: 2,
       ...theme.typography.family.code,
       fontSize: "0.9rem",
-      textShadow: `0 1px ${theme.codeHighlight.background}`,
+      textShadow: `0 1px ${theme.components.codeHighlight.background}`,
       textAlign: "left",
       whiteSpace: "pre-wrap",
       wordSpacing: "normal",
@@ -277,32 +277,32 @@ export function CodeBlock({
 
       "> code": {
         ...theme.typography.family.code,
-        color: theme.codeHighlight.text,
+        color: theme.components.codeHighlight.text,
       },
 
       "& ::selection": {
-        background: theme.codeHighlight.selection,
+        background: theme.components.codeHighlight.selection,
       },
 
       ".token.comment, .token.prolog, .token.doctype, .token.cdata": {
-        color: theme.codeHighlight.comment,
+        color: theme.components.codeHighlight.comment,
       },
       ".token.punctuation": {
-        color: theme.codeHighlight.punctuation,
+        color: theme.components.codeHighlight.punctuation,
       },
 
       "&.language-csv .token.value.string.header, &.language-csv .token.value.header":
         {
-          color: theme.codeHighlight.csvHeader,
+          color: theme.components.codeHighlight.csvHeader,
         },
       "&.language-csv .token.punctuation": {
-        color: theme.codeHighlight.csvSeparator,
+        color: theme.components.codeHighlight.csvSeparator,
       },
       "&.language-csv .token.value": {
-        color: theme.codeHighlight.csvValue,
+        color: theme.components.codeHighlight.csvValue,
       },
       "&.language-csv .token.value.string": {
-        color: theme.codeHighlight.csvStringValue,
+        color: theme.components.codeHighlight.csvStringValue,
       },
 
       ".token.namespace": {
@@ -310,25 +310,25 @@ export function CodeBlock({
       },
       ".token.property, .token.tag, .token.boolean, .token.number, .token.constant, .token.symbol, .token.deleted":
         {
-          color: theme.codeHighlight.property,
+          color: theme.components.codeHighlight.property,
         },
       ".token.selector, .token.attr-name, .token.string, .token.char, .token.builtin, .token.inserted":
         {
-          color: theme.codeHighlight.selector,
+          color: theme.components.codeHighlight.selector,
         },
       ".token.operator, .token.entity, .token.url, .language-css .token.string, .style .token.string":
         {
-          color: theme.codeHighlight.operator,
+          color: theme.components.codeHighlight.operator,
           background: "hsla(0, 0%, 100%, .5)",
         },
       ".token.atrule, .token.attr-value, .token.keyword": {
-        color: theme.codeHighlight.atrule,
+        color: theme.components.codeHighlight.atrule,
       },
       ".token.function, .token.class-name": {
-        color: theme.codeHighlight.function,
+        color: theme.components.codeHighlight.function,
       },
       ".token.regex, .token.important, .token.variable": {
-        color: theme.codeHighlight.regex,
+        color: theme.components.codeHighlight.regex,
       },
       ".token.important, .token.bold": {
         fontWeight: "bold",
@@ -340,7 +340,7 @@ export function CodeBlock({
         cursor: "help",
       },
       ".token.special-term-highlight": {
-        backgroundColor: theme.codeHighlight.highlight,
+        backgroundColor: theme.components.codeHighlight.highlight,
         padding: "2px 3px",
         borderRadius: "3px",
       },

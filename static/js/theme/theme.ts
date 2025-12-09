@@ -265,214 +265,6 @@ const theme: Theme = {
       },
     },
   },
-  // Components
-  linkBox: {
-    standard: {
-      backgroundColor: COLOR_BONE,
-      textDecoration: "none",
-      ["&:hover:not(:disabled)"]: {
-        backgroundColor: COLOR_BREEZE,
-      },
-    },
-    inverted: {
-      backgroundColor: COLOR_GLACIER,
-      textDecoration: "none",
-      ["&:hover:not(:disabled)"]: {
-        backgroundColor: COLOR_ARTIC,
-      },
-    },
-  },
-  tabs: {
-    selected: COLOR_OCEAN,
-    unselected: COLOR_ASH,
-    lining: COLOR_LINEN,
-  },
-  cards: {
-    variant: {
-      blue: {
-        text: COLOR_OCEAN,
-        tag: COLOR_NAVY,
-        pill: COLOR_BREEZE,
-      },
-      green: {
-        text: COLOR_LEAF,
-        tag: COLOR_PINE,
-        pill: COLOR_MINT,
-      },
-      red: {
-        text: COLOR_CRIMSON,
-        tag: COLOR_EMBER,
-        pill: COLOR_BLUSH,
-      },
-      yellow: {
-        text: COLOR_OCHRE,
-        tag: COLOR_EMBER,
-        pill: COLOR_SUNSHINE,
-      },
-      grey: {
-        text: COLOR_SLATE,
-        tag: COLOR_SLATE,
-        pill: COLOR_MIST,
-      },
-    },
-  },
-  button: {
-    variant: {
-      standard: {
-        color: COLOR_OCEAN,
-        backgroundColor: COLOR_WHITE,
-        border: `1px solid ${COLOR_FOG}`,
-        borderRadius: `1000px`,
-        ["&:hover:not(:disabled):not([aria-disabled])"]: {
-          backgroundColor: COLOR_WHITE,
-          color: COLOR_OCEAN,
-          border: `1px solid ${COLOR_OCEAN}`,
-        },
-      },
-      inverted: {
-        color: COLOR_OCEAN,
-        backgroundColor: COLOR_GLACIER,
-        border: `1px solid ${COLOR_GLACIER}`,
-        borderRadius: `1000px`,
-        ["&:hover:not(:disabled):not([aria-disabled])"]: {
-          backgroundColor: COLOR_GLACIER,
-          color: COLOR_OCEAN,
-          border: `1px solid ${COLOR_OCEAN}`,
-        },
-      },
-      text: {
-        color: COLOR_OCEAN,
-        backgroundColor: "transparent",
-        border: `1px solid transparent`,
-        borderRadius: `1000px`,
-        ["&:hover:not(:disabled):not([aria-disabled])"]: {
-          backgroundColor: "transparent",
-          color: COLOR_OCEAN,
-          border: `1px solid ${COLOR_OCEAN}`,
-        },
-      },
-      flat: {
-        color: COLOR_OCEAN,
-        backgroundColor: COLOR_POLAR,
-        border: `1px solid ${COLOR_POLAR}`,
-        borderRadius: "100px",
-        ["&:hover:not(:disabled):not([aria-disabled])"]: {
-          backgroundColor: COLOR_POLAR,
-          color: COLOR_OCEAN,
-          border: `1px solid ${COLOR_OCEAN}`,
-        },
-      },
-      light: {
-        color: COLOR_STEEL,
-        backgroundColor: "transparent",
-        border: "none",
-        borderRadius: "none",
-        ["&:hover:not(:disabled):not([aria-disabled])"]: {
-          backgroundColor: "transparent",
-          color: COLOR_OCEAN,
-          border: "none",
-        },
-      },
-    },
-    size: {
-      sm: {
-        padding: `7px ${SPACING.md}px`,
-      },
-      md: {
-        padding: `11px ${SPACING.md}px 9px`,
-      },
-      lg: {
-        padding: `15px ${SPACING.lg}px`,
-      },
-    },
-  },
-  tooltip: {
-    variant: {
-      standard: {
-        text: COLOR_SLATE,
-        tag: COLOR_OCEAN,
-        pill: COLOR_SNOW,
-      },
-    },
-    size: {
-      md: {
-        width: "300px",
-      },
-    },
-  },
-  spinner: {
-    variant: {
-      standard: {
-        color: COLOR_OCEAN,
-      },
-    },
-  },
-  // Generic Properties
-  infoBox: {
-    backgroundColor: COLOR_GLACIER,
-    icon: {
-      fontSize: "1.5rem",
-      lineHeight: "2rem",
-      [`@media (max-width: ${BREAKPOINTS.sm}px)`]: {
-        fontSize: "1.35rem",
-        lineHeight: "1.5rem",
-      },
-    },
-    heading: {
-      fontSize: "1.5rem",
-      lineHeight: "2rem",
-      fontWeight: 500,
-      [`@media (max-width: ${BREAKPOINTS.sm}px)`]: {
-        fontSize: "1.35rem",
-        lineHeight: "1.75rem",
-      },
-    },
-  },
-  placeTypeSelect: {
-    borderColor: COLOR_OCEAN,
-    boxShadow: `0 0 0 0.2rem ${COLOR_SKY}`,
-  },
-  codeHighlight: {
-    background: COLOR_WHITE,
-    border: COLOR_CLOUD,
-    text: COLOR_SLATE,
-    highlight: COLOR_SUNSHINE,
-    selection: COLOR_SKY,
-    comment: COLOR_STEEL,
-    prolog: COLOR_STEEL,
-    doctype: COLOR_STEEL,
-    cData: COLOR_STEEL,
-    punctuation: COLOR_NAVY,
-    property: COLOR_OCEAN,
-    tag: COLOR_OCEAN,
-    boolean: COLOR_OCEAN,
-    number: COLOR_OCEAN,
-    constant: COLOR_OCEAN,
-    symbol: COLOR_OCEAN,
-    deleted: COLOR_OCEAN,
-    selector: COLOR_LEAF,
-    attrName: COLOR_LEAF,
-    string: COLOR_LEAF,
-    char: COLOR_LEAF,
-    builtin: COLOR_LEAF,
-    inserted: COLOR_LEAF,
-    operator: COLOR_ORANGE,
-    entity: COLOR_ORANGE,
-    url: COLOR_ORANGE,
-    langCSS: COLOR_ORANGE,
-    atrule: COLOR_OCEAN,
-    attrValue: COLOR_OCEAN,
-    keyword: COLOR_OCEAN,
-    function: COLOR_OCEAN,
-    className: COLOR_OCEAN,
-    regex: COLOR_YELLOW,
-    important: COLOR_YELLOW,
-    variable: COLOR_YELLOW,
-    csvHeader: COLOR_LEAF,
-    csvSeparator: COLOR_ORANGE,
-    csvStringValue: COLOR_STEEL,
-    csvValue: COLOR_OCEAN,
-  },
   elevation: {
     none: {
       boxShadow: "none",
@@ -512,6 +304,214 @@ const theme: Theme = {
     drawer: 8000,
     overlay: 11000,
     widget: 7000,
+  },
+  components: {
+    linkBox: {
+      standard: {
+        backgroundColor: COLOR_BONE,
+        textDecoration: "none",
+        ["&:hover:not(:disabled)"]: {
+          backgroundColor: COLOR_BREEZE,
+        },
+      },
+      inverted: {
+        backgroundColor: COLOR_GLACIER,
+        textDecoration: "none",
+        ["&:hover:not(:disabled)"]: {
+          backgroundColor: COLOR_ARTIC,
+        },
+      },
+    },
+    tabs: {
+      selected: COLOR_OCEAN,
+      unselected: COLOR_ASH,
+      lining: COLOR_LINEN,
+    },
+    cards: {
+      variant: {
+        blue: {
+          text: COLOR_OCEAN,
+          tag: COLOR_NAVY,
+          pill: COLOR_BREEZE,
+        },
+        green: {
+          text: COLOR_LEAF,
+          tag: COLOR_PINE,
+          pill: COLOR_MINT,
+        },
+        red: {
+          text: COLOR_CRIMSON,
+          tag: COLOR_EMBER,
+          pill: COLOR_BLUSH,
+        },
+        yellow: {
+          text: COLOR_OCHRE,
+          tag: COLOR_EMBER,
+          pill: COLOR_SUNSHINE,
+        },
+        grey: {
+          text: COLOR_SLATE,
+          tag: COLOR_SLATE,
+          pill: COLOR_MIST,
+        },
+      },
+    },
+    button: {
+      variant: {
+        standard: {
+          color: COLOR_OCEAN,
+          backgroundColor: COLOR_WHITE,
+          border: `1px solid ${COLOR_FOG}`,
+          borderRadius: `1000px`,
+          ["&:hover:not(:disabled):not([aria-disabled])"]: {
+            backgroundColor: COLOR_WHITE,
+            color: COLOR_OCEAN,
+            border: `1px solid ${COLOR_OCEAN}`,
+          },
+        },
+        inverted: {
+          color: COLOR_OCEAN,
+          backgroundColor: COLOR_GLACIER,
+          border: `1px solid ${COLOR_GLACIER}`,
+          borderRadius: `1000px`,
+          ["&:hover:not(:disabled):not([aria-disabled])"]: {
+            backgroundColor: COLOR_GLACIER,
+            color: COLOR_OCEAN,
+            border: `1px solid ${COLOR_OCEAN}`,
+          },
+        },
+        text: {
+          color: COLOR_OCEAN,
+          backgroundColor: "transparent",
+          border: `1px solid transparent`,
+          borderRadius: `1000px`,
+          ["&:hover:not(:disabled):not([aria-disabled])"]: {
+            backgroundColor: "transparent",
+            color: COLOR_OCEAN,
+            border: `1px solid ${COLOR_OCEAN}`,
+          },
+        },
+        flat: {
+          color: COLOR_OCEAN,
+          backgroundColor: COLOR_POLAR,
+          border: `1px solid ${COLOR_POLAR}`,
+          borderRadius: "100px",
+          ["&:hover:not(:disabled):not([aria-disabled])"]: {
+            backgroundColor: COLOR_POLAR,
+            color: COLOR_OCEAN,
+            border: `1px solid ${COLOR_OCEAN}`,
+          },
+        },
+        light: {
+          color: COLOR_STEEL,
+          backgroundColor: "transparent",
+          border: "none",
+          borderRadius: "none",
+          ["&:hover:not(:disabled):not([aria-disabled])"]: {
+            backgroundColor: "transparent",
+            color: COLOR_OCEAN,
+            border: "none",
+          },
+        },
+      },
+      size: {
+        sm: {
+          padding: `7px ${SPACING.md}px`,
+        },
+        md: {
+          padding: `11px ${SPACING.md}px 9px`,
+        },
+        lg: {
+          padding: `15px ${SPACING.lg}px`,
+        },
+      },
+    },
+    tooltip: {
+      variant: {
+        standard: {
+          text: COLOR_SLATE,
+          tag: COLOR_OCEAN,
+          pill: COLOR_SNOW,
+        },
+      },
+      size: {
+        md: {
+          width: "300px",
+        },
+      },
+    },
+    spinner: {
+      variant: {
+        standard: {
+          color: COLOR_OCEAN,
+        },
+      },
+    },
+    infoBox: {
+      backgroundColor: COLOR_GLACIER,
+      icon: {
+        fontSize: "1.5rem",
+        lineHeight: "2rem",
+        [`@media (max-width: ${BREAKPOINTS.sm}px)`]: {
+          fontSize: "1.35rem",
+          lineHeight: "1.5rem",
+        },
+      },
+      heading: {
+        fontSize: "1.5rem",
+        lineHeight: "2rem",
+        fontWeight: 500,
+        [`@media (max-width: ${BREAKPOINTS.sm}px)`]: {
+          fontSize: "1.35rem",
+          lineHeight: "1.75rem",
+        },
+      },
+    },
+    placeTypeSelect: {
+      borderColor: COLOR_OCEAN,
+      boxShadow: `0 0 0 0.2rem ${COLOR_SKY}`,
+    },
+    codeHighlight: {
+      background: COLOR_WHITE,
+      border: COLOR_CLOUD,
+      text: COLOR_SLATE,
+      highlight: COLOR_SUNSHINE,
+      selection: COLOR_SKY,
+      comment: COLOR_STEEL,
+      prolog: COLOR_STEEL,
+      doctype: COLOR_STEEL,
+      cData: COLOR_STEEL,
+      punctuation: COLOR_NAVY,
+      property: COLOR_OCEAN,
+      tag: COLOR_OCEAN,
+      boolean: COLOR_OCEAN,
+      number: COLOR_OCEAN,
+      constant: COLOR_OCEAN,
+      symbol: COLOR_OCEAN,
+      deleted: COLOR_OCEAN,
+      selector: COLOR_LEAF,
+      attrName: COLOR_LEAF,
+      string: COLOR_LEAF,
+      char: COLOR_LEAF,
+      builtin: COLOR_LEAF,
+      inserted: COLOR_LEAF,
+      operator: COLOR_ORANGE,
+      entity: COLOR_ORANGE,
+      url: COLOR_ORANGE,
+      langCSS: COLOR_ORANGE,
+      atrule: COLOR_OCEAN,
+      attrValue: COLOR_OCEAN,
+      keyword: COLOR_OCEAN,
+      function: COLOR_OCEAN,
+      className: COLOR_OCEAN,
+      regex: COLOR_YELLOW,
+      important: COLOR_YELLOW,
+      variable: COLOR_YELLOW,
+      csvHeader: COLOR_LEAF,
+      csvSeparator: COLOR_ORANGE,
+      csvStringValue: COLOR_STEEL,
+      csvValue: COLOR_OCEAN,
+    },
   },
 };
 

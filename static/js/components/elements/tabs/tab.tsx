@@ -63,7 +63,7 @@ export const Tab = ({ label, route }: TabProps): ReactElement => {
         margin: 0 ${theme.spacing.lg}px;
         border: none;
         background: transparent;
-        color: ${isSelected ? theme.tabs.selected : theme.tabs.unselected};
+        color: ${isSelected ? theme.components.tabs.selected : theme.components.tabs.unselected};
         cursor: pointer;
         transition: color 0.3s ease;
       `}
